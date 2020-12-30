@@ -5,7 +5,7 @@ CREATE TABLE Oseba(
     datumRojstva date,
     spol INTEGER,
     drzava TEXT
-)
+);
 
 CREATE TABLE Artist(
     idArtist INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -13,18 +13,18 @@ CREATE TABLE Artist(
     leto_nastanka INTEGER,
     drzava TEXT,
     mesto TEXT
-)
+);
 
 CREATE TABLE Zalozba(
     idZalozbe INTEGER PRIMARY KEY AUTOINCREMENT,
     ime TEXT NOT NULL,
     drzava TEXT
-)
+);
 
 CREATE TABLE Zanr(
     idZanr INTEGER PRIMARY KEY AUTOINCREMENT,
     imeZanra TEXT NOT NULL
-)
+);
 
 CREATE TABLE Izdaja(
     idIzdaja INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,14 +34,15 @@ CREATE TABLE Izdaja(
     tip TEXT NOT NULL,
     idZalozbe INTEGER NOT NULL,
     FOREIGN KEY(idZalozbe) REFERENCES Zalozba(idZalozbe)
-)
+);
 
 CREATE TABLE Spada(
     idIzdaja INTEGER NOT NULL,
     idZanr INTEGER NOT NULL,
+    PRIMARY KEY(idIzdaja,idZanr),
     FOREIGN KEY(idIzdaja) REFERENCES Izdaja(idIzdaja),
     FOREIGN KEY(idZanr) REFERENCES Zanr(idZanr)
-)
+);
 
 CREATE TABLE Track(
     idTrack INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -49,26 +50,34 @@ CREATE TABLE Track(
     dolzina time NOT NULL,
     idizdaja INTEGER NOT NULL,
     FOREIGN KEY (idIzdaja) REFERENCES Izdaja(idIzdaja)
-)
+);
+
+CREATE TABLE Vloga(
+    Vloga TEXT PRIMARY KEY
+);
 
 CREATE TABLE Je_Clan(
     idOseba INTEGER NOT NULL,
     idArtist INTEGER NOT NULL,
+    PRIMARY KEY(idOseba,idArtist),
     FOREIGN KEY(idOseba) REFERENCES Oseba(idOseba),
     FOREIGN KEY(idArtist) REFERENCES Artist(idArtist)
-)
+);
 
 CREATE TABLE Je_Sodeloval(
     idOseba INTEGER NOT NULL,
     idIzdaja INTEGER NOT NULL,
-    vloga TEXT,
+    Vloga TEXT NOT NULL,
+    PRIMARY KEY(idOseba,idIzdaja,Vloga),
     FOREIGN KEY(idOseba) REFERENCES Oseba(idOseba),
-    FOREIGN KEY(idIzdaja) REFERENCES Izdaja(idIzdaja)
-)
+    FOREIGN KEY(idIzdaja) REFERENCES Izdaja(idIzdaja),
+    FOREIGN KEY(Vloga) REFERENCES Vloga(Vloga)
+);
 
 CREATE TABLE Je_Avtor (
     idIzdaja INTEGER NOT NULL,
     idArtist INTEGER NOT NULL,
+    PRIMARY KEY (idIzdaja,idArtist),
     FOREIGN KEY (idIzdaja) REFERENCES Izdaja (idIzdaja),
     FOREIGN KEY (idArtist) REFERENCES Artist (idArtist) 
 );
