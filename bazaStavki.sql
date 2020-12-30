@@ -53,7 +53,8 @@ CREATE TABLE Track(
 );
 
 CREATE TABLE Vloga(
-    Vloga TEXT PRIMARY KEY
+    idVloga INTEGER PRIMARY KEY AUTOINCREMENT,
+    Naziv TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE Je_Clan(
@@ -67,11 +68,11 @@ CREATE TABLE Je_Clan(
 CREATE TABLE Je_Sodeloval(
     idOseba INTEGER NOT NULL,
     idIzdaja INTEGER NOT NULL,
-    Vloga TEXT NOT NULL,
-    PRIMARY KEY(idOseba,idIzdaja,Vloga),
+    idVloga INTEGER NOT NULL,
+    PRIMARY KEY(idOseba,idIzdaja,idVloga),
     FOREIGN KEY(idOseba) REFERENCES Oseba(idOseba),
     FOREIGN KEY(idIzdaja) REFERENCES Izdaja(idIzdaja),
-    FOREIGN KEY(Vloga) REFERENCES Vloga(Vloga)
+    FOREIGN KEY(idVloga) REFERENCES Vloga(idVloga)
 );
 
 CREATE TABLE Je_Avtor (
