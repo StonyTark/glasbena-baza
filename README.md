@@ -9,4 +9,4 @@ Podatke je možno pridobiti iz več virov - Discogs, Last.fm, musicbrainz. Za ko
 
 Spletni vmesnik bo imel možnost poizvedb, dodajanje, modificiranje in brisanje vseh tabel v bazi. Prav tako pa bi lahko naredila manjšo aplikacijo v smeri generatorja miksov glede na podane parametre ali pa nek programček za predloge albumov, spet na podlagi parametrov.
 
-![ER Diagram](ER_diagram.png)
+![ER Diagram](static/ER_diagram.png)
