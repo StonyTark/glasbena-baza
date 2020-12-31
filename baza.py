@@ -67,6 +67,8 @@ class Tabela:
 #
 #KONKRETNE TABELE GLEDE NA ER DIAGRAM
 #
+
+#OSNOVNE TABELE
 class Oseba(Tabela):
     ime='Oseba'
 
@@ -98,10 +100,126 @@ class Zanr(Tabela):
         """)
     
     def dodaj_vrstico(self, /, **podatki):
+        assert "imeZanra" in podatki
+        cur = self.conn.execute("""
+            SELECT idZanr FROM zanr
+            WHERE imeZanra = :imeZanra;
+        """, podatki)
+        r = cur.fetchone()
+        if r is None:
+            return super().dodaj_vrstico(**podatki)
+        else:
+            id, = r
+            print("Ze v bazi, ID: {}".format(str(id)))
+            return id
+        #return super().dodaj_vrstico(**podatki)
+
+class Artist(Tabela):
+    ime='Artist'
+
+    def ustvari(self):
+        self.conn.execute("""
+            CREATE TABLE Artist(
+                idArtist INTEGER PRIMARY KEY AUTOINCREMENT,
+                ime TEXT NOT NULL,
+                leto_nastanka INTEGER,
+                drzava TEXT,
+                mesto TEXT
+            );
+        """)
+    
+    def dodaj_vrstico(self, /, **podatki):
+        return super().dodaj_vrstico(**podatki)
+
+class Zalozba(Tabela):
+    ime='Zalozba'
+
+    def ustvari(self):
+        self.conn.execute("""
+            CREATE TABLE Zalozba(
+                idZalozbe INTEGER PRIMARY KEY AUTOINCREMENT,
+                ime TEXT NOT NULL,
+                drzava TEXT
+            );
+        """)
+    
+    def dodaj_vrstico(self, /, **podatki):
         return super().dodaj_vrstico(**podatki)
 
 
+class Izdaja(Tabela):
+    ime='Izdaja'
 
+    def ustvari(self):
+        self.conn.execute("""
+            CREATE TABLE Izdaja(
+                idIzdaja INTEGER PRIMARY KEY AUTOINCREMENT,
+                naslov TEXT NOT NULL,
+                leto_izida INTEGER NOT NULL,
+                celotnaDolzina time,
+                tip TEXT NOT NULL,
+                idZalozbe INTEGER,
+                FOREIGN KEY(idZalozbe) REFERENCES Zalozba(idZalozbe)
+            );
+        """)
+    
+    def dodaj_vrstico(self, /, **podatki):
+        return super().dodaj_vrstico(**podatki)
+
+
+class Track(Tabela):
+    ime='Track'
+
+    def ustvari(self):
+        self.conn.execute("""
+            CREATE TABLE Track(
+                idTrack INTEGER PRIMARY KEY AUTOINCREMENT,
+                naslov TEXT NOT NULL,
+                dolzina time NOT NULL,
+                idIzdaja INTEGER NOT NULL,
+                FOREIGN KEY (idIzdaja) REFERENCES Izdaja(idIzdaja)
+            );
+        """)
+    
+    def dodaj_vrstico(self, /, **podatki):
+        return super().dodaj_vrstico(**podatki)
+
+
+class Vloga(Tabela):
+    ime='Vloga'
+
+    def ustvari(self):
+        self.conn.execute("""
+            CREATE TABLE Vloga(
+                idVloga INTEGER PRIMARY KEY AUTOINCREMENT,
+                Naziv TEXT NOT NULL UNIQUE
+            );
+        """)
+    
+    def dodaj_vrstico(self, /, **podatki):
+        assert "Naziv" in podatki
+        cur = self.conn.execute("""
+            SELECT idVloga FROM Vloga
+            WHERE Naziv = :Naziv;
+        """, podatki)
+        r = cur.fetchone()
+        if r is None:
+            return super().dodaj_vrstico(**podatki)
+        else:
+            id, = r
+            print("Ze v bazi, ID: {}".format(str(id)))
+            return id
+
+
+#TODO VMESNE TABELE
+
+
+
+
+
+
+
+#USTVARJANJE BAZE
 
 def ustvari_tabele(tabele):
     """
@@ -134,7 +252,12 @@ def pripravi_tabele(conn):
     """
     oseba=Oseba(conn)
     zanr=Zanr(conn)
-    return [oseba,zanr]
+    artist=Artist(conn)
+    zalozba=Zalozba(conn)
+    izdaja=Izdaja(conn)
+    track=Track(conn)
+    vloga=Vloga(conn)
+    return [oseba,zanr,artist,zalozba,izdaja,track,vloga]
 
 def ustvari_bazo_ce_ne_obstaja(conn):
     """

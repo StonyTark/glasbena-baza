@@ -23,7 +23,7 @@ CREATE TABLE Zalozba(
 
 CREATE TABLE Zanr(
     idZanr INTEGER PRIMARY KEY AUTOINCREMENT,
-    imeZanra TEXT NOT NULL
+    imeZanra TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE Izdaja(
@@ -32,7 +32,7 @@ CREATE TABLE Izdaja(
     leto_izida INTEGER NOT NULL,
     celotnaDolzina time,
     tip TEXT NOT NULL,
-    idZalozbe INTEGER NOT NULL,
+    idZalozbe INTEGER,
     FOREIGN KEY(idZalozbe) REFERENCES Zalozba(idZalozbe)
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE Track(
     idTrack INTEGER PRIMARY KEY AUTOINCREMENT,
     naslov TEXT NOT NULL,
     dolzina time NOT NULL,
-    idizdaja INTEGER NOT NULL,
+    idIzdaja INTEGER NOT NULL,
     FOREIGN KEY (idIzdaja) REFERENCES Izdaja(idIzdaja)
 );
 

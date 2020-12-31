@@ -5,7 +5,7 @@ conn = sqlite3.connect('glasbenaBaza.db')
 baza.ustvari_bazo_ce_ne_obstaja(conn)
 conn.execute('PRAGMA foreign_keys = ON')
 
-oseba,zanr=baza.pripravi_tabele(conn)
+oseba,zanr,artist,zalozba,izdaja,track,vloga=baza.pripravi_tabele(conn)
 
 class Oseba:
 
@@ -26,7 +26,7 @@ class Oseba:
     def dodaj_v_bazo(self):
         assert self.id is None
         with conn:
-            self.id = oseba.dodaj_vrstico(ime=self.ime,priimek=self.priimek,datumRojstva=self.datumRojstva, spol=self.datumRojstva, drzava=self.drzava)
+            self.id = oseba.dodaj_vrstico(ime=self.ime,priimek=self.priimek,datumRojstva=self.datumRojstva, spol=self.spol, drzava=self.drzava)
 
 
 class Zanr:
@@ -44,12 +44,122 @@ class Zanr:
     def dodaj_v_bazo(self):
         assert self.id is None
         with conn:
-            self.id = oseba.dodaj_vrstico(imeZanra=self.ime)
+            self.id = zanr.dodaj_vrstico(imeZanra=self.ime)
+
+class Artist:
+
+    def __init__(self, ime, leto_nastanka, drzava, mesto, *, id=None):
+        """
+        Konstruktor umetniškega akta.
+        """
+        self.id = id
+        self.ime = ime
+        self.leto_nastanka = leto_nastanka
+        self.drzava = drzava
+        self.mesto = mesto
+    
+    def __str__(self):
+        return "Artist: {}".format(self.ime)
+    
+    def dodaj_v_bazo(self):
+        assert self.id is None
+        with conn:
+            self.id = artist.dodaj_vrstico(ime=self.ime,leto_nastanka=self.leto_nastanka,drzava=self.drzava, mesto=self.mesto)
 
 
-test=Oseba('Geezer','Butler','1949-07-17','M','United Kingdom')
-test.dodaj_v_bazo()
-print(test)
+class Zalozba:
+
+    def __init__(self, ime, drzava, *, id=None):
+        """
+        Konstruktor zalozbe.
+        """
+        self.id = id
+        self.ime = ime
+        self.drzava = drzava
+    
+    def __str__(self):
+        return "{} , {} (id:{})".format(self.ime,self.drzava,self.id)
+
+    def dodaj_v_bazo(self):
+        assert self.id is None
+        with conn:
+            self.id = zalozba.dodaj_vrstico(ime=self.ime,drzava=self.drzava)
+
+
+class Izdaja:
+
+    def __init__(self, naslov, leto_izida, tip, celotnaDolzina=None ,idZalozbe=None, *, id=None):
+        """
+        Konstruktor izdaje.
+        celotna dolzina se lahko tudi poračuna glede na tracke ?
+        """
+        self.id = id
+        self.naslov = naslov
+        self.leto_izida = leto_izida
+        self.tip = tip
+        self.celotnaDolzina = celotnaDolzina
+        self.idZalozbe = idZalozbe
+    
+    def __str__(self):
+        return "{}, ({})".format(self.naslov,self.leto_izida)
+    
+    def dodaj_v_bazo(self):
+        assert self.id is None
+        with conn:
+            self.id = artist.dodaj_vrstico(naslov=self.naslov,leto_izida=self.leto_izida,tip=self.tip, celotnaDolzina=self.celotnaDolzina, idZalozbe=self.idZalozbe)
+
+
+class Track:
+
+    def __init__(self, naslov, dolzina, idIzdaja, *, id=None):
+        """
+        Konstruktor zalozbe.
+        """
+        self.id = id
+        self.naslov = naslov
+        self.dolzina = dolzina
+        self.idIzdaja = idIzdaja
+    
+    def __str__(self):
+        return "{} , {}".format(self.naslov,self.idIzdaja,self.id)
+
+    def dodaj_v_bazo(self):
+        assert self.id is None
+        with conn:
+            self.id = track.dodaj_vrstico(naslov=self.naslov,dolzina=self.dolzina,idIzdaja=self.idIzdaja)
+    
+class Vloga:
+
+    def __init__(self, naziv, *, id=None):
+        """
+        Konstruktor zalozbe.
+        """
+        self.id = id
+        self.naziv = naziv
+    
+    def __str__(self):
+        return "{} , {}".format(self.id,self.naziv)
+
+    def dodaj_v_bazo(self):
+        assert self.id is None
+        with conn:
+            self.id = vloga.dodaj_vrstico(naziv=self.naziv)
+
+#TODO VMESNE TABELE
+
+
+#test=Oseba('Geezer','Butler','1949-07-17','M','United Kingdom')
+#test.dodaj_v_bazo()
+#print(test)
+
+# test=Zanr('Rock')
+# test.dodaj_v_bazo()
+
+# test=Zanr('Funk')
+# test.dodaj_v_bazo()
+
+# test=Zanr('Rock')
+# test.dodaj_v_bazo()
     
 
 
