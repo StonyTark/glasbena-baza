@@ -68,7 +68,11 @@ class Tabela:
 #KONKRETNE TABELE GLEDE NA ER DIAGRAM
 #
 
+
+#
 #OSNOVNE TABELE
+#
+
 class Oseba(Tabela):
     ime='Oseba'
 
@@ -83,10 +87,6 @@ class Oseba(Tabela):
                 drzava TEXT
             );
         """)
-    
-    def dodaj_vrstico(self, /, **podatki):
-        return super().dodaj_vrstico(**podatki)
-
 
 class Zanr(Tabela):
     ime='Zanr'
@@ -95,7 +95,7 @@ class Zanr(Tabela):
         self.conn.execute("""
             CREATE TABLE Zanr(
                 idZanr INTEGER PRIMARY KEY AUTOINCREMENT,
-                imeZanra TEXT NOT NULL
+                imeZanra TEXT NOT NULL UNIQUE
             );
         """)
     
@@ -112,7 +112,6 @@ class Zanr(Tabela):
             id, = r
             print("Ze v bazi, ID: {}".format(str(id)))
             return id
-        #return super().dodaj_vrstico(**podatki)
 
 class Artist(Tabela):
     ime='Artist'
@@ -127,9 +126,6 @@ class Artist(Tabela):
                 mesto TEXT
             );
         """)
-    
-    def dodaj_vrstico(self, /, **podatki):
-        return super().dodaj_vrstico(**podatki)
 
 class Zalozba(Tabela):
     ime='Zalozba'
@@ -142,9 +138,6 @@ class Zalozba(Tabela):
                 drzava TEXT
             );
         """)
-    
-    def dodaj_vrstico(self, /, **podatki):
-        return super().dodaj_vrstico(**podatki)
 
 
 class Izdaja(Tabela):
@@ -162,9 +155,6 @@ class Izdaja(Tabela):
                 FOREIGN KEY(idZalozbe) REFERENCES Zalozba(idZalozbe)
             );
         """)
-    
-    def dodaj_vrstico(self, /, **podatki):
-        return super().dodaj_vrstico(**podatki)
 
 
 class Track(Tabela):
@@ -180,9 +170,6 @@ class Track(Tabela):
                 FOREIGN KEY (idIzdaja) REFERENCES Izdaja(idIzdaja)
             );
         """)
-    
-    def dodaj_vrstico(self, /, **podatki):
-        return super().dodaj_vrstico(**podatki)
 
 
 class Vloga(Tabela):
@@ -211,8 +198,72 @@ class Vloga(Tabela):
             return id
 
 
-#TODO VMESNE TABELE
 
+
+#
+#VMESNE TABELE
+#
+
+class Spada(Tabela):
+    ime='Spada'
+
+    def ustvari(self):
+        self.conn.execute("""
+            CREATE TABLE Spada(
+                idIzdaja INTEGER NOT NULL,
+                idZanr INTEGER NOT NULL,
+                PRIMARY KEY(idIzdaja,idZanr),
+                FOREIGN KEY(idIzdaja) REFERENCES Izdaja(idIzdaja),
+                FOREIGN KEY(idZanr) REFERENCES Zanr(idZanr)
+            );
+        """)
+
+
+class Je_Clan(Tabela):
+    ime='Je_Clan'
+
+    def ustvari(self):
+        self.conn.execute("""
+            CREATE TABLE Je_Clan(
+                idOseba INTEGER NOT NULL,
+                idArtist INTEGER NOT NULL,
+                PRIMARY KEY(idOseba,idArtist),
+                FOREIGN KEY(idOseba) REFERENCES Oseba(idOseba),
+                FOREIGN KEY(idArtist) REFERENCES Artist(idArtist)
+            );
+        """)
+
+
+class Je_Sodeloval(Tabela):
+    ime='Je_Sodeloval'
+
+    def ustvari(self):
+        self.conn.execute("""
+            CREATE TABLE Je_Sodeloval(
+                idOseba INTEGER NOT NULL,
+                idIzdaja INTEGER NOT NULL,
+                idVloga INTEGER NOT NULL,
+                PRIMARY KEY(idOseba,idIzdaja,idVloga),
+                FOREIGN KEY(idOseba) REFERENCES Oseba(idOseba),
+                FOREIGN KEY(idIzdaja) REFERENCES Izdaja(idIzdaja),
+                FOREIGN KEY(idVloga) REFERENCES Vloga(idVloga)
+            );
+        """)
+
+
+class Je_Avtor(Tabela):
+    ime='Je_Avtor'
+
+    def ustvari(self):
+        self.conn.execute("""
+            CREATE TABLE Je_Avtor(
+                idIzdaja INTEGER NOT NULL,
+                idArtist INTEGER NOT NULL,
+                PRIMARY KEY (idIzdaja,idArtist),
+                FOREIGN KEY (idIzdaja) REFERENCES Izdaja (idIzdaja),
+                FOREIGN KEY (idArtist) REFERENCES Artist (idArtist) 
+            );
+        """)
 
 
 
@@ -255,9 +306,13 @@ def pripravi_tabele(conn):
     artist=Artist(conn)
     zalozba=Zalozba(conn)
     izdaja=Izdaja(conn)
+    spada=Spada(conn)
     track=Track(conn)
     vloga=Vloga(conn)
-    return [oseba,zanr,artist,zalozba,izdaja,track,vloga]
+    je_clan=Je_Clan(conn)
+    je_sodeloval=Je_Sodeloval(conn)
+    je_avtor=Je_Avtor(conn)
+    return [oseba,zanr,artist,zalozba,izdaja,spada,track,vloga,je_clan,je_sodeloval,je_avtor]
 
 def ustvari_bazo_ce_ne_obstaja(conn):
     """

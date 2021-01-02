@@ -5,7 +5,11 @@ conn = sqlite3.connect('glasbenaBaza.db')
 baza.ustvari_bazo_ce_ne_obstaja(conn)
 conn.execute('PRAGMA foreign_keys = ON')
 
-oseba,zanr,artist,zalozba,izdaja,track,vloga=baza.pripravi_tabele(conn)
+oseba,zanr,artist,zalozba,izdaja,spada,track,vloga,je_clan,je_sodeloval,je_avtor=baza.pripravi_tabele(conn)
+
+#
+#OSNOVNE TABELE
+#
 
 class Oseba:
 
@@ -113,7 +117,7 @@ class Track:
 
     def __init__(self, naslov, dolzina, idIzdaja, *, id=None):
         """
-        Konstruktor zalozbe.
+        Konstruktor pesmi.
         """
         self.id = id
         self.naslov = naslov
@@ -132,7 +136,7 @@ class Vloga:
 
     def __init__(self, naziv, *, id=None):
         """
-        Konstruktor zalozbe.
+        Konstruktor vloge.
         """
         self.id = id
         self.naziv = naziv
@@ -145,7 +149,7 @@ class Vloga:
         with conn:
             self.id = vloga.dodaj_vrstico(naziv=self.naziv)
 
-#TODO VMESNE TABELE
+
 
 
 #test=Oseba('Geezer','Butler','1949-07-17','M','United Kingdom')

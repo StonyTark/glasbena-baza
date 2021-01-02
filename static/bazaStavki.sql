@@ -75,7 +75,7 @@ CREATE TABLE Je_Sodeloval(
     FOREIGN KEY(idVloga) REFERENCES Vloga(idVloga)
 );
 
-CREATE TABLE Je_Avtor (
+CREATE TABLE Je_Avtor(
     idIzdaja INTEGER NOT NULL,
     idArtist INTEGER NOT NULL,
     PRIMARY KEY (idIzdaja,idArtist),
