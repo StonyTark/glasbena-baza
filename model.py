@@ -31,6 +31,7 @@ class Oseba:
         assert self.id is None
         with conn:
             self.id = oseba.dodaj_vrstico(ime=self.ime,priimek=self.priimek,datumRojstva=self.datumRojstva, spol=self.spol, drzava=self.drzava)
+    
 
 
 class Zanr:
@@ -69,6 +70,12 @@ class Artist:
         assert self.id is None
         with conn:
             self.id = artist.dodaj_vrstico(ime=self.ime,leto_nastanka=self.leto_nastanka,drzava=self.drzava, mesto=self.mesto)
+    
+    def dodaj_clane(self,clani):
+        with conn:
+            for clan in clani:
+                je_clan.dodaj_vrstico(idOseba=clan.id,idArtist=self.id)
+
 
 
 class Zalozba:
@@ -148,6 +155,27 @@ class Vloga:
         assert self.id is None
         with conn:
             self.id = vloga.dodaj_vrstico(naziv=self.naziv)
+
+
+def najdi(id):
+        sql = """
+            SELECT idOseba,ime,priimek,datumRojstva,spol,drzava
+            FROM Oseba
+            WHERE idOseba=?
+        """
+        idOseba,ime,priimek,datumRojstva,spol,drzava=conn.execute(sql,str(id)).fetchone()
+        return Oseba(ime,priimek,datumRojstva,spol,drzava,id=idOseba)
+
+osebe=[]
+for i in range(5,10):
+    osebe.append(najdi(i))
+
+
+skupina=Artist('neki',2005,'France','Paris')
+#skupina.dodaj_v_bazo()
+skupina.dodaj_clane(osebe)
+
+
 
 
 
