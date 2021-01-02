@@ -72,6 +72,10 @@ class Artist:
             self.id = artist.dodaj_vrstico(ime=self.ime,leto_nastanka=self.leto_nastanka,drzava=self.drzava, mesto=self.mesto)
     
     def dodaj_clane(self,clani):
+        '''
+        clani naj bo tabela oseb
+        podane osebe nato zapiše v tabelo je_clan z trenutni artist idjem
+        '''
         with conn:
             for clan in clani:
                 je_clan.dodaj_vrstico(idOseba=clan.id,idArtist=self.id)
