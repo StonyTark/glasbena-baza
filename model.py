@@ -79,6 +79,12 @@ class Artist:
         with conn:
             for clan in clani:
                 je_clan.dodaj_vrstico(idOseba=clan.id,idArtist=self.id)
+    
+    @staticmethod
+    def poisci(niz):
+        sql = "SELECT ime,leto_nastanka,drzava,mesto FROM Artist WHERE ime LIKE ?;"
+        for ime,leto_nastanka,drzava,mesto in conn.execute(sql, ['%' + niz + '%']):
+            yield Artist(ime,leto_nastanka,drzava,mesto)
 
 
 

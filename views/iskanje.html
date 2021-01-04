@@ -1,5 +1,55 @@
-<form>
+% rebase('osnova.html')
+
+<form class="form-horizontal">
+    <fieldset>
     
+    <!-- Form Name -->
+    <legend>Iskanje po bazi</legend>
+    
+    <!-- Multiple Radios (inline) -->
+    <div class="form-group">
+      <div class="col-md-4"> 
+        <label class="radio-inline" for="radios-0">
+          <input type="radio" name="izbira" id="radios-0" value="1" checked="checked">
+          Artist
+        </label> 
+        <label class="radio-inline" for="radios-1">
+          <input type="radio" name="izbira" id="radios-1" value="2">
+          Oseba
+        </label> 
+        <label class="radio-inline" for="radios-2">
+          <input type="radio" name="izbira" id="radios-2" value="3">
+          Izdaja
+        </label> 
+      </div>
+    </div>
+    
+    <!-- Search input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="searchinput">Search Input</label>
+      <div class="col-md-4">
+        <input id="searchinput" name="iskaniNiz" type="search" placeholder="Iskano ime" class="form-control input-md" value="">
+      </div>
+    </div>
+    
+    </fieldset>
 </form>
 
 
+<table>
+    <tr>
+        <th>Ime</th>
+        <th>Leto Nastanka</th>
+        <th>Drzava</th>
+        <th>Mesto</th>
+    </tr>
+    % for artist in podatki:
+    <tr>
+        <td>{{artist.ime}}</td>
+        <td>{{artist.leto_nastanka}}</td>
+        <td>{{artist.drzava}}</td>
+        <td>{{artist.mesto}}</td>
+    </tr>
+    % end
+</table>
+    

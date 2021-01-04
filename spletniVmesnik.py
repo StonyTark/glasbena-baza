@@ -14,9 +14,10 @@ def dodaj_post():
     #TODO
     bottle.redirect("/")
 
-@bottle.get("/izpis")
+@bottle.get("/iskanje")
 def izpis():
-    bottle.template('izpis.html')
+    iskaniNiz = bottle.request.query.get("iskaniNiz")
+    return bottle.template('iskanje.html', niz=iskaniNiz, podatki=model.Artist.poisci(iskaniNiz))
 
 bottle.run(debug=True, reloader=True)
 
