@@ -160,7 +160,7 @@ class Vloga:
         with conn:
             self.id = vloga.dodaj_vrstico(naziv=self.naziv)
 
-
+'''
 def najdi(id):
         sql = """
             SELECT idOseba,ime,priimek,datumRojstva,spol,drzava
@@ -172,12 +172,12 @@ def najdi(id):
 
 osebe=[]
 for i in range(5,10):
-    osebe.append(najdi(i))
+    osebe.append(najdi(i))'''
 
 
-skupina=Artist('neki',2005,'France','Paris')
+#skupina=Artist('neki',2005,'France','Paris')
 #skupina.dodaj_v_bazo()
-skupina.dodaj_clane(osebe)
+#skupina.dodaj_clane(osebe)
 
 
 
