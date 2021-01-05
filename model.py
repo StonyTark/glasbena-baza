@@ -32,6 +32,12 @@ class Oseba:
         with conn:
             self.id = oseba.dodaj_vrstico(ime=self.ime,priimek=self.priimek,datumRojstva=self.datumRojstva, spol=self.spol, drzava=self.drzava)
     
+    @staticmethod
+    def poisci(niz):
+        sql = "SELECT ime,priimek,datumRojstva,spol,drzava FROM Oseba WHERE ime LIKE ?;"
+        for ime,priimek,datumRojstva,spol,drzava in conn.execute(sql, ['%' + niz + '%']):
+            yield Oseba(ime,priimek,datumRojstva,spol,drzava)
+    
 
 
 class Zanr:
@@ -128,6 +134,12 @@ class Izdaja:
         assert self.id is None
         with conn:
             self.id = artist.dodaj_vrstico(naslov=self.naslov,leto_izida=self.leto_izida,tip=self.tip, celotnaDolzina=self.celotnaDolzina, idZalozbe=self.idZalozbe)
+
+    @staticmethod
+    def poisci(niz):
+        sql = "SELECT naslov,leto_izida,celotnaDolzina,tip,idZalozbe FROM Izdaja WHERE naslov LIKE ?;"
+        for naslov,leto_izida,celotnaDolzina,tip,idZalozbe in conn.execute(sql, ['%' + niz + '%']):
+            yield Izdaja(naslov,leto_izida,celotnaDolzina,tip,idZalozbe)
 
 
 class Track:

@@ -1,6 +1,8 @@
 % rebase('osnova.html')
 
 <form class="form-horizontal">
+    <!-- TODO: dinamičen izpis forme glede na izbiro radio buttona (javascript)-->
+    
     <fieldset>
     
     <!-- Form Name -->
@@ -37,13 +39,14 @@
 
 
 <table>
+  %if izbira=='1':
     <tr>
-        <th>Ime</th>
-        <th>Leto Nastanka</th>
-        <th>Drzava</th>
-        <th>Mesto</th>
+      <td>ime</td>
+      <td>leto_nastanka</td>
+      <td>drzava</td>
+      <td>mesto</td>
     </tr>
-    % for artist in podatki:
+    %for artist in podatki:
     <tr>
         <td>{{artist.ime}}</td>
         <td>{{artist.leto_nastanka}}</td>
@@ -51,5 +54,46 @@
         <td>{{artist.mesto}}</td>
     </tr>
     % end
+  % end
+
+  %if izbira=='2':
+    <tr>
+      <td>ime</td>
+      <td>priimek</td>
+      <td>datumRojstva</td>
+      <td>spol</td>
+      <td>drzava</td>
+    </tr>
+    %for oseba in podatki:
+    <tr>
+        <td>{{oseba.ime}}</td>
+        <td>{{oseba.priimek}}</td>
+        <td>{{oseba.datumRojstva}}</td>
+        <td>{{oseba.spol}}</td>
+        <td>{{oseba.drzava}}</td>
+    </tr>
+    % end
+  % end
+
+
+  %if izbira=='3':
+    <tr>
+      <td>naslov</td>
+      <td>leto_izida</td>
+      <td>celotnaDolzina</td>
+      <td>mesto</td>
+      <td>tip</td>
+      <td>idZalozbe</td>
+    </tr>
+    %for izdaja in podatki:
+    <tr>
+        <td>{{izdaja.naslov}}</td>
+        <td>{{izdaja.leto_izida}}</td>
+        <td>{{izdaja.celotnaDolzina}}</td>
+        <td>{{izdaja.tip}}</td>
+        <td>{{izdaja.idZalozbe}}</td>
+    </tr>
+    % end
+  % end
 </table>
     
