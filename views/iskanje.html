@@ -1,5 +1,14 @@
 % rebase('osnova.html')
-
+<script>
+  function myFunction() {
+        if(document.getElementById("radios-1").checked){
+          document.getElementById("searchinputAlt").style.display="block"
+        }
+        else{
+          document.getElementById("searchinputAlt").style.display="none"
+        }
+    }
+  </script>
 <form class="form-horizontal">
     <!-- TODO: dinamičen izpis forme glede na izbiro radio buttona (javascript)-->
     
@@ -12,15 +21,15 @@
     <div class="form-group">
       <div class="col-md-4"> 
         <label class="radio-inline" for="radios-0">
-          <input type="radio" name="izbira" id="radios-0" value="1" checked="checked">
+          <input type="radio" name="izbira" id="radios-0" value="1" checked="checked" onclick="myFunction()">
           Artist
         </label> 
         <label class="radio-inline" for="radios-1">
-          <input type="radio" name="izbira" id="radios-1" value="2">
+          <input type="radio" name="izbira" id="radios-1" value="2" onclick="myFunction()">
           Oseba
         </label> 
         <label class="radio-inline" for="radios-2">
-          <input type="radio" name="izbira" id="radios-2" value="3">
+          <input type="radio" name="izbira" id="radios-2" value="3" onclick="myFunction()">
           Izdaja
         </label> 
       </div>
@@ -31,14 +40,16 @@
       <label class="col-md-4 control-label" for="searchinput">Search Input</label>
       <div class="col-md-4">
         <input id="searchinput" name="iskaniNiz" type="search" placeholder="Iskano ime" class="form-control input-md" value="">
+        <input id="searchinputAlt" name="iskaniNizAlt" type="search" placeholder="Iskan priimek" class="form-control input-md" value="" style="display:none">
       </div>
+      <input type="submit" value="Submit">
     </div>
     
     </fieldset>
 </form>
 
 
-<table>
+<table class="table">
   %if izbira=='1':
     <tr>
       <td>ime</td>

@@ -36,8 +36,6 @@ class Oseba:
     def poisci(**kwargs):
         ime=kwargs['ime']
         priimek=kwargs['priimek']
-        print("sfafsaFsagvads")
-        print(ime)
         sql = "SELECT ime,priimek,datumRojstva,spol,drzava FROM Oseba WHERE ime LIKE ? AND priimek LIKE ?;"
         for ime,priimek,datumRojstva,spol,drzava in conn.execute(sql, ['%' + ime + '%','%' + priimek + '%']):
             yield Oseba(ime,priimek,datumRojstva,spol,drzava)

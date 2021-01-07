@@ -21,7 +21,8 @@ def iskanje():
     if izbira=='1':
         return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Artist.poisci(iskaniNiz))
     elif izbira=='2':
-        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Oseba.poisci(iskaniNiz))
+        priimek=bottle.request.query.get('iskaniNizAlt','')
+        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Oseba.poisci(ime=iskaniNiz,priimek=priimek))
     elif izbira=='3':
         return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Izdaja.poisci(iskaniNiz))
     
