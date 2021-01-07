@@ -11,7 +11,34 @@ def dodaj():
 
 @bottle.post("/dodaj")
 def dodaj_post():
-    #TODO
+    izbira=bottle.request.forms.getunicode("izbira")
+    if izbira=='1':
+        ime = bottle.request.forms.getunicode("vnos1")
+        priimek = bottle.request.forms.getunicode("vnos2")
+        datumRojstva = bottle.request.forms.getunicode("vnos3")
+        spol = bottle.request.forms.getunicode("vnos4")
+        drzava = bottle.request.forms.getunicode("vnos5")
+        model.Oseba(ime,priimek,datumRojstva,spol,drzava).dodaj_v_bazo()
+    
+    elif izbira=='2':
+        ime = bottle.request.forms.getunicode("vnos1")
+        leto = bottle.request.forms.getunicode("vnos2")
+        drzava = bottle.request.forms.getunicode("vnos3")
+        mesto = bottle.request.forms.getunicode("vnos4")
+        model.Artist(ime,leto,drzava,mesto).dodaj_v_bazo()
+    
+    elif izbira=='3':
+        naslov = bottle.request.forms.getunicode("vnos1")
+        leto = bottle.request.forms.getunicode("vnos2")
+        celotnaDolzina = bottle.request.forms.getunicode("vnos3")
+        tip = bottle.request.forms.getunicode("vnos4")
+        idZalozbe = bottle.request.forms.getunicode("vnos5")
+        if idZalozbe=='':
+            idZalozbe=None
+        else:
+            idZalozbe=int(idZalozbe)
+        model.Izdaja(naslov,leto,tip,celotnaDolzina,idZalozbe).dodaj_v_bazo()
+    
     bottle.redirect("/")
 
 @bottle.get("/iskanje")

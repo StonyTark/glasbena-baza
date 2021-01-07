@@ -1,0 +1,111 @@
+% rebase('osnova.html')
+
+<!--TODO - izpis form glede na izbiro v meniju-->
+<script>
+function formaOseba(){
+    document.getElementById("obrazec").style.display="block"
+
+    document.getElementById("vnos1").style.display="block"
+    document.getElementById("vnos2").style.display="block"
+    document.getElementById("vnos3").style.display="block"
+    document.getElementById("vnos4").style.display="block"
+    document.getElementById("vnos5").style.display="block"
+
+    document.getElementById("vnos1").placeholder="Ime"
+    document.getElementById("vnos2").placeholder="Priimek"
+    document.getElementById("vnos3").placeholder="Datum Rojstva (YYYY/MM/DD)"
+    document.getElementById("vnos4").placeholder="Spol"
+    document.getElementById("vnos5").placeholder="Drzava"
+
+    document.getElementById("izbira").value="1"
+}
+
+function formaArtist(){
+    document.getElementById("obrazec").style.display="block"
+
+    document.getElementById("vnos1").style.display="block"
+    document.getElementById("vnos2").style.display="block"
+    document.getElementById("vnos3").style.display="block"
+    document.getElementById("vnos4").style.display="block"
+    document.getElementById("vnos5").style.display="none"
+
+    document.getElementById("vnos1").placeholder="Ime"
+    document.getElementById("vnos2").placeholder="Leto nastanka"
+    document.getElementById("vnos3").placeholder="Drzava"
+    document.getElementById("vnos4").placeholder="Mesto"
+
+    document.getElementById("izbira").value="2"
+}
+
+function formaIzdaja(){
+    document.getElementById("obrazec").style.display="block"
+
+    document.getElementById("vnos1").style.display="block"
+    document.getElementById("vnos2").style.display="block"
+    document.getElementById("vnos3").style.display="block"
+    document.getElementById("vnos4").style.display="block"
+    document.getElementById("vnos5").style.display="block"
+
+    document.getElementById("vnos1").placeholder="Naslov"
+    document.getElementById("vnos2").placeholder="Leto izida"
+    document.getElementById("vnos3").placeholder="Celotna dolzina"
+    document.getElementById("vnos4").placeholder="Tip"
+    document.getElementById("vnos5").placeholder="ID Zalozbe"
+
+    document.getElementById("izbira").value="3"
+}
+
+</script>
+
+<div class="container">                                       
+    <div class="dropdown">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        Kaj dodajaš?
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#" onclick="formaOseba()">Dodaj osebo</a>
+        <a class="dropdown-item" href="#" onclick="formaArtist()">Dodaj artista</a>
+        <a class="dropdown-item" href="#" onclick="formaIzdaja()">Dodaj izdajo</a>
+      </div>
+    </div>
+  </div>
+
+<div class="container" id="obrazec" style="display:none">
+    <form method="POST">
+        <div class="form-group">
+          <label for="exampleFormControlInput1"></label>
+          <input type="text" class="form-control" id="vnos1" name="vnos1" placeholder="Ime"/>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleFormControlInput1"></label>
+            <input type="text" class="form-control" id="vnos2" name="vnos2" placeholder="Priimek"/>
+        </div>
+
+        <div class="form-group">
+        <label for="exampleFormControlInput1"></label>
+        <input type="text" class="form-control" id="vnos3" name="vnos3" placeholder="Datum Rojstva"/>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleFormControlInput1"></label>
+            <input type="text" class="form-control" id="vnos4" name="vnos4" placeholder="Spol"/>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleFormControlInput1"></label>
+            <input type="text" class="form-control" id="vnos5" name="vnos5" placeholder="Drzava"/>
+        </div>
+        
+    <input type="hidden" name="izbira" id="izbira" value="1"/>
+    <input type="submit" value="Submit" class="btn btn-primary"/>
+    </form>
+    
+</div>
+
+
+
+
+
+
+

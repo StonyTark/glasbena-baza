@@ -117,6 +117,8 @@ class Zalozba:
 
 class Izdaja:
 
+    #TODO potrebna modifikacija, ki zveže izdajo na avtorja - torej potreben še en parameter v initu (al neki) , metoda, ki vrne avtorja?
+
     def __init__(self, naslov, leto_izida, tip, celotnaDolzina=None ,idZalozbe=None, *, id=None):
         """
         Konstruktor izdaje.
@@ -135,7 +137,7 @@ class Izdaja:
     def dodaj_v_bazo(self):
         assert self.id is None
         with conn:
-            self.id = artist.dodaj_vrstico(naslov=self.naslov,leto_izida=self.leto_izida,tip=self.tip, celotnaDolzina=self.celotnaDolzina, idZalozbe=self.idZalozbe)
+            self.id = izdaja.dodaj_vrstico(naslov=self.naslov,leto_izida=self.leto_izida, celotnaDolzina=self.celotnaDolzina, tip=self.tip, idZalozbe=self.idZalozbe)
 
     @staticmethod
     def poisci(niz):
