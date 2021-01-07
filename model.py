@@ -33,9 +33,13 @@ class Oseba:
             self.id = oseba.dodaj_vrstico(ime=self.ime,priimek=self.priimek,datumRojstva=self.datumRojstva, spol=self.spol, drzava=self.drzava)
     
     @staticmethod
-    def poisci(niz):
-        sql = "SELECT ime,priimek,datumRojstva,spol,drzava FROM Oseba WHERE ime LIKE ?;"
-        for ime,priimek,datumRojstva,spol,drzava in conn.execute(sql, ['%' + niz + '%']):
+    def poisci(**kwargs):
+        ime=kwargs['ime']
+        priimek=kwargs['priimek']
+        print("sfafsaFsagvads")
+        print(ime)
+        sql = "SELECT ime,priimek,datumRojstva,spol,drzava FROM Oseba WHERE ime LIKE ? AND priimek LIKE ?;"
+        for ime,priimek,datumRojstva,spol,drzava in conn.execute(sql, ['%' + ime + '%','%' + priimek + '%']):
             yield Oseba(ime,priimek,datumRojstva,spol,drzava)
     
 
