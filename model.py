@@ -32,13 +32,36 @@ class Oseba:
         with conn:
             self.id = oseba.dodaj_vrstico(ime=self.ime,priimek=self.priimek,datumRojstva=self.datumRojstva, spol=self.spol, drzava=self.drzava)
     
+    def clan(self):
+        rez=[]
+        sql = "SELECT a.idArtist, a.ime FROM Artist a JOIN je_clan j ON j.idArtist=a.idArtist WHERE j.idOseba=?;"
+        poizv=conn.execute(sql,[self.id,])
+        for vrst in poizv.fetchall():
+            print(vrst)
+            rez.append(tuple(vrst))
+        
+        return rez
+
+    def relevantnaDela(self):
+        #TODO
+        return 
+
     @staticmethod
     def poisci(**kwargs):
         ime=kwargs['ime']
         priimek=kwargs['priimek']
-        sql = "SELECT ime,priimek,datumRojstva,spol,drzava FROM Oseba WHERE ime LIKE ? AND priimek LIKE ?;"
-        for ime,priimek,datumRojstva,spol,drzava in conn.execute(sql, ['%' + ime + '%','%' + priimek + '%']):
-            yield Oseba(ime,priimek,datumRojstva,spol,drzava)
+        sql = "SELECT idOseba,ime,priimek,datumRojstva,spol,drzava FROM Oseba WHERE ime LIKE ? AND priimek LIKE ?;"
+        for osID,ime,priimek,datumRojstva,spol,drzava in conn.execute(sql, ['%' + ime + '%','%' + priimek + '%']):
+            yield Oseba(ime,priimek,datumRojstva,spol,drzava,id=osID)
+    
+    @staticmethod
+    def poisciID(id):
+        sql = "SELECT ime,priimek,datumRojstva,spol,drzava FROM Oseba WHERE idOseba= ?;"
+        rez=conn.execute(sql, [id,])
+        ime,priimek,datumRojstva,spol,drzava=rez.fetchone()
+        return Oseba(ime,priimek,datumRojstva,spol,drzava,id=id)
+    
+    
     
 
 

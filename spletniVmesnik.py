@@ -52,6 +52,11 @@ def iskanje():
         return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Oseba.poisci(ime=iskaniNiz,priimek=priimek))
     elif izbira=='3':
         return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Izdaja.poisci(iskaniNiz))
+
+
+@bottle.get("/oseba/<id>")
+def oseba(id):
+    return bottle.template('oseba.html', iskaniID=id , podatki=model.Oseba.poisciID(id))
     
 
 bottle.run(debug=True, reloader=True)

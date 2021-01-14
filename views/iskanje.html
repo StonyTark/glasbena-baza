@@ -68,15 +68,21 @@
   % end
 
   %if izbira=='2':
+    <thead>
     <tr>
-      <td>ime</td>
-      <td>priimek</td>
-      <td>datumRojstva</td>
-      <td>spol</td>
-      <td>drzava</td>
+      <th>ID</th>
+      <th>ime</th>
+      <th>priimek</th>
+      <th>datumRojstva</th>
+      <th>spol</th>
+      <th>drzava</th>
     </tr>
+    </thead>
+    <tbody>
     %for oseba in podatki:
+    %referenca="/oseba/"+str(oseba.id)
     <tr>
+        <td><a href={{referenca}}>{{oseba.id}}</a></td>
         <td>{{oseba.ime}}</td>
         <td>{{oseba.priimek}}</td>
         <td>{{oseba.datumRojstva}}</td>
@@ -84,8 +90,9 @@
         <td>{{oseba.drzava}}</td>
     </tr>
     % end
+  
   % end
-
+  </tbody>
 
   %if izbira=='3':
     <tr>

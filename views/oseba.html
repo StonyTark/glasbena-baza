@@ -1,0 +1,22 @@
+% rebase('osnova.html')
+
+ID: {{podatki.id}} <br>
+Ime: {{podatki.ime}} <br>
+Priimek: {{podatki.priimek}} <br>
+Datum Rojstva: {{podatki.datumRojstva}} <br> 
+Spol: {{podatki.spol}}<br>
+Drzava: {{podatki.drzava}} <br>
+
+<br>
+Sodeluje v:
+<table class="table">
+%for a,b in podatki.clan():
+<tr>
+    <td><a href="/artist/{{a}}">{{b}} ({{a}})</a></td>
+</tr>
+
+%end
+</table>
+
+
+
