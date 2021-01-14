@@ -1,15 +1,22 @@
 % rebase('osnova.html')
 
+
+<div>
 ID: {{podatki.id}} <br>
 Ime: {{podatki.ime}} <br>
 Priimek: {{podatki.priimek}} <br>
 Datum Rojstva: {{podatki.datumRojstva}} <br> 
 Spol: {{podatki.spol}}<br>
 Drzava: {{podatki.drzava}} <br>
+</div>
 
+<div>
 <br>
-Sodeluje v:
+
 <table class="table">
+    <thead>
+        <th>Sodeluje v</th>
+    </thead>
 %for a,b in podatki.clan():
 <tr>
     <td><a href="/artist/{{a}}">{{b}} ({{a}})</a></td>
@@ -17,6 +24,9 @@ Sodeluje v:
 
 %end
 </table>
+
+</div>
+
 
 
 

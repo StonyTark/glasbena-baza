@@ -51,14 +51,19 @@
 
 <table class="table">
   %if izbira=='1':
+    <thead>
     <tr>
-      <td>ime</td>
-      <td>leto_nastanka</td>
-      <td>drzava</td>
-      <td>mesto</td>
+      <th>ime</th>
+      <th>leto_nastanka</th>
+      <th>drzava</th>
+      <th>mesto</th>
     </tr>
+  </thead>
+  <tbody>
     %for artist in podatki:
-    <tr>
+    %referenca="/artist/"+str(artist.id)
+    <tr>¸
+        <td><a href={{referenca}}>{{artist.id}}</a></td>
         <td>{{artist.ime}}</td>
         <td>{{artist.leto_nastanka}}</td>
         <td>{{artist.drzava}}</td>
@@ -66,6 +71,7 @@
     </tr>
     % end
   % end
+  </tbody>
 
   %if izbira=='2':
     <thead>
@@ -95,16 +101,21 @@
   </tbody>
 
   %if izbira=='3':
+    <thead>
     <tr>
-      <td>naslov</td>
-      <td>leto_izida</td>
-      <td>celotnaDolzina</td>
-      <td>mesto</td>
-      <td>tip</td>
-      <td>idZalozbe</td>
+      <th>naslov</th>
+      <th>leto_izida</th>
+      <th>celotnaDolzina</th>
+      <th>mesto</th>
+      <th>tip</th>
+      <th>idZalozbe</th>
     </tr>
+  </thead>
+  <tbody>
     %for izdaja in podatki:
+    %referenca="/izdaja/"+str(izdaja.id)
     <tr>
+        <td><a href={{referenca}}>{{izdaja.id}}</a></td>
         <td>{{izdaja.naslov}}</td>
         <td>{{izdaja.leto_izida}}</td>
         <td>{{izdaja.celotnaDolzina}}</td>
@@ -113,5 +124,6 @@
     </tr>
     % end
   % end
+</tbody>
 </table>
     

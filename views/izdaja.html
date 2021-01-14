@@ -1,0 +1,48 @@
+% rebase('osnova.html')
+
+<div>
+ID: {{podatki.id}} <br>
+Avtor: 
+%avtorji=podatki.vrni_Avtorje()
+%dolz=len(avtorji)
+%for id,ime in avtorji:
+     <a href="/artist/{{id}}">{{ime}}</a>
+     %if dolz!=1:
+     ,
+     %dolz-=1
+     %end
+%end
+
+<br>
+
+Naslov: {{podatki.naslov}} <br>
+Leto_izida: {{podatki.leto_izida}} <br>
+CelotnaDolzina: {{podatki.celotnaDolzina}} <br> 
+Tip: {{podatki.tip}}<br>
+IdZalozbe: {{podatki.idZalozbe}} <br>
+</div>
+
+<div>
+    <br>
+    <table class="table">
+    <thead>
+        <tr>
+        <th>Tracklist</th>
+        <th>Naslov</th>
+        <th>Dolzina</th>
+        </tr>
+    </thead>
+    %i=1
+    %for naslov,dolzina in podatki.vrni_Tracklist():
+    <tr>
+        <td>{{i}}</td>
+        <td>{{naslov}}</td>
+        <td>{{dolzina}}</td>>
+    </tr>
+    %i+=1
+    %end
+    </table>
+    
+</div>
+
+

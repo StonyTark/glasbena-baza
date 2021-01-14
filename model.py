@@ -111,11 +111,50 @@ class Artist:
             for clan in clani:
                 je_clan.dodaj_vrstico(idOseba=clan.id,idArtist=self.id)
     
+    def dodaj_izdaje(self,idIzdaje):
+        '''
+        Trenutnega artista označi kot avtorja podane izdaje
+        '''
+        je_avtor.dodaj_vrstico(idIzdaje=idIzdaje,idArtist=self.id)
+    
+    def vrni_clane(self):
+        rez=[]
+        sql = '''SELECT o.idOseba, o.ime, o.priimek FROM Oseba o 
+                JOIN Je_Clan j ON j.idOseba=o.idOseba
+                WHERE j.idArtist=?;'''
+        poizv=conn.execute(sql,[self.id,])
+        for vrst in poizv.fetchall():
+            print(vrst)
+            rez.append(tuple(vrst))
+        print(rez)
+        return rez
+    
+    def vrni_izdaje(self):
+        rez=[]
+        sql = '''
+            SELECT i.idIzdaja,i.naslov,i.leto_izida FROM Izdaja i
+            JOIN Je_Avtor j ON i.idIzdaja=j.idIzdaja
+            WHERE j.idArtist=?
+            ORDER BY i.leto_izida;
+        '''
+        poizv=conn.execute(sql,[self.id,])
+        for vrst in poizv.fetchall():
+            print(vrst)
+            rez.append(tuple(vrst))
+        return rez
+    
     @staticmethod
     def poisci(niz):
-        sql = "SELECT ime,leto_nastanka,drzava,mesto FROM Artist WHERE ime LIKE ?;"
-        for ime,leto_nastanka,drzava,mesto in conn.execute(sql, ['%' + niz + '%']):
-            yield Artist(ime,leto_nastanka,drzava,mesto)
+        sql = "SELECT idArtist,ime,leto_nastanka,drzava,mesto FROM Artist WHERE ime LIKE ?;"
+        for arID,ime,leto_nastanka,drzava,mesto in conn.execute(sql, ['%' + niz + '%']):
+            yield Artist(ime,leto_nastanka,drzava,mesto,id=arID)
+    
+    @staticmethod
+    def poisciID(id):
+        sql = "SELECT ime,leto_nastanka,drzava,mesto FROM Artist WHERE idArtist= ?;"
+        rez=conn.execute(sql, [id,])
+        ime,leto_nastanka,drzava,mesto=rez.fetchone()
+        return Artist(ime,leto_nastanka,drzava,mesto,id=id)
 
 
 
@@ -162,11 +201,44 @@ class Izdaja:
         with conn:
             self.id = izdaja.dodaj_vrstico(naslov=self.naslov,leto_izida=self.leto_izida, celotnaDolzina=self.celotnaDolzina, tip=self.tip, idZalozbe=self.idZalozbe)
 
+    def vrni_Tracklist(self):
+        rez=[]
+        sql = '''
+            SELECT naslov,dolzina FROM Track
+            WHERE idIzdaja=?
+        '''
+        poizv=conn.execute(sql,[self.id,])
+        for vrst in poizv.fetchall():
+            print(vrst)
+            rez.append(tuple(vrst))
+        print(rez)
+        return rez
+    
+    def vrni_Avtorje(self):
+        rez=[]
+        sql = '''
+            SELECT a.idArtist,a.ime FROM Artist a
+            JOIN Je_Avtor j ON j.idArtist=a.idArtist
+            WHERE j.idIzdaja=?;
+        '''
+        poizv=conn.execute(sql,[self.id,])
+        for vrst in poizv.fetchall():
+            print(vrst)
+            rez.append(tuple(vrst))
+        return rez
+
     @staticmethod
     def poisci(niz):
-        sql = "SELECT naslov,leto_izida,celotnaDolzina,tip,idZalozbe FROM Izdaja WHERE naslov LIKE ?;"
-        for naslov,leto_izida,celotnaDolzina,tip,idZalozbe in conn.execute(sql, ['%' + niz + '%']):
-            yield Izdaja(naslov,leto_izida,celotnaDolzina,tip,idZalozbe)
+        sql = "SELECT idIzdaja,naslov,leto_izida,celotnaDolzina,tip,idZalozbe FROM Izdaja WHERE naslov LIKE ?;"
+        for izID,naslov,leto_izida,celotnaDolzina,tip,idZalozbe in conn.execute(sql, ['%' + niz + '%']):
+            yield Izdaja(naslov,leto_izida,celotnaDolzina,tip,idZalozbe,id=izID)
+    
+    @staticmethod
+    def poisciID(id):
+        sql = "SELECT naslov,leto_izida,celotnaDolzina,tip,idZalozbe FROM Izdaja WHERE idIzdaja= ?;"
+        rez=conn.execute(sql, [id,])
+        naslov,leto_izida,celotnaDolzina,tip,idZalozbe=rez.fetchone()
+        return Izdaja(naslov,leto_izida,celotnaDolzina,tip,idZalozbe,id=id)
 
 
 class Track:
