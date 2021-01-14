@@ -239,6 +239,14 @@ class Izdaja:
         rez=conn.execute(sql, [id,])
         naslov,leto_izida,celotnaDolzina,tip,idZalozbe=rez.fetchone()
         return Izdaja(naslov,leto_izida,celotnaDolzina,tip,idZalozbe,id=id)
+    
+    '''
+    TODO
+    Ob dodaji nove izdaje:
+    -dodaj artista kot avtorja
+    -trenutne clane zapisi kot avtorje v Je_sodeloval
+    -v pregledu izdaje izpisi tudi je_sodeloval
+    '''
 
 
 class Track:
