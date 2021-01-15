@@ -111,7 +111,7 @@ class Artist:
             for clan in clani:
                 je_clan.dodaj_vrstico(idOseba=clan.id,idArtist=self.id)
     
-    def dodaj_izdaje(self,idIzdaje):
+    def dodaj_izdajo(self,idIzdaje):
         '''
         Trenutnega artista označi kot avtorja podane izdaje
         '''
