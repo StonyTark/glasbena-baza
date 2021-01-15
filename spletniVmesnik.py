@@ -11,8 +11,7 @@ def dodaj():
 
 @bottle.post("/dodaj")
 def dodaj_post():
-    koliko = bottle.request.forms.getunicode("koliko")
-    print(koliko)
+    koliko = int(bottle.request.forms.getunicode("koliko"))
     izbira=bottle.request.forms.getunicode("izbira")
     if izbira=='1':
         ime = bottle.request.forms.getunicode("vnos1")
@@ -27,7 +26,14 @@ def dodaj_post():
         leto = bottle.request.forms.getunicode("vnos2")
         drzava = bottle.request.forms.getunicode("vnos3")
         mesto = bottle.request.forms.getunicode("vnos4")
-        model.Artist(ime,leto,drzava,mesto).dodaj_v_bazo()
+        clani=[]
+        for i in range(5,koliko+1):
+            temp=bottle.request.forms.getunicode("vnos{}".format(i))
+            clani.append(int(temp))
+        art=model.Artist(ime,leto,drzava,mesto)
+        art.dodaj_v_bazo()
+        art.dodaj_clane(clani)
+
     
     elif izbira=='3':
         naslov = bottle.request.forms.getunicode("vnos1")

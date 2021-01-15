@@ -1,9 +1,8 @@
 % rebase('osnova.html')
 
-<!--TODO - izpis form glede na izbiro v meniju-->
 <script>
 function dodajOkno() {
-    if("#izbira"==2){
+    if($("#izbira").val()=="2"){
         label="Član"
     }
     else{
@@ -98,9 +97,10 @@ function formaArtist(){
         Mesto<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder=""/>
     </div>
     
-    <input type="button" id="dodajGumb" value='Dodaj člana'/>
+    <input type="button" id="dodajGumb" value='Dodaj člana' class="btn btn-secondary btn-sm"/>
 
     </fieldset>
+    <br/>
     <input type="submit" value="Submit" class="btn btn-primary"/>`;
     $("#obrazec").empty();
     $("#obrazec").append(forma)

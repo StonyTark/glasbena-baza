@@ -104,12 +104,12 @@ class Artist:
     
     def dodaj_clane(self,clani):
         '''
-        clani naj bo tabela oseb
+        clani naj bo tabela ID-jev željenih članov
         podane osebe nato zapiše v tabelo je_clan z trenutni artist idjem
         '''
         with conn:
-            for clan in clani:
-                je_clan.dodaj_vrstico(idOseba=clan.id,idArtist=self.id)
+            for clanID in clani:
+                je_clan.dodaj_vrstico(idOseba=clanID,idArtist=self.id)
     
     def dodaj_izdajo(self,idIzdaje):
         '''
