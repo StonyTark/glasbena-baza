@@ -45,4 +45,20 @@ IdZalozbe: {{podatki.idZalozbe}} <br>
     
 </div>
 
-
+<div>
+    <table class="table">
+        <thead>
+            Ustvarjalci, ki so sodelovali:
+        </thead>
+        <tr>
+            <th>Ime</th>
+            <th>Priimek</th>
+        </tr>
+        % for ime, priimek in podatki.vrni_Sodelujoce():
+        <tr>
+            <td>{{ime}}</td>
+            <td>{{priimek}}</td>
+        </tr>
+        % end
+    </table>
+</div>

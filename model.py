@@ -226,6 +226,16 @@ class Izdaja:
             print(vrst)
             rez.append(tuple(vrst))
         return rez
+    
+    def vrni_Sodelujoce(self):
+        rez = []
+        sql = """
+            SELECT ime, priimek FROM OSEBA o JOIN Je_Sodeloval j ON (o.idOseba = j.idOseba) WHERE j.idIzdaja = ?
+        """
+        poziv = conn.execute(sql, [self.id,])
+        for vrst in poziv.fetchall():
+            rez.append(tuple(vrst))
+        return rez
 
     @staticmethod
     def poisci(niz):
