@@ -2,6 +2,36 @@
 
 <!--TODO - izpis form glede na izbiro v meniju-->
 <script>
+function dodajOkno() {
+    if("#izbira"==2){
+        label="Član"
+    }
+    else{
+        label="Avtor"
+    }
+    vred=$("#obrazec div").length + 1; //Štetje že obstoječih polj
+    document.getElementById("koliko").value=String(vred); //Da v spletnem vmesniku vemo koliko polj je potrebno obdelati
+    console.log(vred)
+    newName="vnos".concat(vred);
+    vnosnoOkno=`<div class="form-group">
+        <label for="exampleFormControlInput1"></label>
+        ${label}<input type="text" class="form-control" id=${newName} name=${newName} placeholder=""/>
+    </div>`
+		$('#formContent').append(vnosnoOkno)
+}
+
+
+
+
+$(document).on('click', '#dodajGumb', function () {
+    dodajOkno()
+});
+
+$(document).on('submit', function () {
+    $("#koliko").val=String($("#obrazec div").length + 1);
+});
+
+
 function formaOseba(){
   $("#obrazec").empty();
 
@@ -11,7 +41,6 @@ function formaOseba(){
   //TODO - BERI HTML IZ DATOTEKE
   
   var forma= `
-  <form method="POST">
     <div class="form-group">
       <label for="exampleFormControlInput1"></label>
         Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
@@ -26,7 +55,7 @@ function formaOseba(){
     <label for="exampleFormControlInput1"></label>
         Datum Rojstva<input type="text" class="form-control" id="vnos3" name="vnos3" placeholder=""/>
     </div>
-
+    
     <div class="form-group">
         <label for="exampleFormControlInput1"></label>
         Spol<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder=""/>
@@ -36,18 +65,19 @@ function formaOseba(){
         <label for="exampleFormControlInput1"></label>
         Drzava<input type="text" class="form-control" id="vnos5" name="vnos5" placeholder=""/>
     </div>
-    
-<input type="hidden" name="izbira" id="izbira" value="1"/>
-<input type="submit" value="Submit" class="btn btn-primary"/>
-</form> `;
-$("#obrazec").append(forma)
+    <input type="submit" value="Submit" class="btn btn-primary"/>`;
+
+    $("#obrazec").append(forma)
 
 
     document.getElementById("izbira").value="1"
 }
 
 function formaArtist(){
-    forma=`<form method="POST">
+    
+    $("#koliko").val='5';
+    forma=`
+    <fieldset id="formContent">
     <div class="form-group">
       <label for="exampleFormControlInput1"></label>
         Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
@@ -68,17 +98,18 @@ function formaArtist(){
         Mesto<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder=""/>
     </div>
     
-<input type="hidden" name="izbira" id="izbira" value="1"/>
-<input type="submit" value="Submit" class="btn btn-primary"/>
-</form>`;
+    <input type="button" id="dodajGumb" value='Dodaj člana'/>
+
+    </fieldset>
+    <input type="submit" value="Submit" class="btn btn-primary"/>`;
     $("#obrazec").empty();
     $("#obrazec").append(forma)
     document.getElementById("izbira").value="2"
 }
 
 function formaIzdaja(){
+    $("#koliko").val='6';
     forma=`
-    <form method="POST">
     <div class="form-group">
         <label for="exampleFormControlInput1"></label>
         Naslov<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
@@ -103,28 +134,17 @@ function formaIzdaja(){
         <label for="exampleFormControlInput1"></label>
         ID Zalozbe<input type="text" class="form-control" id="vnos5" name="vnos5" placeholder=""/>
 </div>
-
-<input type="hidden" name="izbira" id="izbira" value=""/>
 <input type="submit" value="Submit" class="btn btn-primary"/>
-</form>
-    `
+    `;
     $("#obrazec").empty();
     $("#obrazec").append(forma)
 
     document.getElementById("izbira").value="3"
 }
 
-/*
-function create(param) {
-    newName="Fname"+param;
-		$('#screens').append('<input type="text" name="'+newName+'">')
-    document.getElementById("createTextboxes").value = "newButtonValue";
-}
 
-$('#createTextboxes').click(function () {
-    'use strict';
-    create(document.getElementById("createTextboxes").value);
-});*/
+
+
 
 </script>
 
@@ -141,43 +161,17 @@ $('#createTextboxes').click(function () {
     </div>
   </div>
 
-<div class="container" id="obrazec">
-fsafgvagaga
+<div class="container">
+<form method="POST">
+    <input type="hidden" name="izbira" id="izbira"/>
+    <input type="hidden" name="koliko" id="koliko"/>
+    <div class="container" id="obrazec">
+
+    </div>
+    
+</form>
 </div>
 
-<!--
-<div class="container" id="obrazec" style="display:none">
-    <form method="POST">
-        <div class="form-group">
-          <label for="exampleFormControlInput1"></label>
-          <input type="text" class="form-control" id="vnos1" name="vnos1" placeholder="Ime"/>
-        </div>
-
-        <div class="form-group">
-            <label for="exampleFormControlInput1"></label>
-            <input type="text" class="form-control" id="vnos2" name="vnos2" placeholder="Priimek"/>
-        </div>
-
-        <div class="form-group">
-        <label for="exampleFormControlInput1"></label>
-        <input type="text" class="form-control" id="vnos3" name="vnos3" placeholder="Datum Rojstva"/>
-        </div>
-
-        <div class="form-group">
-            <label for="exampleFormControlInput1"></label>
-            <input type="text" class="form-control" id="vnos4" name="vnos4" placeholder="Spol"/>
-        </div>
-
-        <div class="form-group">
-            <label for="exampleFormControlInput1"></label>
-            <input type="text" class="form-control" id="vnos5" name="vnos5" placeholder="Drzava"/>
-        </div>
-        
-    <input type="hidden" name="izbira" id="izbira" value="1"/>
-    <input type="submit" value="Submit" class="btn btn-primary"/>
-    </form>
-    
-</div>-->
 
 
 

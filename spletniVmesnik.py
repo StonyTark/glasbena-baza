@@ -11,6 +11,8 @@ def dodaj():
 
 @bottle.post("/dodaj")
 def dodaj_post():
+    koliko = bottle.request.forms.getunicode("koliko")
+    print(koliko)
     izbira=bottle.request.forms.getunicode("izbira")
     if izbira=='1':
         ime = bottle.request.forms.getunicode("vnos1")
