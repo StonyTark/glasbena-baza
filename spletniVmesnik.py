@@ -53,7 +53,7 @@ def dodaj_post():
             temp=bottle.request.forms.getunicode("vnos{}".format(i))
             avtorji.append(int(temp))
 
-        izd=model.Izdaja(naslov,leto,celotnaDolzina,tip,idZalozbe)
+        izd=model.Izdaja(naslov,leto,tip,celotnaDolzina,idZalozbe)
         izd.dodaj_v_bazo()
         izd.dodaj_avtorje(avtorji)
     
