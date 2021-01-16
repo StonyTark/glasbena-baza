@@ -22,24 +22,27 @@ def dodaj_post():
         model.Oseba(ime,priimek,datumRojstva,spol,drzava).dodaj_v_bazo()
     
     elif izbira=='2':
-        koliko = int(bottle.request.forms.getunicode("koliko"))
+        
         ime = bottle.request.forms.getunicode("vnos1")
         leto = bottle.request.forms.getunicode("vnos2")
         drzava = bottle.request.forms.getunicode("vnos3")
         mesto = bottle.request.forms.getunicode("vnos4")
 
-        clani=[]
-        for i in range(5,koliko+1):
-            temp=bottle.request.forms.getunicode("vnos{}".format(i))
-            clani.append(int(temp))
-        
         art=model.Artist(ime,leto,drzava,mesto)
         art.dodaj_v_bazo()
-        art.dodaj_clane(clani)
 
+        koliko=bottle.request.forms.getunicode("koliko")
+        if koliko != '':
+            koliko = int(koliko)
+            clani=[]
+            for i in range(5,koliko+1):
+                temp=bottle.request.forms.getunicode("vnos{}".format(i))
+                clani.append(int(temp))
+            art.dodaj_clane(clani)
+            
     
     elif izbira=='3':
-        koliko = int(bottle.request.forms.getunicode("koliko"))
+        
         naslov = bottle.request.forms.getunicode("vnos1")
         leto = bottle.request.forms.getunicode("vnos2")
         celotnaDolzina = bottle.request.forms.getunicode("vnos3")
@@ -50,14 +53,18 @@ def dodaj_post():
         else:
             idZalozbe=int(idZalozbe)
 
-        avtorji=[]
-        for i in range(6,koliko+1):
-            temp=bottle.request.forms.getunicode("vnos{}".format(i))
-            avtorji.append(int(temp))
-
         izd=model.Izdaja(naslov,leto,tip,celotnaDolzina,idZalozbe)
         izd.dodaj_v_bazo()
-        izd.dodaj_avtorje(avtorji)
+
+        koliko = bottle.request.forms.getunicode("koliko")
+        avtorji=[]
+        if koliko!='':
+            koliko=int(koliko)
+            for i in range(6,koliko+1):
+                temp=bottle.request.forms.getunicode("vnos{}".format(i))
+                avtorji.append(int(temp))
+            izd.dodaj_avtorje(avtorji)   
+        
     
     bottle.redirect("/")
 
@@ -86,7 +93,8 @@ def artist(id):
 @bottle.post("/artist/<id>")
 def artist_post(id):
     id_oseba = bottle.request.forms.getunicode("id")
-    model.Artist.poisciID(id).dodaj_clane([id_oseba,])
+    model.Artist.poisciID(id).dodaj_clane([id_oseba,]) #treba dodelat funkcijo, trenutno crashne, če dodaš osebo, ki je že član
+    return bottle.template('artist.html', iskaniID=id , podatki=model.Artist.poisciID(id)) 
 
 @bottle.get("/izdaja/<id>")
 def artist(id):
