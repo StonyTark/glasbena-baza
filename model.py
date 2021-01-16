@@ -34,7 +34,7 @@ class Oseba:
     
     def clan(self):
         rez=[]
-        sql = "SELECT a.idArtist, a.ime FROM Artist a JOIN je_clan j ON j.idArtist=a.idArtist WHERE j.idOseba=?;"
+        sql = "SELECT a.idArtist, a.ime FROM Artist a JOIN je_clan j ON j.idArtist=a.idArtist WHERE j.idOseba=? ORDER BY a.ime;"
         poizv=conn.execute(sql,[self.id,])
         for vrst in poizv.fetchall():
             print(vrst)
@@ -63,12 +63,11 @@ class Oseba:
     
     @staticmethod
     def vrni_spisek_oseb():
-        sql = "SELECT idOseba,ime,priimek,datumRojstva FROM Oseba;"
+        sql = "SELECT idOseba,ime,priimek,datumRojstva FROM Oseba ORDER BY priimek;"
         poizv=conn.execute(sql)
         rez=[]
         for vrst in poizv.fetchall():
             rez.append(tuple(vrst))
-        print(rez)
         return rez
     
     @staticmethod
@@ -137,9 +136,7 @@ class Artist:
                 WHERE j.idArtist=?;'''
         poizv=conn.execute(sql,[self.id,])
         for vrst in poizv.fetchall():
-            print(vrst)
             rez.append(tuple(vrst))
-        print(rez)
         return rez
     
     def vrni_izdaje(self):
@@ -152,11 +149,20 @@ class Artist:
         '''
         poizv=conn.execute(sql,[self.id,])
         for vrst in poizv.fetchall():
-            print(vrst)
             rez.append(tuple(vrst))
         return rez
     
-    
+    def vrni_neClane(self):
+        rez=[]
+        sql = '''SELECT DISTINCT o.idOseba, o.ime, o.priimek,o.datumRojstva FROM Oseba o 
+                JOIN Je_Clan j ON j.idOseba=o.idOseba
+                WHERE j.idArtist<>?;'''
+        poizv=conn.execute(sql,[self.id,])
+        for vrst in poizv.fetchall():
+            rez.append(tuple(vrst))
+        print(rez)
+        return rez
+
     @staticmethod
     def poisci(niz):
         sql = "SELECT idArtist,ime,leto_nastanka,drzava,mesto FROM Artist WHERE ime LIKE ?;"
@@ -172,13 +178,11 @@ class Artist:
     
     @staticmethod
     def vrni_spisek_artistov():
-        sql = "SELECT idArtist,ime,drzava FROM Artist;"
+        sql = "SELECT idArtist,ime,drzava FROM Artist ORDER BY ime;"
         poizv=conn.execute(sql)
         rez=[]
         for vrst in poizv.fetchall():
             rez.append(tuple(vrst))
-        print("ARSRASTSATASTAST")
-        print(rez)
         return rez
 
     @staticmethod
@@ -263,6 +267,7 @@ class Izdaja:
             JOIN Je_Sodeloval j ON (o.idOseba = j.idOseba) 
             JOIN Vloga v ON v.idVloga=j.idVloga
             WHERE j.idIzdaja = ?
+            ORDER BY naziv,priimek
         """
         poziv = conn.execute(sql, [self.id,])
         for vrst in poziv.fetchall():

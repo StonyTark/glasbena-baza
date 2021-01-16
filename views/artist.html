@@ -15,7 +15,11 @@
                     <label>Dodaj člana:</label>
                 </div>
                 <div class="col-5">
-                    <input type="text" class="form-control" id="id" name="id" placeholder="Id"/>
+                    <select type="text" class="form-control" id="id" name="id" placeholder="Id">
+                        %for id,ime,priimek,datum in podatki.vrni_neClane():
+                        <option value={{id}}>{{priimek}} {{ime}} - {{datum}} - (ID:{{id}})</option>
+                        %end
+                    </select>
                 </div>
                 <!--input type="text" id="ime" name="ime" placeholder="Ime"/-->
                 <!--input type="text" id="priimek" name="priimek" placeholder="Priimek"/-->

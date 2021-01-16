@@ -14,7 +14,7 @@ function dodajOkno() {
         <label for="exampleFormControlInput1"></label>
         ${label}<select type="text" class="form-control" id=${newName} name=${newName} placeholder=""/>
         %for id,ime,priimek,datum in osebe.vrni_spisek_oseb():
-        <option value="{{id}}">{{id}}: {{ime}} {{priimek}} ({{datum}})</option>
+        <option value="{{id}}">{{priimek}} {{ime}} - {{datum}} - (ID:{{id}})</option>
         %end
     </div>
     `
@@ -27,7 +27,7 @@ function dodajOkno() {
         <label for="exampleFormControlInput1"></label>
         ${label}<select type="text" class="form-control" id=${newName} name=${newName} placeholder=""/>
         %for id,ime,drzava in artisti.vrni_spisek_artistov():
-        <option value="{{id}}">{{id}}: {{ime}} ({{drzava}})</option>
+        <option value="{{id}}">{{ime}}, {{drzava}} (ID:{{id}})</option>
         %end
     </div>
     `
