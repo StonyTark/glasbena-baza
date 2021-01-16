@@ -11,7 +11,7 @@ def dodaj():
 
 @bottle.post("/dodaj")
 def dodaj_post():
-    koliko = int(bottle.request.forms.getunicode("koliko"))
+    
     izbira=bottle.request.forms.getunicode("izbira")
     if izbira=='1':
         ime = bottle.request.forms.getunicode("vnos1")
@@ -22,6 +22,7 @@ def dodaj_post():
         model.Oseba(ime,priimek,datumRojstva,spol,drzava).dodaj_v_bazo()
     
     elif izbira=='2':
+        koliko = int(bottle.request.forms.getunicode("koliko"))
         ime = bottle.request.forms.getunicode("vnos1")
         leto = bottle.request.forms.getunicode("vnos2")
         drzava = bottle.request.forms.getunicode("vnos3")
@@ -38,6 +39,7 @@ def dodaj_post():
 
     
     elif izbira=='3':
+        koliko = int(bottle.request.forms.getunicode("koliko"))
         naslov = bottle.request.forms.getunicode("vnos1")
         leto = bottle.request.forms.getunicode("vnos2")
         celotnaDolzina = bottle.request.forms.getunicode("vnos3")
