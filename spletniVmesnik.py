@@ -19,7 +19,10 @@ def dodaj_post():
         datumRojstva = bottle.request.forms.getunicode("vnos3")
         spol = bottle.request.forms.getunicode("vnos4")
         drzava = bottle.request.forms.getunicode("vnos5")
-        model.Oseba(ime,priimek,datumRojstva,spol,drzava).dodaj_v_bazo()
+        oseba = model.Oseba(ime,priimek,datumRojstva,spol,drzava)
+        oseba.dodaj_v_bazo()
+
+        return bottle.template("oseba.html", iskanId=oseba.id, podatki=oseba)
     
     elif izbira=='2':
         koliko = int(bottle.request.forms.getunicode("koliko"))
@@ -36,6 +39,8 @@ def dodaj_post():
         art=model.Artist(ime,leto,drzava,mesto)
         art.dodaj_v_bazo()
         art.dodaj_clane(clani)
+
+        return bottle.template("artist.html", iskanId=art.id, podatki=art)
 
     
     elif izbira=='3':
@@ -58,8 +63,9 @@ def dodaj_post():
         izd=model.Izdaja(naslov,leto,tip,celotnaDolzina,idZalozbe)
         izd.dodaj_v_bazo()
         izd.dodaj_avtorje(avtorji)
+
+        return bottle.template("izdaja.html", iskaniID=izd.id , podatki=izd)
     
-    bottle.redirect("/")
 
 @bottle.get("/iskanje")
 def iskanje():
@@ -87,9 +93,10 @@ def artist(id):
 def artist_post(id):
     id_oseba = bottle.request.forms.getunicode("id")
     model.Artist.poisciID(id).dodaj_clane([id_oseba,])
+    return bottle.template("artist.html", iskanID=id, podatki=model.Artist.poisciID(id))
 
 @bottle.get("/izdaja/<id>")
-def artist(id):
+def izdaja(id):
     return bottle.template('izdaja.html', iskaniID=id , podatki=model.Izdaja.poisciID(id))
     
 
