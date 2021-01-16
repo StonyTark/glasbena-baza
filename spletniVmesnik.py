@@ -7,7 +7,7 @@ def zacetna_stran():
 
 @bottle.get("/dodaj")
 def dodaj():
-    return bottle.template('dodaj.html')
+    return bottle.template('dodaj.html',osebe=model.Oseba.dummy(),artisti=model.Artist.dummy()) #dummy objekt da lahko kličemo metode v html strani brez importa
 
 @bottle.post("/dodaj")
 def dodaj_post():
