@@ -25,22 +25,20 @@ IdZalozbe: {{podatki.idZalozbe}} <br>
 <div>
     <br>
     <table class="table">
-    <thead>
-        <tr>
+    <tr>
         <th>Tracklist</th>
         <th>Naslov</th>
         <th>Dolzina</th>
         </tr>
-    </thead>
-    %i=1
-    %for naslov,dolzina in podatki.vrni_Tracklist():
+    % i=1
+    % for naslov,dolzina in podatki.vrni_Tracklist():
     <tr>
         <td>{{i}}</td>
         <td>{{naslov}}</td>
         <td>{{dolzina}}</td>>
     </tr>
-    %i+=1
-    %end
+    % i+=1
+    % end
     </table>
     
 </div>
@@ -49,11 +47,11 @@ IdZalozbe: {{podatki.idZalozbe}} <br>
     <table class="table">
         <thead>
             Ustvarjalci, ki so sodelovali:
+        </thead>
         <tr>
             <th>Ime</th>
             <th>Vloga</th>
         </tr>
-        </thead>
         % for id, ime, priimek, vloga in podatki.vrni_Sodelujoce():
         <tr>
             <td><a href="/oseba/{{id}}">{{ime}} {{priimek}}</a></td>
