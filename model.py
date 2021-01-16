@@ -239,6 +239,28 @@ class Izdaja:
         for vrst in poziv.fetchall():
             rez.append(tuple(vrst))
         return rez
+    
+    def dodaj_avtorje(self,avtorji):
+        '''
+        avtorji naj bo tabela ID-jev željenih članov
+        podane osebe nato zapiše v tabelo je_clan z trenutni artist idjem
+        '''
+        with conn:
+            for avtorID in avtorji:
+                je_avtor.dodaj_vrstico(idArtist=avtorID,idIzdaja=self.id)
+
+                "Vzame trenutne člane (osebe) in jih zapiše v je_sodeloval kot avtorje"
+                temp=Artist.poisciID(avtorID).vrni_clane()
+                print("DODAJ AVTORJE FUNKCIJA")
+                print(temp)
+                for clan,_,_ in temp:
+                    print(clan)
+                    je_sodeloval.dodaj_vrstico(idOseba=clan, idIzdaja=self.id, idVloga=1) #VLOGA ZA AVTORJA NAJ BO 1
+            
+                
+        
+        
+
 
     @staticmethod
     def poisci(niz):

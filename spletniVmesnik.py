@@ -26,10 +26,12 @@ def dodaj_post():
         leto = bottle.request.forms.getunicode("vnos2")
         drzava = bottle.request.forms.getunicode("vnos3")
         mesto = bottle.request.forms.getunicode("vnos4")
+
         clani=[]
         for i in range(5,koliko+1):
             temp=bottle.request.forms.getunicode("vnos{}".format(i))
             clani.append(int(temp))
+        
         art=model.Artist(ime,leto,drzava,mesto)
         art.dodaj_v_bazo()
         art.dodaj_clane(clani)
@@ -45,7 +47,15 @@ def dodaj_post():
             idZalozbe=None
         else:
             idZalozbe=int(idZalozbe)
-        model.Izdaja(naslov,leto,tip,celotnaDolzina,idZalozbe).dodaj_v_bazo()
+
+        avtorji=[]
+        for i in range(6,koliko+1):
+            temp=bottle.request.forms.getunicode("vnos{}".format(i))
+            avtorji.append(int(temp))
+
+        izd=model.Izdaja(naslov,leto,celotnaDolzina,tip,idZalozbe)
+        izd.dodaj_v_bazo()
+        izd.dodaj_avtorje(avtorji)
     
     bottle.redirect("/")
 
