@@ -47,10 +47,10 @@
     <thead>
     <tr>
       <th>ID</th>
-      <th>ime</th>
-      <th>leto_nastanka</th>
-      <th>drzava</th>
-      <th>mesto</th>
+      <th>Ime</th>
+      <th>Leto nastanka</th>
+      <th>Drzava</th>
+      <th>Mesto</th>
     </tr>
   </thead>
   <tbody>
@@ -71,11 +71,11 @@
     <thead>
     <tr>
       <th>ID</th>
-      <th>ime</th>
-      <th>priimek</th>
-      <th>datumRojstva</th>
-      <th>spol</th>
-      <th>drzava</th>
+      <th>Ime</th>
+      <th>Priimek</th>
+      <th>DatumRojstva</th>
+      <th>Spol</th>
+      <th>Drzava</th>
     </tr>
     </thead>
     <tbody>
@@ -98,11 +98,12 @@
     <thead>
     <tr>
       <th>ID</th>
-      <th>naslov</th>
-      <th>leto_izida</th>
-      <th>tip</th>
-      <th>celotnaDolzina</th>
-      <th>idZalozbe</th>
+      <th>Naslov</th>
+      <th>Leto izida</th>
+      <th>Avtorji</th>
+      <th>Tip</th>
+      <th>CelotnaDolzina</th>
+      <th>ID Zalozbe</th>
     </tr>
   </thead>
   <tbody>
@@ -112,6 +113,17 @@
         <td><a href={{referenca}}>{{izdaja.id}}</a></td>
         <td>{{izdaja.naslov}}</td>
         <td>{{izdaja.leto_izida}}</td>
+        <td>
+          %avtorji=izdaja.vrni_Avtorje()
+          %dolz=len(avtorji)
+          %for id,ime in avtorji:
+              <a href="/artist/{{id}}">{{ime}}</a>
+              %if dolz!=1:
+              ,
+              %dolz-=1
+              %end
+          %end
+        </td>
         <td>{{izdaja.celotnaDolzina}}</td>
         <td>{{izdaja.tip}}</td>
         <td>{{izdaja.idZalozbe}}</td>
