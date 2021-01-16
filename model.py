@@ -71,6 +71,10 @@ class Oseba:
         print(rez)
         return rez
     
+    @staticmethod
+    def dummy():
+        return Oseba(None,None,None,None,None)
+    
     
 
 
@@ -152,6 +156,7 @@ class Artist:
             rez.append(tuple(vrst))
         return rez
     
+    
     @staticmethod
     def poisci(niz):
         sql = "SELECT idArtist,ime,leto_nastanka,drzava,mesto FROM Artist WHERE ime LIKE ?;"
@@ -164,6 +169,21 @@ class Artist:
         rez=conn.execute(sql, [id,])
         ime,leto_nastanka,drzava,mesto=rez.fetchone()
         return Artist(ime,leto_nastanka,drzava,mesto,id=id)
+    
+    @staticmethod
+    def vrni_spisek_artistov():
+        sql = "SELECT idArtist,ime,drzava FROM Artist;"
+        poizv=conn.execute(sql)
+        rez=[]
+        for vrst in poizv.fetchall():
+            rez.append(tuple(vrst))
+        print("ARSRASTSATASTAST")
+        print(rez)
+        return rez
+
+    @staticmethod
+    def dummy():
+        return Artist(None,None,None,None)
 
 
 

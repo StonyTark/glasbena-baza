@@ -2,20 +2,47 @@
 
 <script>
 function dodajOkno() {
-    if($("#izbira").val()=="2"){
+    
+    izbira=$("#izbira").val()
+    console.log("Izbira:"+String(izbira))
+    vred=$("#obrazec div").length + 1;
+    newName="vnos".concat(vred);
+    if(izbira=="2"){
         label="Član"
+        vnosnoOkno=`
+    <div class="form-group">
+        <label for="exampleFormControlInput1"></label>
+        ${label}<select type="text" class="form-control" id=${newName} name=${newName} placeholder=""/>
+        %for id,ime,priimek,datum in osebe.vrni_spisek_oseb():
+        <option value="{{id}}">{{id}}: {{ime}} {{priimek}} ({{datum}})</option>
+        %end
+    </div>
+    `
     }
     else{
+        console.log("im here")
         label="Avtor"
+        vnosnoOkno=`
+    <div class="form-group">
+        <label for="exampleFormControlInput1"></label>
+        ${label}<select type="text" class="form-control" id=${newName} name=${newName} placeholder=""/>
+        %for id,ime,drzava in artisti.vrni_spisek_artistov():
+        <option value="{{id}}">{{id}}: {{ime}} ({{drzava}})</option>
+        %end
+    </div>
+    `
     }
-    vred=$("#obrazec div").length + 1; //Štetje že obstoječih polj
+
+     //Štetje že obstoječih polj
     document.getElementById("koliko").value=String(vred); //Da v spletnem vmesniku vemo koliko polj je potrebno obdelati
-    console.log(vred)
-    newName="vnos".concat(vred);
+    
+    /*
     vnosnoOkno=`<div class="form-group">
         <label for="exampleFormControlInput1"></label>
         ${label}<input type="text" class="form-control" id=${newName} name=${newName} placeholder=""/>
-    </div>`
+    </div>`*/
+
+    
 		$('#formContent').append(vnosnoOkno)
 }
 
