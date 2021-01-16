@@ -61,6 +61,15 @@ class Oseba:
         ime,priimek,datumRojstva,spol,drzava=rez.fetchone()
         return Oseba(ime,priimek,datumRojstva,spol,drzava,id=id)
     
+    @staticmethod
+    def vrni_spisek_oseb():
+        sql = "SELECT idOseba,ime,priimek,datumRojstva FROM Oseba;"
+        poizv=conn.execute(sql)
+        rez=[]
+        for vrst in poizv.fetchall():
+            rez.append(tuple(vrst))
+        print(rez)
+        return rez
     
     
 
