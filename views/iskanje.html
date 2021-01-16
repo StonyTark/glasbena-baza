@@ -9,46 +9,39 @@
         }
     }
   </script>
+<div class="container">
+<h2>Iskanje po bazi</h2>
+<br />
 <form class="form-horizontal">
-    <!-- TODO: dinamičen izpis forme glede na izbiro radio buttona (javascript)-->
-    
     <fieldset>
-    
-    <!-- Form Name -->
-    <legend>Iskanje po bazi</legend>
     
     <!-- Multiple Radios (inline) -->
     <div class="form-group">
       <div class="col-md-4"> 
-        <label class="radio-inline" for="radios-0">
           <input type="radio" name="izbira" id="radios-0" value="1" checked="checked" onclick="myFunction()">
-          Artist
-        </label> 
-        <label class="radio-inline" for="radios-1">
+          <label class="radio-inline" for="radios-0"></label>Artist</label> 
+        
           <input type="radio" name="izbira" id="radios-1" value="2" onclick="myFunction()">
-          Oseba
-        </label> 
-        <label class="radio-inline" for="radios-2">
+          <label class="radio-inline" for="radios-1"></label>Oseba</label>
+        
           <input type="radio" name="izbira" id="radios-2" value="3" onclick="myFunction()">
-          Izdaja
-        </label> 
+          <label class="radio-inline" for="radios-2"></label>Izdaja</label> 
       </div>
     </div>
     
     <!-- Search input-->
     <div class="form-group">
-      <label class="col-md-4 control-label" for="searchinput">Search Input</label>
       <div class="col-md-4">
-        <input id="searchinput" name="iskaniNiz" type="search" placeholder="Iskano ime" class="form-control input-md" value="">
+        <input id="searchinput" name="iskaniNiz" type="search" placeholder="Iskano ime" class="form-control input-md" value="" style="margin-bottom: 5px">
         <input id="searchinputAlt" name="iskaniNizAlt" type="search" placeholder="Iskan priimek" class="form-control input-md" value="" style="display:none">
       </div>
-      <input type="submit" value="Submit">
+      
     </div>
-    
     </fieldset>
+    <input type="submit" value="Submit" class="btn btn-primary">
 </form>
 
-
+<br />
 <table class="table">
   %if izbira=='1':
     <thead>
@@ -126,4 +119,4 @@
   % end
 </tbody>
 </table>
-    
+</div>   

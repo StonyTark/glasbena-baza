@@ -49,15 +49,15 @@ IdZalozbe: {{podatki.idZalozbe}} <br>
     <table class="table">
         <thead>
             Ustvarjalci, ki so sodelovali:
-        </thead>
         <tr>
             <th>Ime</th>
-            <th>Priimek</th>
+            <th>Vloga</th>
         </tr>
-        % for ime, priimek in podatki.vrni_Sodelujoce():
+        </thead>
+        % for id, ime, priimek, vloga in podatki.vrni_Sodelujoce():
         <tr>
-            <td>{{ime}}</td>
-            <td>{{priimek}}</td>
+            <td><a href="/oseba/{{id}}">{{ime}} {{priimek}}</a></td>
+            <td>{{vloga}}</td>
         </tr>
         % end
     </table>

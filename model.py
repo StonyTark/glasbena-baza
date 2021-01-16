@@ -230,7 +230,10 @@ class Izdaja:
     def vrni_Sodelujoce(self):
         rez = []
         sql = """
-            SELECT ime, priimek FROM OSEBA o JOIN Je_Sodeloval j ON (o.idOseba = j.idOseba) WHERE j.idIzdaja = ?
+            SELECT o.idOseba,ime, priimek, naziv FROM OSEBA o 
+            JOIN Je_Sodeloval j ON (o.idOseba = j.idOseba) 
+            JOIN Vloga v ON v.idVloga=j.idVloga
+            WHERE j.idIzdaja = ?
         """
         poziv = conn.execute(sql, [self.id,])
         for vrst in poziv.fetchall():
