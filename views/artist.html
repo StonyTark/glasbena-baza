@@ -1,11 +1,32 @@
 % rebase('osnova.html')
 
-<div>
-ID: {{podatki.id}} <br>
-Ime: {{podatki.ime}} <br>
-Leto nastanka: {{podatki.leto_nastanka}} <br> 
-Drzava: {{podatki.drzava}}<br>
-Mesto: {{podatki.mesto}} <br>
+<div style="display: flex">
+    <div style="width: 45%">
+        ID: {{podatki.id}} <br>
+        Ime: {{podatki.ime}} <br>
+        Leto nastanka: {{podatki.leto_nastanka}} <br> 
+        Drzava: {{podatki.drzava}}<br>
+        Mesto: {{podatki.mesto}} <br>
+    </div>
+
+    <form method="POST">
+        <div class="form-group" >
+            <div class="row">
+                <div class="col-sm-4 col-form-label">
+                    <label>Dodaj člana:</label>
+                </div>
+                <div class="col-5">
+                    <input type="text" class="form-control" id="id" name="id" placeholder="Id"/>
+                </div>
+                
+                <!--input type="text" id="ime" name="ime" placeholder="Ime"/-->
+                <!--input type="text" id="priimek" name="priimek" placeholder="Priimek"/-->
+                <div class="col">
+                    <input type="submit" value="Submit" class="btn btn-primary"/>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 
 <div>
@@ -31,9 +52,7 @@ Mesto: {{podatki.mesto}} <br>
 <br>
 
 <table class="table">
-    <thead>
-        <th>Izdaje</th>
-    </thead>
+    <th>Izdaje</th>
     %for id,naslov,leto_izida in podatki.vrni_izdaje():
     <tr>
         <td><a href="/izdaja/{{id}}">{{naslov}} ({{leto_izida}})</a></td>

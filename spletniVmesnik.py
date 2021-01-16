@@ -81,6 +81,11 @@ def oseba(id):
 def artist(id):
     return bottle.template('artist.html', iskaniID=id , podatki=model.Artist.poisciID(id))
 
+@bottle.post("/artist/<id>")
+def artist_post(id):
+    id_oseba = bottle.request.forms.getunicode("id")
+    model.Artist.poisciID(id).dodaj_clane([id_oseba,])
+
 @bottle.get("/izdaja/<id>")
 def artist(id):
     return bottle.template('izdaja.html', iskaniID=id , podatki=model.Izdaja.poisciID(id))
