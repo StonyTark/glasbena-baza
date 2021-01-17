@@ -3,7 +3,8 @@
 <div style="display: flex">
     <div style="width: 40%">
     <h2>{{podatki.naslov}}</h2>
-    <h4>Avtor: 
+    <h4>Avtor:
+    % from pomozneFunkcije import sekunde_v_format
     %avtorji=podatki.vrni_Avtorje()
     %dolz=len(avtorji)
     %for id,ime in avtorji:
@@ -15,7 +16,7 @@
     %end
     </h4>
     Leto_izida: {{podatki.leto_izida}} <br>
-    CelotnaDolzina: {{podatki.celotnaDolzina}} <br> 
+    CelotnaDolzina: {{sekunde_v_format(podatki.celotnaDolzina)}} <br> 
     Tip: {{podatki.tip}}<br>
     Žanri:
     %zanriTemp=podatki.vrni_zanre()
@@ -33,7 +34,7 @@
 
     <form method="POST">
         <div class="form-group" >
-            <label>Dodaj žanr:</label>
+            <label>Dodaj zvrst:</label>
             <div class="row">
                 <div class="col-9">
                     <select type="text" class="form-control" id="id" name="izbraniZanr">
@@ -85,20 +86,18 @@
         <div class="col-sm">
 <form method="POST">
     <fieldset>
-        <div style="flex-grow: 1;">
-            <div class="form-group" >
-                <div class="row">
-                    <div class="col">
-                        <label>Dodaj novo skladbo:</label>
-                    </div>
+        <div class="form-group" >
+            <div class="row">
+                <div class="col">
+                    <label>Dodaj novo skladbo:</label>
                 </div>
-                <div class="row">
-                    <div class="col-6">
-                        <input type="text" class="form-control" id="naslov" name="naslov" placeholder="Naslov skladbe"/>
-                    </div>
-                    <div class="col-6">
-                        <input type="time" step="1" class="form-control" id="dolzina" name="dolzina"/>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <input type="text" class="form-control" id="naslov" name="naslov" placeholder="Naslov skladbe"/>
+                </div>
+                <div class="col-6">
+                    <input type="time" step="1" class="form-control" id="dolzina" name="dolzina"/>
                 </div>
             </div>
         </div>

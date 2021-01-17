@@ -357,6 +357,14 @@ class Izdaja:
         for vrst in poziv.fetchall():
             rez.append(tuple(vrst))
         return rez
+    
+    def nastavi_dolzino(self):
+        sql = "SELECT dolzina FROM Track WHERE idIzdaja=?"
+        poziv = conn.execute(sql, [self.id,])
+        cas = 0
+        for d in poziv.fetchall():
+            cas += d[0]
+        self.celotnaDolzina = cas
 
     @staticmethod
     def poisci_po_naslovu(niz):
