@@ -78,6 +78,13 @@ def dodaj_post():
         zanr=bottle.request.forms.getunicode('vnos1', '')
         model.Zanr(zanr).dodaj_v_bazo()
         return bottle.template("dodaj.html", osebe=model.Oseba.dummy(), artisti=model.Artist.dummy())
+    
+    elif izbira == '5':
+
+        ime=bottle.request.forms.getunicode('vnos1', '')
+        drzava=bottle.request.forms.getunicode('vnos2', '')
+        model.Zalozba(ime, drzava).dodaj_v_bazo()
+        return bottle.template("dodaj.html", osebe=model.Oseba.dummy(), artisti=model.Artist.dummy()) 
         
     
 
