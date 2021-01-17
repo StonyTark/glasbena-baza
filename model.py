@@ -166,9 +166,8 @@ class Artist:
     
     def vrni_neClane(self):
         rez=[]
-        sql = '''SELECT DISTINCT o.idOseba, o.ime, o.priimek,o.datumRojstva FROM Oseba o 
-                JOIN Je_Clan j ON j.idOseba=o.idOseba
-                WHERE j.idArtist<>?;'''
+        sql = '''SELECT DISTINCT idOseba, ime, priimek,datumRojstva FROM Oseba
+        WHERE idOseba NOT IN (SELECT idOseba FROM je_clan WHERE idArtist=?);'''
         poizv=conn.execute(sql,[self.id,])
         for vrst in poizv.fetchall():
             rez.append(tuple(vrst))
