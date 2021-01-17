@@ -66,7 +66,7 @@ def dodaj_post():
         avtorji=[]
         if koliko!='':
             koliko=int(koliko)
-            for i in range(5,koliko+1):
+            for i in range(6,koliko+1):
                 temp=bottle.request.forms.getunicode("vnos{}".format(i))
                 avtorji.append(int(temp))
             izd.dodaj_avtorje(avtorji)   
