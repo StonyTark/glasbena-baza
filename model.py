@@ -272,7 +272,7 @@ class Izdaja:
     def vrni_Tracklist(self):
         rez=[]
         sql = '''
-            SELECT naslov,dolzina FROM Track
+            SELECT idTrack,naslov,dolzina FROM Track
             WHERE idIzdaja=?
         '''
         poizv=conn.execute(sql,[self.id,])
@@ -392,6 +392,12 @@ class Track:
         assert self.id is None
         with conn:
             self.id = track.dodaj_vrstico(naslov=self.naslov,dolzina=self.dolzina,idIzdaja=self.idIzdaja)
+    
+    @staticmethod
+    def izbrisi_ID(id):
+        sql = "DELETE FROM Track WHERE idTrack=?"
+        with conn:
+            conn.execute(sql,[id,])
     
 class Vloga:
 
