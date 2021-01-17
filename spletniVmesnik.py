@@ -1,5 +1,6 @@
 import bottle
 import model
+import pomozneFunkcije as pf
 
 @bottle.get("/")
 def zacetna_stran():
@@ -165,6 +166,14 @@ def artist_post(id):
 @bottle.get("/izdaja/<id>")
 def izdaja(id):
     return bottle.template('izdaja.html', iskaniID=id , podatki=model.Izdaja.poisciID(id))
+
+@bottle.post("/izdaja/<id>")
+def izdaja_post(id):
+    naslov = bottle.request.forms.getunicode("naslov")
+    dolzina = bottle.request.forms.getunicode("dolzina")
+    model.Track(naslov, pf.pretvori_v_sekunde(dolzina), id).dodaj_v_bazo()
+    print("----", naslov, pf.pretvori_v_sekunde(dolzina), isinstance(dolzina, str))
+    return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id))
     
 
 bottle.run(debug=True, reloader=True)
