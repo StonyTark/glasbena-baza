@@ -39,7 +39,7 @@ def dodaj_post():
         if koliko != '':
             koliko = int(koliko)
             clani=[]
-            for i in range(5,koliko+1):
+            for i in range(6,koliko+1):
                 temp=bottle.request.forms.getunicode("vnos{}".format(i))
                 clani.append(int(temp))
             art.dodaj_clane(clani)
@@ -51,7 +51,7 @@ def dodaj_post():
         
         naslov = bottle.request.forms.getunicode("vnos1")
         leto = bottle.request.forms.getunicode("vnos2")
-        celotnaDolzina = bottle.request.forms.getunicode("vnos3")
+        celotnaDolzina = 0
         tip = bottle.request.forms.getunicode("vnos4")
         idZalozbe = bottle.request.forms.getunicode("vnos5")
         if idZalozbe=='':
@@ -66,7 +66,7 @@ def dodaj_post():
         avtorji=[]
         if koliko!='':
             koliko=int(koliko)
-            for i in range(6,koliko+1):
+            for i in range(5,koliko+1):
                 temp=bottle.request.forms.getunicode("vnos{}".format(i))
                 avtorji.append(int(temp))
             izd.dodaj_avtorje(avtorji)   

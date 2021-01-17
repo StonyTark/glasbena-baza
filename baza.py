@@ -62,6 +62,7 @@ class Tabela:
         print("Im here")
         podatki = {kljuc: vrednost for kljuc, vrednost in podatki.items() if vrednost is not None}
         poizvedba = self.dodajanje(podatki.keys())
+        print
         cur = self.conn.execute(poizvedba, podatki)
         print("fsadgaga")
         print(cur.lastrowid)
