@@ -1,58 +1,62 @@
 % rebase('osnova.html')
 
-<div style="display: flex">
-    <div style="width: 40%">
-    <h2>{{podatki.naslov}}</h2>
-    <h4>Avtor:
-    % from pomozneFunkcije import sekunde_v_format
-    %avtorji=podatki.vrni_Avtorje()
-    %dolz=len(avtorji)
-    %for id,ime in avtorji:
-        <a href="/artist/{{id}}">{{ime}}</a>
-        %if dolz!=1:
-        ,
-        %dolz-=1
-        %end
-    %end
-    </h4>
-    Leto_izida: {{podatki.leto_izida}} <br>
-    CelotnaDolzina: {{sekunde_v_format(podatki.celotnaDolzina)}} <br> 
-    Tip: {{podatki.tip}}<br>
-    Žanri:
-    %zanriTemp=podatki.vrni_zanre()
-    %dolz=len(zanriTemp)
-    %for id,ime in zanriTemp:
-        {{ime}}
-        %if dolz!=1:
-        ,
-        %dolz-=1
-        %end
-    %end
-    <br/>
-    IdZalozbe: {{podatki.idZalozbe}} <br>
-    </div>
-
-    <form method="POST">
-        <div class="form-group" >
-            <label>Dodaj zvrst:</label>
-            <div class="row">
-                <div class="col-9">
-                    <select type="text" class="form-control" id="id" name="izbraniZanr">
-                        %for id,ime in podatki.vrni_mozne_zanre():
-                        <option value={{id}}>{{ime}} ({{id}})</option>
-                        %end
-                    </select>
-                </div>
-                <!--input type="text" id="ime" name="ime" placeholder="Ime"/-->
-                <!--input type="text" id="priimek" name="priimek" placeholder="Priimek"/-->
-                <div class="col-2">
-                    <input type="submit" name="gumb" value="Dodaj zvrst" class="btn btn-primary"/>
-                </div>
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h2>{{podatki.naslov}}</h2>
+            <h4>Avtor:
+            % from pomozneFunkcije import sekunde_v_format
+            %avtorji=podatki.vrni_Avtorje()
+            %dolz=len(avtorji)
+            %for id,ime in avtorji:
+                <a href="/artist/{{id}}">{{ime}}</a>
+                %if dolz!=1:
+                ,
+                %dolz-=1
+                %end
+            %end
+            </h4>
+            Leto_izida: {{podatki.leto_izida}} <br>
+            CelotnaDolzina: {{sekunde_v_format(podatki.celotnaDolzina)}} <br> 
+            Tip: {{podatki.tip}}<br>
+            Zvrsti:
+            %zanriTemp=podatki.vrni_zanre()
+            %dolz=len(zanriTemp)
+            %for id,ime in zanriTemp:
+                {{ime}}
+                %if dolz!=1:
+                ,
+                %dolz-=1
+                %end
+            %end
+            <br/>
+            IdZalozbe: {{podatki.idZalozbe}} <br>
         </div>
-    </form>
-
+            
+        <div class="col">
+            <form method="POST">
+                <div class="form-group" >
+                    <label>Dodaj zvrst:</label>
+                    <div class="row">
+                        <div class="col">
+                            <select type="text" class="form-control" id="id" name="izbraniZanr">
+                                %for id,ime in podatki.vrni_mozne_zanre():
+                                <option value={{id}}>{{ime}} ({{id}})</option>
+                                %end
+                            </select>
+                        </div>
+                        <!--input type="text" id="ime" name="ime" placeholder="Ime"/-->
+                        <!--input type="text" id="priimek" name="priimek" placeholder="Priimek"/-->
+                        <div class="col-2">
+                            <input type="submit" name="gumb" value="Dodaj zvrst" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
 
 <div class="container-fluid">
     <br>
@@ -67,44 +71,44 @@
             </tr>
         </thead>
         <form method="POST">
-        % from pomozneFunkcije import sekunde_v_format
-        % i=1
-        % for idTrack,naslov,dolzina in podatki.vrni_Tracklist():
-        <tr>
-            <td>{{i}}</td>
-            <td>{{naslov}}</td>
-            <td>{{sekunde_v_format(dolzina)}}</td>
-            <td><button class="btn btn-danger" type="submit" name="brisanID" value={{idTrack}}>X</button></td>
-        </tr>
-        % i+=1
-        % end
+            % from pomozneFunkcije import sekunde_v_format
+            % i=1
+            % for idTrack,naslov,dolzina in podatki.vrni_Tracklist():
+            <tr>
+                <td>{{i}}</td>
+                <td>{{naslov}}</td>
+                <td>{{sekunde_v_format(dolzina)}}</td>
+                <td><button class="btn btn-danger" type="submit" name="brisanID" value={{idTrack}}>X</button></td>
+            </tr>
+            % i+=1
+            % end
         </form>
     </table>
 </div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm">
-<form method="POST">
-    <fieldset>
-        <div class="form-group" >
-            <div class="row">
-                <div class="col">
-                    <label>Dodaj novo skladbo:</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <input type="text" class="form-control" id="naslov" name="naslov" placeholder="Naslov skladbe"/>
-                </div>
-                <div class="col-6">
-                    <input type="time" step="1" class="form-control" id="dolzina" name="dolzina"/>
-                </div>
-            </div>
+            <form method="POST">
+                <fieldset>
+                    <div class="form-group" >
+                        <div class="row">
+                            <div class="col">
+                                <label>Dodaj novo skladbo:</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="text" class="form-control" id="naslov" name="naslov" placeholder="Naslov skladbe"/>
+                            </div>
+                            <div class="col-6">
+                                <input type="time" step="1" class="form-control" id="dolzina" name="dolzina"/>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <input type="submit" name="gumb" value="Dodaj skladbo" class="btn btn-primary"/>
+            </form>
         </div>
-    </fieldset>
-    <input type="submit" name="gumb" value="Dodaj skladbo" class="btn btn-primary"/>
-    </form>
-    </div>
     <div class="col"></div>
     </div>
 <br/>

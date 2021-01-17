@@ -1,35 +1,36 @@
 % rebase('osnova.html')
-<div style="display: flex">
-    <div style="width: 40%">
-        <h2>{{podatki.ime}}</h2>
-        ID: {{podatki.id}} <br>
-        Leto nastanka: {{podatki.leto_nastanka}} <br> 
-        Drzava: {{podatki.drzava}}<br>
-        Mesto: {{podatki.mesto}} <br>
-    </div>
 
-    <form method="POST">
-        <div class="form-group" >
-            <div class="row">
-                <div class="col-sm-4 col-form-label">
-                    <label>Dodaj člana:</label>
-                </div>
-                <div class="col-5">
-                    <select type="text" class="form-control" id="id" name="id" placeholder="Id">
-                        %for id,ime,priimek,datum in podatki.vrni_neClane():
-                        <option value={{id}}>{{priimek}} {{ime}} - {{datum}} - (ID:{{id}})</option>
-                        %end
-                    </select>
-                </div>
-                <!--input type="text" id="ime" name="ime" placeholder="Ime"/-->
-                <!--input type="text" id="priimek" name="priimek" placeholder="Priimek"/-->
-                <div class="col">
-                    <input type="submit" value="Submit" class="btn btn-primary"/>
-                </div>
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h2>{{podatki.ime}}</h2>
+            ID: {{podatki.id}} <br>
+            Leto nastanka: {{podatki.leto_nastanka}} <br> 
+            Drzava: {{podatki.drzava}}<br>
+            Mesto: {{podatki.mesto}} <br>
         </div>
-    </form>
+        <div class="col">
+            <form method="POST">
+                <div class="form-group" >
+                    <label>Dodaj člana:</label>
+                    <div class="row">
+                        <div class="col">
+                            <select type="text" class="form-control" id="id" name="id" placeholder="Id">
+                                %for id,ime,priimek,datum in podatki.vrni_neClane():
+                                <option value={{id}}>{{priimek}} {{ime}} - {{datum}} - (ID:{{id}})</option>
+                                %end
+                            </select>
+                        </div>
+                        <div class="col">
+                            <input type="submit" value="Submit" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+        
 
 <div>
 
