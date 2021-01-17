@@ -103,6 +103,7 @@ def iskanje():
         dat_do=bottle.request.query.get('vnos4','2030-01-01')
         spol=bottle.request.query.get('vnos5','')
         drzava=bottle.request.query.get('vnos6','')
+        print("----", dat_od, dat_do, isinstance(dat_od, str))
         if dat_od=='':
             dat_od='1900-01-01'
         if dat_do=='':
