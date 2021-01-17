@@ -59,9 +59,12 @@ class Tabela:
         Argumenti:
         - poimenovani parametri: vrednosti v ustreznih stolpcih
         """
+        print("Im here")
         podatki = {kljuc: vrednost for kljuc, vrednost in podatki.items() if vrednost is not None}
         poizvedba = self.dodajanje(podatki.keys())
         cur = self.conn.execute(poizvedba, podatki)
+        print("fsadgaga")
+        print(cur.lastrowid)
         return cur.lastrowid
 
 #
@@ -108,6 +111,7 @@ class Zanr(Tabela):
         """, podatki)
         r = cur.fetchone()
         if r is None:
+            print('DSADFSAFGSAGSA')
             return super().dodaj_vrstico(**podatki)
         else:
             id, = r

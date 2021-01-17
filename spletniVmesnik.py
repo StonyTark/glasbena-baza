@@ -166,17 +166,16 @@ def artist_post(id):
 
 @bottle.get("/izdaja/<id>")
 def izdaja(id):
-    return bottle.template('izdaja.html', iskaniID=id , podatki=model.Izdaja.poisciID(id),zanri=model.Zanr.dummy().vrni_zanre())
+    return bottle.template('izdaja.html', iskaniID=id , podatki=model.Izdaja.poisciID(id))
 
 @bottle.post("/izdaja/<id>")
 def izdaja_post(id):
-    gumb1=bottle.request.forms.getunicode("gumb1",'')
-    gumb2=bottle.request.forms.getunicode("gumb2",'')
-    if gumb1:
+    gumb=bottle.request.forms.getunicode("gumb")
+    print(gumb)
+    if gumb=='Dodaj skladbo':
         naslov = bottle.request.forms.getunicode("naslov")
         dolzina = bottle.request.forms.getunicode("dolzina")
         model.Track(naslov, pf.pretvori_v_sekunde(dolzina), id).dodaj_v_bazo()
-        print("----", naslov, pf.pretvori_v_sekunde(dolzina), isinstance(dolzina, str))
         return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id),zanri=model.Zanr.dummy().vrni_zanre())
     else:
         izbraniZanr = bottle.request.forms.getunicode("izbraniZanr")

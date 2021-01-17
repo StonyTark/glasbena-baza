@@ -18,6 +18,17 @@
     Leto_izida: {{podatki.leto_izida}} <br>
     CelotnaDolzina: {{podatki.celotnaDolzina}} <br> 
     Tip: {{podatki.tip}}<br>
+    Žanri:
+    %zanriTemp=podatki.vrni_zanre()
+    %dolz=len(zanriTemp)
+    %for id,ime in zanriTemp:
+        {{ime}}
+        %if dolz!=1:
+        ,
+        %dolz-=1
+        %end
+    %end
+    <br/>
     IdZalozbe: {{podatki.idZalozbe}} <br>
     </div>
 
@@ -27,8 +38,7 @@
             <div class="row">
                 <div class="col-9">
                     <select type="text" class="form-control" id="id" name="izbraniZanr">
-                        %print(zanri)
-                        %for id,ime in zanri:
+                        %for id,ime in podatki.vrni_mozne_zanre():
                         <option value={{id}}>{{ime}} ({{id}})</option>
                         %end
                     </select>
@@ -36,7 +46,7 @@
                 <!--input type="text" id="ime" name="ime" placeholder="Ime"/-->
                 <!--input type="text" id="priimek" name="priimek" placeholder="Priimek"/-->
                 <div class="col-2">
-                    <input type="submit" name="gumb1" value="Submit" class="btn btn-primary"/>
+                    <input type="submit" name="gumb" value="Dodaj zvrst" class="btn btn-primary"/>
                 </div>
             </div>
         </div>
@@ -61,7 +71,7 @@
         <tr>
             <td>{{i}}</td>
             <td>{{naslov}}</td>
-            <td>{{sekunde_v_format(dolzina)}}</td>>
+            <td>{{sekunde_v_format(dolzina)}}</td>
         </tr>
         % i+=1
         % end
@@ -90,8 +100,8 @@
             </div>
         </div>
     </fieldset>
-    <input type="submit" name="gumb2" value="Submit" class="btn btn-primary"/>
-</form>
+    <input type="submit" name="gumb" value="Dodaj skladbo" class="btn btn-primary"/>
+    </form>
     </div>
     <div class="col"></div>
     </div>

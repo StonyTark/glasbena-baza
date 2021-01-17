@@ -40,7 +40,6 @@ class Oseba:
         sql = "SELECT a.idArtist, a.ime FROM Artist a JOIN je_clan j ON j.idArtist=a.idArtist WHERE j.idOseba=? ORDER BY a.ime;"
         poizv=conn.execute(sql,[self.id,])
         for vrst in poizv.fetchall():
-            print(vrst)
             rez.append(tuple(vrst))
         
         return rez
@@ -114,7 +113,6 @@ class Zanr:
         poizv=conn.execute(sql)
         for vrst in poizv.fetchall():
             rez.append(tuple(vrst))
-        print(rez)
         return rez
     
     @staticmethod
@@ -187,7 +185,6 @@ class Artist:
         poizv=conn.execute(sql,[self.id,])
         for vrst in poizv.fetchall():
             rez.append(tuple(vrst))
-        print(rez)
         return rez
 
     @staticmethod
@@ -280,9 +277,7 @@ class Izdaja:
         '''
         poizv=conn.execute(sql,[self.id,])
         for vrst in poizv.fetchall():
-            print(vrst)
             rez.append(tuple(vrst))
-        print(rez)
         return rez
     
     def vrni_Avtorje(self):
@@ -294,7 +289,6 @@ class Izdaja:
         '''
         poizv=conn.execute(sql,[self.id,])
         for vrst in poizv.fetchall():
-            print(vrst)
             rez.append(tuple(vrst))
         return rez
     
@@ -323,15 +317,31 @@ class Izdaja:
 
                 "Vzame trenutne člane (osebe) in jih zapiše v je_sodeloval kot avtorje"
                 temp=Artist.poisciID(avtorID).vrni_clane()
-                print("DODAJ AVTORJE FUNKCIJA")
-                print(temp)
                 for clan,_,_ in temp:
-                    print(clan)
                     je_sodeloval.dodaj_vrstico(idOseba=clan, idIzdaja=self.id, idVloga=1) #VLOGA ZA AVTORJA NAJ BO 1
               
     def dodaj_zanr(self,zanrID):
-        spada.dodaj_vrstico(idIzdaja=self.id,idZanr=zanrID)
+        print("DODAJAM ZANR")
+        print(self.id)
+        print(zanrID)
+        with conn:
+            spada.dodaj_vrstico(idIzdaja=self.id,idZanr=zanrID)
+    
+    def vrni_zanre(self):
+        rez=[]
+        sql='SELECT z.idZanr,z.imeZanra FROM Zanr z JOIN Spada s ON s.idZanr=z.idZanr WHERE s.idIzdaja=?'
+        poziv = conn.execute(sql, [self.id,])
+        for vrst in poziv.fetchall():
+            rez.append(tuple(vrst))
+        return rez
 
+    def vrni_mozne_zanre(self):
+        rez=[]
+        sql='SELECT idZanr,imeZanra FROM Zanr WHERE idZanr NOT IN(SELECT idZanr FROM Spada WHERE idIzdaja=?) '
+        poziv = conn.execute(sql, [self.id,])
+        for vrst in poziv.fetchall():
+            rez.append(tuple(vrst))
+        return rez
 
     @staticmethod
     def poisci_po_naslovu(niz):
@@ -345,10 +355,6 @@ class Izdaja:
                 WHERE naslov LIKE ? AND (leto_izida BETWEEN ? AND ?) AND tip LIKE ?
                 ORDER BY naslov;
         '''
-        print(naslov)
-        print(leto_od)
-        print(leto_do)
-        print(tip)
         for izID,naslov,leto_izida,celotnaDolzina,tip,idZalozbe in conn.execute(sql, [enkapsulirajNiz(naslov),leto_od,leto_do,enkapsulirajNiz(tip)]):
             yield Izdaja(naslov,leto_izida,celotnaDolzina,tip,idZalozbe,id=izID)
     
