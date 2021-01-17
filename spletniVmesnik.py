@@ -202,6 +202,7 @@ def izdaja_post(id):
         naslov = bottle.request.forms.getunicode("naslov")
         dolzina = bottle.request.forms.getunicode("dolzina")
         model.Track(naslov, pf.pretvori_v_sekunde(dolzina), id).dodaj_v_bazo()
+        model.Izdaja.nastavi_dolzino(id)
         return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id),zanri=model.Zanr.dummy().vrni_zanre())
     elif gumb=='Dodaj zvrst':
         izbraniZanr = bottle.request.forms.getunicode("izbraniZanr")
@@ -210,6 +211,7 @@ def izdaja_post(id):
     else:
         brisanID=bottle.request.forms.getunicode("brisanID")
         model.Track.izbrisi_ID(int(brisanID))
+        model.Izdaja.nastavi_dolzino(id)
         bottle.redirect("/izdaja/"+str(id))
 
     

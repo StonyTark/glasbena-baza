@@ -276,7 +276,7 @@ class Izdaja:
         self.naslov = naslov
         self.leto_izida = leto_izida
         self.tip = tip
-        self.celotnaDolzina = self.nastavi_dolzino(id)
+        self.celotnaDolzina = celotnaDolzina
         self.idZalozbe = idZalozbe
     
     def __str__(self):
