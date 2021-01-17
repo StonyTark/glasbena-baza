@@ -108,8 +108,8 @@
           %   for artist in podatki[0]:
           %   referenca="/artist/"+str(artist.id)
               <tr>
-                  <td><a href={{referenca}}>{{artist.id}}</a></td>
-                  <td>{{artist.ime}}</td>
+                  <td>{{artist.id}}</td>
+                  <td><a href={{referenca}}>{{artist.ime}}</a></td>
                   <td>{{artist.leto_nastanka}}</td>
                   <td>{{artist.drzava}}</td>
                   <td>{{artist.mesto}}</td>
@@ -125,7 +125,6 @@
           <tr>
             <th>ID</th>
             <th>ime</th>
-            <th>priimek</th>
             <th>datumRojstva</th>
             <th>spol</th>
             <th>drzava</th>
@@ -135,10 +134,10 @@
           % if podatki[1] is not None:
           %   for oseba in podatki[1]:
           %   referenca="/oseba/"+str(oseba.id)
+          %   name = oseba.priimek + " " + oseba.ime
               <tr>
-                <td><a href={{referenca}}>{{oseba.id}}</a></td>
-                <td>{{oseba.ime}}</td>
-                <td>{{oseba.priimek}}</td>
+                <td>{{oseba.id}}</td>
+                <td><a href={{referenca}}>{{name}}</a></td>
                 <td>{{oseba.datumRojstva}}</td>
                 <td>{{oseba.spol}}</td>
                 <td>{{oseba.drzava}}</td>
@@ -166,8 +165,8 @@
           %   for izdaja in podatki[2]:
           %   referenca="/izdaja/"+str(izdaja.id)
               <tr>
-                  <td><a href={{referenca}}>{{izdaja.id}}</a></td>
-                  <td>{{izdaja.naslov}}</td>
+                  <td>{{izdaja.id}}</td>
+                  <td><a href={{referenca}}>{{izdaja.naslov}}</a></td>
                   <td>{{izdaja.leto_izida}}</td>
                   <td>
                     %avtorji=izdaja.vrni_Avtorje()
