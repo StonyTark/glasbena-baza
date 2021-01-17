@@ -77,14 +77,22 @@ def dodaj_post():
 @bottle.get("/iskanje")
 def iskanje():
     iskaniNiz=bottle.request.query.get('iskaniNiz','')
-    izbira=bottle.request.query.get('izbira','1')
-    if izbira=='1':
-        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Artist.poisci(iskaniNiz))
-    elif izbira=='2':
-        priimek=bottle.request.query.get('iskaniNizAlt','')
-        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Oseba.poisci(ime=iskaniNiz,priimek=priimek))
-    elif izbira=='3':
-        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Izdaja.poisci(iskaniNiz))
+    izbira=bottle.request.query.get('izbira', '')
+    priimek=bottle.request.query.get('iskaniNizAlt','')
+    data = [
+        model.Artist.poisci(iskaniNiz),
+        model.Oseba.poisci(ime=iskaniNiz,priimek=priimek),
+        model.Izdaja.poisci(iskaniNiz),
+    ]
+    return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=data)
+
+#    if izbira=='1':
+#        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Artist.poisci(iskaniNiz))
+#    elif izbira=='2':
+#        priimek=bottle.request.query.get('iskaniNizAlt','')
+#        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Oseba.poisci(ime=iskaniNiz,priimek=priimek))
+#    elif izbira=='3':
+#        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Izdaja.poisci(iskaniNiz))
 
 
 @bottle.get("/oseba/<id>")
