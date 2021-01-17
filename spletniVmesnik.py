@@ -143,6 +143,7 @@ def iskanje():
             None,
             model.Izdaja.poisci_po_vsem(naslov,leto1,leto2,tip)
         ]
+        print(data[2])
 
     return bottle.template('iskanje.html', izbira=izbira, podatki=data)
     '''data = [

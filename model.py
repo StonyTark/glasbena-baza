@@ -383,7 +383,7 @@ class Izdaja:
                 ORDER BY lower(naslov);
         '''
         for izID,naslov,leto_izida,celotnaDolzina,tip,idZalozbe in conn.execute(sql, [enkapsulirajNiz(naslov),leto_od,leto_do,enkapsulirajNiz(tip)]):
-            yield Izdaja(naslov,leto_izida,celotnaDolzina,tip,idZalozbe,id=izID)
+            yield Izdaja(naslov,leto_izida,tip,celotnaDolzina=celotnaDolzina,idZalozbe=idZalozbe,id=izID)
     
     @staticmethod
     def poisciID(id):

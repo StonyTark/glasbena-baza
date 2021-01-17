@@ -161,9 +161,11 @@
           </tr>
         </thead>
         <tbody>
+          % from pomozneFunkcije import sekunde_v_format
           % if podatki[2] is not None:
           %   for izdaja in podatki[2]:
-          %   referenca="/izdaja/"+str(izdaja.id)
+          %     referenca="/izdaja/"+str(izdaja.id)
+          %     print(izdaja.tip)
               <tr>
                   <td>{{izdaja.id}}</td>
                   <td><a href={{referenca}}>{{izdaja.naslov}}</a></td>
@@ -179,8 +181,8 @@
                         %end
                     %end
                   </td>
-                  <td>{{izdaja.celotnaDolzina}}</td>
                   <td>{{izdaja.tip}}</td>
+                  <td>{{sekunde_v_format(izdaja.celotnaDolzina)}}</td>
                   <td>{{izdaja.idZalozbe}}</td>
               </tr>
           % end
