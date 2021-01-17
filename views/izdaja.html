@@ -63,18 +63,22 @@
                 <th>Tracklist</th>
                 <th>Naslov</th>
                 <th>Dolzina</th>
+                <th>Briši</th>
             </tr>
         </thead>
+        <form method="POST">
         % from pomozneFunkcije import sekunde_v_format
         % i=1
-        % for naslov,dolzina in podatki.vrni_Tracklist():
+        % for idTrack,naslov,dolzina in podatki.vrni_Tracklist():
         <tr>
             <td>{{i}}</td>
             <td>{{naslov}}</td>
             <td>{{sekunde_v_format(dolzina)}}</td>
+            <td><button class="btn btn-danger" type="submit" name="brisanID" value={{idTrack}}>X</button></td>
         </tr>
         % i+=1
         % end
+        </form>
     </table>
 </div>
 <div class="container-fluid">

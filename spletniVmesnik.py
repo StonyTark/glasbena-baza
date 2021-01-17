@@ -186,16 +186,20 @@ def izdaja(id):
 @bottle.post("/izdaja/<id>")
 def izdaja_post(id):
     gumb=bottle.request.forms.getunicode("gumb")
-    print(gumb)
+    print("WE HERE")
     if gumb=='Dodaj skladbo':
         naslov = bottle.request.forms.getunicode("naslov")
         dolzina = bottle.request.forms.getunicode("dolzina")
         model.Track(naslov, pf.pretvori_v_sekunde(dolzina), id).dodaj_v_bazo()
         return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id),zanri=model.Zanr.dummy().vrni_zanre())
-    else:
+    elif gumb=='Dodaj zvrst':
         izbraniZanr = bottle.request.forms.getunicode("izbraniZanr")
         model.Izdaja.poisciID(id).dodaj_zanr(int(izbraniZanr))
         return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id),zanri=model.Zanr.dummy().vrni_zanre())
+    else:
+        brisanID=bottle.request.forms.getunicode("brisanID")
+        model.Track.izbrisi_ID(int(brisanID))
+        bottle.redirect("/izdaja/"+str(id))
 
     
 bottle.run(debug=True, reloader=True)
