@@ -71,6 +71,7 @@ function formaOseba(){
       <label for="exampleFormControlInput1"></label>
         Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
     </div>
+
     <div class="form-group">
         <label for="exampleFormControlInput1"></label>
         Priimek<input type="text" class="form-control" id="vnos2" name="vnos2" placeholder=""/>
@@ -173,8 +174,35 @@ function formaIzdaja(){
     document.getElementById("izbira").value="3"
 }
 
+function formaZanr () {
+    var forma = `
+        <div class="form-group">
+            <label for="exampleFormControlInput1"></label>
+            Žanr<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+        </div>
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+    `
+    $("#obrazec").empty().append(forma)
+    document.getElementById("izbira").value="4"
+}
 
+function formaZalozba () {
+    var forma = `
+        <div class="form-group">
+            <label for="exampleFormControlInput1"></label>
+            Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+        </div>
+        
+        <div class="form-group">
+            <label for="exampleFormControlInput1"></label>
+            Država<input type="text" class="form-control" id="vnos2" name="vnos2" placeholder=""/>
+        </div>
 
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+    `
+    $("#obrazec").empty().append(forma)
+    document.getElementById("izbira").value="5"
+}
 
 </script>
 
@@ -187,6 +215,8 @@ function formaIzdaja(){
         <a class="dropdown-item" href="#" onclick="formaOseba()">Dodaj osebo</a>
         <a class="dropdown-item" href="#" onclick="formaArtist()">Dodaj artista</a>
         <a class="dropdown-item" href="#" onclick="formaIzdaja()">Dodaj izdajo</a>
+        <a class="dropdown-item" href="#" onclick="formaZanr()">Dodaj žanr</a>
+        <a class="dropdown-item" href="#" onclick="formaZalozba()">Dodaj založbo</a>
       </div>
     </div>
   </div>

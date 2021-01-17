@@ -73,6 +73,19 @@ def dodaj_post():
         
         return bottle.template("izdaja.html", iskaniID=izd.id , podatki=izd)
         
+    elif izbira == '4':
+        
+        zanr=bottle.request.forms.getunicode('vnos1', '')
+        model.Zanr(zanr).dodaj_v_bazo()
+        return bottle.template("dodaj.html", osebe=model.Oseba.dummy(), artisti=model.Artist.dummy())
+    
+    elif izbira == '5':
+
+        ime=bottle.request.forms.getunicode('vnos1', '')
+        drzava=bottle.request.forms.getunicode('vnos2', '')
+        model.Zalozba(ime, drzava).dodaj_v_bazo()
+        return bottle.template("dodaj.html", osebe=model.Oseba.dummy(), artisti=model.Artist.dummy()) 
+        
     
 
 @bottle.get("/iskanje")
