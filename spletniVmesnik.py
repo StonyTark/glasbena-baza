@@ -76,15 +76,67 @@ def dodaj_post():
 
 @bottle.get("/iskanje")
 def iskanje():
-    iskaniNiz=bottle.request.query.get('iskaniNiz','')
     izbira=bottle.request.query.get('izbira', '')
-    priimek=bottle.request.query.get('iskaniNizAlt','')
-    data = [
-        model.Artist.poisci(iskaniNiz),
+    data=[None,None,None]
+    if izbira=='1':
+        ime=bottle.request.query.get('vnos1','')
+        leto1=bottle.request.query.get('vnos2',1900)
+        leto2=bottle.request.query.get('vnos3',2030)
+        drzava=bottle.request.query.get('vnos4','')
+        mesto=bottle.request.query.get('vnos5','')
+        if leto1=='':
+            leto1=1900
+        if leto2=='':
+            leto2=2030
+        data=[
+            model.Artist.poisci_po_vsem(ime,leto1,leto2,drzava,mesto),
+            None,
+            None
+        ]
+        
+    
+    elif izbira=='2':
+        ime=bottle.request.query.get('vnos1','')
+        priimek=bottle.request.query.get('vnos2','')
+        dat_od=bottle.request.query.get('vnos3','1900-01-01')
+        dat_do=bottle.request.query.get('vnos4','2030-01-01')
+        spol=bottle.request.query.get('vnos5','')
+        drzava=bottle.request.query.get('vnos6','')
+        if dat_od=='':
+            dat_od='1900-01-01'
+        if dat_do=='':
+            dat_do='2030-01-01'
+        data=[
+            None,
+            model.Oseba.poisci_po_vsem(ime,priimek,dat_od,dat_do,spol,drzava),
+            None
+        ]
+    
+    elif izbira=='3':
+        naslov=bottle.request.query.get('vnos1','')
+        leto1=bottle.request.query.get('vnos2',1900)
+        leto2=bottle.request.query.get('vnos3',2030)
+        tip=bottle.request.query.get('vnos4','')
+        if leto1=='':
+            leto1=1900
+        if leto2=='':
+            leto2=2030
+        data=[
+            None,
+            None,
+            model.Izdaja.poisci_po_vsem(naslov,leto1,leto2,tip)
+        ]
+
+    return bottle.template('iskanje.html', izbira=izbira, podatki=data)
+    '''data = [
+        #model.Artist.poisci(iskaniNiz),
+        model.Artist.poisci_po_vsem(),
         model.Oseba.poisci(ime=iskaniNiz,priimek=priimek),
         model.Izdaja.poisci(iskaniNiz),
     ]
     return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=data)
+    '''
+    
 
 #    if izbira=='1':
 #        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Artist.poisci(iskaniNiz))

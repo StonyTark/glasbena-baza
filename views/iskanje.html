@@ -9,8 +9,90 @@
         }
     }
   
+
+  //Izpis form
+  function artistForm(){
+    var forma=`<div class="form-group">
+                    Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+                </div>
+                
+                <div class="form-group">
+                    Leto nastanka
+                    <div class="row">
+                        <div class="col"><input type="text" class="form-control" id="vnos2" name="vnos2" placeholder="Od"/></div>
+                        <div class="col"><input type="text" class="form-control" id="vnos3" name="vnos3" placeholder="Do"/></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    Drzava<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder=""/>
+                </div>
+
+                <div class="form-group">
+                    Mesto<input type="text" class="form-control" id="vnos5" name="vnos5" placeholder=""/>
+                </div>
+                <br/>`;
+    $("#vnosnaPolja").empty()
+    $("#vnosnaPolja").append(forma)
+  }
+
+  function osebaForm(){
+    var forma=`<div class="form-group">
+    Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+</div>
+
+<div class="form-group">
+    Priimek<input type="text" class="form-control" id="vnos2" name="vnos2" placeholder=""/>
+</div>
+
+<div class="form-group">
+    Datum Rojstva
+    <div class="row">
+        <div class="col"><input type="text" class="form-control" id="vnos3" name="vnos3" placeholder="Od (YYYY-MM-DD)"/></div>
+        <div class="col"><input type="text" class="form-control" id="vnos4" name="vnos4" placeholder="Do (YYYY-MM-DD)"/></div>
+    </div>
+</div>
+
+<div class="form-group">
+    Spol<input type="text" class="form-control" id="vnos5" name="vnos5" placeholder=""/>
+</div>
+
+<div class="form-group">
+    Drzava<input type="text" class="form-control" id="vnos6" name="vnos6" placeholder=""/>
+</div>`;
+    $("#vnosnaPolja").empty()
+    $("#vnosnaPolja").append(forma)
+  }
+
+
+  function izdajaForm(){
+    var forma=`
+    <div class="form-group">
+    Naslov<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+    </div>
+
+    <div class="form-group">
+        Leto izida
+        <div class="row">
+            <div class="col"><input type="text" class="form-control" id="vnos2" name="vnos2" placeholder="Od"/></div>
+            <div class="col"><input type="text" class="form-control" id="vnos3" name="vnos3" placeholder="Do"/></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        Tip<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder=""/>
+    </div>
+    `;
+    $("#vnosnaPolja").empty()
+    $("#vnosnaPolja").append(forma)
+  }
+  
+  
+
+  //Izpis tabele
   function myTable(value) {
     if (value === 1) {
+      artistForm()
       var forma = `
         <thead>
           <tr>
@@ -22,19 +104,22 @@
           </tr>
         </thead>
         <tbody>
-          % for artist in podatki[0]:
-          % referenca="/artist/"+str(artist.id)
-          <tr>
-              <td><a href={{referenca}}>{{artist.id}}</a></td>
-              <td>{{artist.ime}}</td>
-              <td>{{artist.leto_nastanka}}</td>
-              <td>{{artist.drzava}}</td>
-              <td>{{artist.mesto}}</td>
-          </tr>
+          % if podatki[0] is not None:
+          %   for artist in podatki[0]:
+          %   referenca="/artist/"+str(artist.id)
+              <tr>
+                  <td><a href={{referenca}}>{{artist.id}}</a></td>
+                  <td>{{artist.ime}}</td>
+                  <td>{{artist.leto_nastanka}}</td>
+                  <td>{{artist.drzava}}</td>
+                  <td>{{artist.mesto}}</td>
+              </tr>
+          % end
           % end
         </tbody>
         `
     } else if (value === 2) {
+      osebaForm()
       var forma = `
         <thead>
           <tr>
@@ -47,20 +132,23 @@
           </tr>
         </thead>
         <tbody>
-          % for oseba in podatki[1]:
-          % referenca="/oseba/"+str(oseba.id)
-          <tr>
-            <td><a href={{referenca}}>{{oseba.id}}</a></td>
-            <td>{{oseba.ime}}</td>
-            <td>{{oseba.priimek}}</td>
-            <td>{{oseba.datumRojstva}}</td>
-            <td>{{oseba.spol}}</td>
-            <td>{{oseba.drzava}}</td>
-          </tr>
+          % if podatki[1] is not None:
+          %   for oseba in podatki[1]:
+          %   referenca="/oseba/"+str(oseba.id)
+              <tr>
+                <td><a href={{referenca}}>{{oseba.id}}</a></td>
+                <td>{{oseba.ime}}</td>
+                <td>{{oseba.priimek}}</td>
+                <td>{{oseba.datumRojstva}}</td>
+                <td>{{oseba.spol}}</td>
+                <td>{{oseba.drzava}}</td>
+              </tr>
+          % end
           % end
         </tbody>
       `
     } else if (value === 3) {
+      izdajaForm()
       var forma = `
         <thead>
           <tr>
@@ -73,16 +161,18 @@
           </tr>
         </thead>
         <tbody>
-          % for izdaja in podatki[2]:
-          % referenca="/izdaja/"+str(izdaja.id)
-          <tr>
-              <td><a href={{referenca}}>{{izdaja.id}}</a></td>
-              <td>{{izdaja.naslov}}</td>
-              <td>{{izdaja.leto_izida}}</td>
-              <td>{{izdaja.celotnaDolzina}}</td>
-              <td>{{izdaja.tip}}</td>
-              <td>{{izdaja.idZalozbe}}</td>
-          </tr>
+          % if podatki[2] is not None:
+          %   for izdaja in podatki[2]:
+          %   referenca="/izdaja/"+str(izdaja.id)
+              <tr>
+                  <td><a href={{referenca}}>{{izdaja.id}}</a></td>
+                  <td>{{izdaja.naslov}}</td>
+                  <td>{{izdaja.leto_izida}}</td>
+                  <td>{{izdaja.celotnaDolzina}}</td>
+                  <td>{{izdaja.tip}}</td>
+                  <td>{{izdaja.idZalozbe}}</td>
+              </tr>
+          % end
           % end
         </tbody>
       `
@@ -120,7 +210,12 @@
         </div>
       </div>
       
-      <!-- Search input-->
+      
+      <div class="form-group" id="vnosnaPolja">
+
+      </div>
+      
+      <!-- Search input ZAENKRAT PUST-->
       <div class="form-group">
         <div class="col-md-4">
           <input id="searchinput" name="iskaniNiz" type="search" placeholder="Iskano ime" class="form-control input-md" value="" style="margin-bottom: 5px">

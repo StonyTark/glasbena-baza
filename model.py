@@ -11,6 +11,9 @@ oseba,zanr,artist,zalozba,izdaja,spada,track,vloga,je_clan,je_sodeloval,je_avtor
 #OSNOVNE TABELE
 #
 
+def enkapsulirajNiz(niz):
+    return '%' + niz + '%'
+
 class Oseba:
 
     def __init__(self, ime, priimek, datumRojstva, spol, drzava, *, id=None):
@@ -47,13 +50,22 @@ class Oseba:
         return 
 
     @staticmethod
-    def poisci(**kwargs):
+    def poisci_po_ImePriimek(**kwargs):
         ime=kwargs['ime']
         priimek=kwargs['priimek']
         sql = "SELECT idOseba,ime,priimek,datumRojstva,spol,drzava FROM Oseba WHERE ime LIKE ? AND priimek LIKE ? ORDER BY priimek;"
         for osID,ime,priimek,datumRojstva,spol,drzava in conn.execute(sql, ['%' + ime + '%','%' + priimek + '%']):
             yield Oseba(ime,priimek,datumRojstva,spol,drzava,id=osID)
     
+    @staticmethod
+    def poisci_po_vsem(ime,priimek,dat_od,dat_do,spol,drzava):
+        sql = '''SELECT idOseba,ime,priimek,datumRojstva,spol,drzava FROM Oseba 
+                WHERE ime LIKE ? AND priimek LIKE ? AND (datumRojstva BETWEEN ? AND ?) AND spol LIKE ? AND drzava LIKE ?
+                ORDER BY ime;
+        '''
+        for osID,ime,priimek,datumRojstva,spol,drzava in conn.execute(sql, [enkapsulirajNiz(ime),enkapsulirajNiz(priimek),dat_od,dat_do,enkapsulirajNiz(spol),enkapsulirajNiz(drzava)]):
+            yield Oseba(ime,priimek,datumRojstva,spol,drzava,id=osID)
+
     @staticmethod
     def poisciID(id):
         sql = "SELECT ime,priimek,datumRojstva,spol,drzava FROM Oseba WHERE idOseba= ?;"
@@ -164,9 +176,20 @@ class Artist:
         return rez
 
     @staticmethod
-    def poisci(niz):
+    def poisci_po_imenu(niz):
         sql = "SELECT idArtist,ime,leto_nastanka,drzava,mesto FROM Artist WHERE ime LIKE ? ORDER BY ime;"
         for arID,ime,leto_nastanka,drzava,mesto in conn.execute(sql, ['%' + niz + '%']):
+            yield Artist(ime,leto_nastanka,drzava,mesto,id=arID)
+    
+
+    @staticmethod
+    def poisci_po_vsem(ime,leto_od,leto_do,drzava,mesto):
+        sql = '''SELECT idArtist,ime,leto_nastanka,drzava,mesto FROM Artist 
+                WHERE ime LIKE ? AND (leto_nastanka BETWEEN ? AND ?) AND drzava LIKE ? AND mesto LIKE ?
+                ORDER BY ime;
+
+        '''
+        for arID,ime,leto_nastanka,drzava,mesto in conn.execute(sql, [enkapsulirajNiz(ime),leto_od,leto_do,enkapsulirajNiz(drzava),enkapsulirajNiz(mesto)]):
             yield Artist(ime,leto_nastanka,drzava,mesto,id=arID)
     
     @staticmethod
@@ -290,16 +313,26 @@ class Izdaja:
                 for clan,_,_ in temp:
                     print(clan)
                     je_sodeloval.dodaj_vrstico(idOseba=clan, idIzdaja=self.id, idVloga=1) #VLOGA ZA AVTORJA NAJ BO 1
-            
-                
-        
-        
+              
 
 
     @staticmethod
-    def poisci(niz):
+    def poisci_po_naslovu(niz):
         sql = "SELECT idIzdaja,naslov,leto_izida,celotnaDolzina,tip,idZalozbe FROM Izdaja WHERE naslov LIKE ?;"
         for izID,naslov,leto_izida,celotnaDolzina,tip,idZalozbe in conn.execute(sql, ['%' + niz + '%']):
+            yield Izdaja(naslov,leto_izida,celotnaDolzina,tip,idZalozbe,id=izID)
+    
+    @staticmethod
+    def poisci_po_vsem(naslov,leto_od,leto_do,tip):
+        sql = '''SELECT idIzdaja,naslov,leto_izida,celotnaDolzina,tip,idZalozbe FROM Izdaja 
+                WHERE naslov LIKE ? AND (leto_izida BETWEEN ? AND ?) AND tip LIKE ?
+                ORDER BY naslov;
+        '''
+        print(naslov)
+        print(leto_od)
+        print(leto_do)
+        print(tip)
+        for izID,naslov,leto_izida,celotnaDolzina,tip,idZalozbe in conn.execute(sql, [enkapsulirajNiz(naslov),leto_od,leto_do,enkapsulirajNiz(tip)]):
             yield Izdaja(naslov,leto_izida,celotnaDolzina,tip,idZalozbe,id=izID)
     
     @staticmethod
