@@ -22,8 +22,8 @@ def dodaj_post():
         drzava = bottle.request.forms.getunicode("vnos5")
         oseba = model.Oseba(ime,priimek,datumRojstva,spol,drzava)
         oseba.dodaj_v_bazo()
-
-        return bottle.template("oseba.html", iskanId=oseba.id, podatki=oseba)
+        bottle.redirect("/oseba/"+str(oseba.id))
+        #return bottle.template("oseba.html", iskanId=oseba.id, podatki=oseba)
     
     elif izbira=='2':
         
@@ -43,8 +43,8 @@ def dodaj_post():
                 temp=bottle.request.forms.getunicode("vnos{}".format(i))
                 clani.append(int(temp))
             art.dodaj_clane(clani)
-        
-        return bottle.template("artist.html", iskanId=art.id, podatki=art)
+        bottle.redirect("/artist/"+str(art.id))
+        #return bottle.template("artist.html", iskanId=art.id, podatki=art)
             
     
     elif izbira=='3':
@@ -70,21 +70,23 @@ def dodaj_post():
                 temp=bottle.request.forms.getunicode("vnos{}".format(i))
                 avtorji.append(int(temp))
             izd.dodaj_avtorje(avtorji)   
-        
-        return bottle.template("izdaja.html", iskaniID=izd.id , podatki=izd)
+        bottle.redirect("/izdaja/"+str(izd.id))
+        #return bottle.template("izdaja.html", iskaniID=izd.id , podatki=izd)
         
     elif izbira == '4':
         
         zanr=bottle.request.forms.getunicode('vnos1', '')
         model.Zanr(zanr).dodaj_v_bazo()
-        return bottle.template("dodaj.html", osebe=model.Oseba.dummy(), artisti=model.Artist.dummy())
+        bottle.redirect("/dodaj")
+        #return bottle.template("dodaj.html", osebe=model.Oseba.dummy(), artisti=model.Artist.dummy())
     
     elif izbira == '5':
 
         ime=bottle.request.forms.getunicode('vnos1', '')
         drzava=bottle.request.forms.getunicode('vnos2', '')
         model.Zalozba(ime, drzava).dodaj_v_bazo()
-        return bottle.template("dodaj.html", osebe=model.Oseba.dummy(), artisti=model.Artist.dummy()) 
+        bottle.redirect("/dodaj")
+        #return bottle.template("dodaj.html", osebe=model.Oseba.dummy(), artisti=model.Artist.dummy()) 
         
     
 
