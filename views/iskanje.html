@@ -8,128 +8,131 @@
           document.getElementById("searchinputAlt").style.display="none"
         }
     }
+  
+  function myTable(value) {
+    if (value === 1) {
+      var forma = `
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>ime</th>
+            <th>leto_nastanka</th>
+            <th>drzava</th>
+            <th>mesto</th>
+          </tr>
+        </thead>
+        <tbody>
+          % for artist in podatki[0]:
+          % referenca="/artist/"+str(artist.id)
+          <tr>
+              <td><a href={{referenca}}>{{artist.id}}</a></td>
+              <td>{{artist.ime}}</td>
+              <td>{{artist.leto_nastanka}}</td>
+              <td>{{artist.drzava}}</td>
+              <td>{{artist.mesto}}</td>
+          </tr>
+          % end
+        </tbody>
+        `
+    } else if (value === 2) {
+      var forma = `
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>ime</th>
+            <th>priimek</th>
+            <th>datumRojstva</th>
+            <th>spol</th>
+            <th>drzava</th>
+          </tr>
+        </thead>
+        <tbody>
+          % for oseba in podatki[1]:
+          % referenca="/oseba/"+str(oseba.id)
+          <tr>
+            <td><a href={{referenca}}>{{oseba.id}}</a></td>
+            <td>{{oseba.ime}}</td>
+            <td>{{oseba.priimek}}</td>
+            <td>{{oseba.datumRojstva}}</td>
+            <td>{{oseba.spol}}</td>
+            <td>{{oseba.drzava}}</td>
+          </tr>
+          % end
+        </tbody>
+      `
+    } else if (value === 3) {
+      var forma = `
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>naslov</th>
+            <th>leto_izida</th>
+            <th>tip</th>
+            <th>celotnaDolzina</th>
+            <th>idZalozbe</th>
+          </tr>
+        </thead>
+        <tbody>
+          % for izdaja in podatki[2]:
+          % referenca="/izdaja/"+str(izdaja.id)
+          <tr>
+              <td><a href={{referenca}}>{{izdaja.id}}</a></td>
+              <td>{{izdaja.naslov}}</td>
+              <td>{{izdaja.leto_izida}}</td>
+              <td>{{izdaja.celotnaDolzina}}</td>
+              <td>{{izdaja.tip}}</td>
+              <td>{{izdaja.idZalozbe}}</td>
+          </tr>
+          % end
+        </tbody>
+      `
+    }
+    setTimeout(() => {$("#tabela").empty().append(forma)}, 50)
+  }
   </script>
+
 <div class="container">
 <h2>Iskanje po bazi</h2>
-<br />
+<br/>
 <form class="form-horizontal">
     <fieldset>
     
     <!-- Multiple Radios (inline) -->
-    <div class="form-group">
-      <div class="col-md-4"> 
-          <input type="radio" name="izbira" id="radios-0" value="1" checked="checked" onclick="myFunction()">
-          <label class="radio-inline" for="radios-0"></label>Artist</label> 
-        
-          <input type="radio" name="izbira" id="radios-1" value="2" onclick="myFunction()">
-          <label class="radio-inline" for="radios-1"></label>Oseba</label>
-        
-          <input type="radio" name="izbira" id="radios-2" value="3" onclick="myFunction()">
-          <label class="radio-inline" for="radios-2"></label>Izdaja</label> 
-      </div>
-    </div>
-    
-    <!-- Search input-->
-    <div class="form-group">
-      <div class="col-md-4">
-        <input id="searchinput" name="iskaniNiz" type="search" placeholder="Iskano ime" class="form-control input-md" value="" style="margin-bottom: 5px">
-        <input id="searchinputAlt" name="iskaniNizAlt" type="search" placeholder="Iskan priimek" class="form-control input-md" value="" style="display:none">
+      <div class="form-group">
+        <div class="col-md-4">
+            <input type="radio" name="izbira" id="radios-0" value="1" onclick="myFunction(); myTable(1)">
+            <label class="radio-inline" for="radios-0"></label>Artist</label> 
+          
+            <input type="radio" name="izbira" id="radios-1" value="2" onclick="myFunction(); myTable(2)">
+            <label class="radio-inline" for="radios-1"></label>Oseba</label>
+          
+            <input type="radio" name="izbira" id="radios-2" value="3" onclick="myFunction(); myTable(3)">
+            <label class="radio-inline" for="radios-2"></label>Izdaja</label> 
+
+          % print(izbira)
+          % if izbira == "1":
+            <script>document.getElementById("radios-0").checked=true; myTable(1)</script>
+          % elif izbira == "2":
+            <script>document.getElementById("radios-1").checked=true; myTable(2)</script>
+          % elif izbira == "3":
+            <script>document.getElementById("radios-2").checked=true; myTable(3)</script>
+          % end
+        </div>
       </div>
       
-    </div>
+      <!-- Search input-->
+      <div class="form-group">
+        <div class="col-md-4">
+          <input id="searchinput" name="iskaniNiz" type="search" placeholder="Iskano ime" class="form-control input-md" value="" style="margin-bottom: 5px">
+          <input id="searchinputAlt" name="iskaniNizAlt" type="search" placeholder="Iskan priimek" class="form-control input-md" value="" style="display:none">
+        </div>
+        
+      </div>
     </fieldset>
     <input type="submit" value="Submit" class="btn btn-primary">
 </form>
 
 <br />
-<table class="table">
-  %if izbira=='1':
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Ime</th>
-      <th>Leto nastanka</th>
-      <th>Drzava</th>
-      <th>Mesto</th>
-    </tr>
-  </thead>
-  <tbody>
-    %for artist in podatki:
-    %referenca="/artist/"+str(artist.id)
-    <tr>¸
-        <td><a href={{referenca}}>{{artist.id}}</a></td>
-        <td>{{artist.ime}}</td>
-        <td>{{artist.leto_nastanka}}</td>
-        <td>{{artist.drzava}}</td>
-        <td>{{artist.mesto}}</td>
-    </tr>
-    % end
-  % end
-  </tbody>
-
-  %if izbira=='2':
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Priimek</th>
-      <th>Ime</th>
-      <th>DatumRojstva</th>
-      <th>Spol</th>
-      <th>Drzava</th>
-    </tr>
-    </thead>
-    <tbody>
-    %for oseba in podatki:
-    %referenca="/oseba/"+str(oseba.id)
-    <tr>
-        <td><a href={{referenca}}>{{oseba.id}}</a></td>
-        <td>{{oseba.priimek}}</td>
-        <td>{{oseba.ime}}</td>
-        <td>{{oseba.datumRojstva}}</td>
-        <td>{{oseba.spol}}</td>
-        <td>{{oseba.drzava}}</td>
-    </tr>
-    % end
-  
-  % end
-  </tbody>
-
-  %if izbira=='3':
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Naslov</th>
-      <th>Leto izida</th>
-      <th>Avtorji</th>
-      <th>Tip</th>
-      <th>CelotnaDolzina</th>
-      <th>ID Zalozbe</th>
-    </tr>
-  </thead>
-  <tbody>
-    %for izdaja in podatki:
-    %referenca="/izdaja/"+str(izdaja.id)
-    <tr>
-        <td><a href={{referenca}}>{{izdaja.id}}</a></td>
-        <td>{{izdaja.naslov}}</td>
-        <td>{{izdaja.leto_izida}}</td>
-        <td>
-          %avtorji=izdaja.vrni_Avtorje()
-          %dolz=len(avtorji)
-          %for id,ime in avtorji:
-              <a href="/artist/{{id}}">{{ime}}</a>
-              %if dolz!=1:
-              ,
-              %dolz-=1
-              %end
-          %end
-        </td>
-        <td>{{izdaja.celotnaDolzina}}</td>
-        <td>{{izdaja.tip}}</td>
-        <td>{{izdaja.idZalozbe}}</td>
-    </tr>
-    % end
-  % end
-</tbody>
+<table class="table" id="tabela" name="tabela">
 </table>
 </div>   
