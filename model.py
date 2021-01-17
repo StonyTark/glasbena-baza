@@ -105,6 +105,22 @@ class Zanr:
         assert self.id is None
         with conn:
             self.id = zanr.dodaj_vrstico(imeZanra=self.ime)
+    
+    @staticmethod
+    def vrni_zanre():
+        #Metoda vrne spisek trenutno zapisanih žanrov v obliki tabele
+        sql='SELECT idZanr, imeZanra FROM Zanr'
+        rez=[]
+        poizv=conn.execute(sql)
+        for vrst in poizv.fetchall():
+            rez.append(tuple(vrst))
+        print(rez)
+        return rez
+    
+    @staticmethod
+    def dummy():
+        return Zanr(None)
+
 
 class Artist:
 
@@ -313,6 +329,8 @@ class Izdaja:
                     print(clan)
                     je_sodeloval.dodaj_vrstico(idOseba=clan, idIzdaja=self.id, idVloga=1) #VLOGA ZA AVTORJA NAJ BO 1
               
+    def dodaj_zanr(self,zanrID):
+        spada.dodaj_vrstico(idIzdaja=self.id,idZanr=zanrID)
 
 
     @staticmethod

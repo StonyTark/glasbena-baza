@@ -98,6 +98,7 @@ class Zanr(Tabela):
                 imeZanra TEXT NOT NULL UNIQUE
             );
         """)
+        self.conn.execute("INSERT INTO Zanr (imeZanra) VALUES ('Nedefiniran'),('Pop'),('Hip-hop'),('Rock'),('Electronic'),('Latin'),('Indie'),('Classical'),('K-Pop'),('Country'),('Jazz'),('Metal'),('Funk'),('Disco');")
     
     def dodaj_vrstico(self, /, **podatki):
         assert "imeZanra" in podatki
@@ -182,6 +183,7 @@ class Vloga(Tabela):
                 Naziv TEXT NOT NULL UNIQUE
             );
         """)
+        self.conn.execute("INSERT INTO Vloga(idVloga,Naziv) VALUES(1,'Avtor');")
     
     def dodaj_vrstico(self, /, **podatki):
         assert "Naziv" in podatki
