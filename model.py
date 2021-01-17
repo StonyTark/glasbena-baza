@@ -378,7 +378,7 @@ class Izdaja:
         sql = "SELECT naslov,leto_izida,celotnaDolzina,tip,idZalozbe FROM Izdaja WHERE idIzdaja= ?;"
         rez=conn.execute(sql, [id,])
         naslov,leto_izida,celotnaDolzina,tip,idZalozbe=rez.fetchone()
-        return Izdaja(naslov,leto_izida,celotnaDolzina,tip,idZalozbe,id=id)
+        return Izdaja(naslov,leto_izida,tip,celotnaDolzina,idZalozbe,id=id)
     
     '''
     TODO

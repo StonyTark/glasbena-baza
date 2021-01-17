@@ -2,8 +2,8 @@
 
 <div style="display: flex">
     <div style="width: 40%">
-    ID: {{podatki.id}} <br>
-    Avtor: 
+    <h2>{{podatki.naslov}}</h2>
+    <h4>Avtor: 
     %avtorji=podatki.vrni_Avtorje()
     %dolz=len(avtorji)
     %for id,ime in avtorji:
@@ -13,8 +13,7 @@
         %dolz-=1
         %end
     %end
-    <br>
-    Naslov: {{podatki.naslov}} <br>
+    </h4>
     Leto_izida: {{podatki.leto_izida}} <br>
     CelotnaDolzina: {{podatki.celotnaDolzina}} <br> 
     Tip: {{podatki.tip}}<br>
