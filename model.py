@@ -50,7 +50,7 @@ class Oseba:
     def poisci(**kwargs):
         ime=kwargs['ime']
         priimek=kwargs['priimek']
-        sql = "SELECT idOseba,ime,priimek,datumRojstva,spol,drzava FROM Oseba WHERE ime LIKE ? AND priimek LIKE ?;"
+        sql = "SELECT idOseba,ime,priimek,datumRojstva,spol,drzava FROM Oseba WHERE ime LIKE ? AND priimek LIKE ? ORDER BY priimek;"
         for osID,ime,priimek,datumRojstva,spol,drzava in conn.execute(sql, ['%' + ime + '%','%' + priimek + '%']):
             yield Oseba(ime,priimek,datumRojstva,spol,drzava,id=osID)
     
@@ -165,7 +165,7 @@ class Artist:
 
     @staticmethod
     def poisci(niz):
-        sql = "SELECT idArtist,ime,leto_nastanka,drzava,mesto FROM Artist WHERE ime LIKE ?;"
+        sql = "SELECT idArtist,ime,leto_nastanka,drzava,mesto FROM Artist WHERE ime LIKE ? ORDER BY ime;"
         for arID,ime,leto_nastanka,drzava,mesto in conn.execute(sql, ['%' + niz + '%']):
             yield Artist(ime,leto_nastanka,drzava,mesto,id=arID)
     
