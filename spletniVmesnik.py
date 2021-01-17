@@ -190,7 +190,7 @@ def artist_post(id):
 @bottle.get("/izdaja/<id>")
 def izdaja(id):
     podatki = model.Izdaja.poisciID(id)
-    podatki.nastavi_dolzino()
+    podatki.nastavi_dolzino(id)
     return bottle.template('izdaja.html', iskaniID=id , podatki=podatki)
 
 @bottle.post("/izdaja/<id>")

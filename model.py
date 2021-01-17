@@ -276,7 +276,7 @@ class Izdaja:
         self.naslov = naslov
         self.leto_izida = leto_izida
         self.tip = tip
-        self.celotnaDolzina = celotnaDolzina
+        self.celotnaDolzina = self.nastavi_dolzino(id)
         self.idZalozbe = idZalozbe
     
     def __str__(self):
@@ -358,13 +358,17 @@ class Izdaja:
             rez.append(tuple(vrst))
         return rez
     
-    def nastavi_dolzino(self):
+    @staticmethod
+    def nastavi_dolzino(id):
         sql = "SELECT dolzina FROM Track WHERE idIzdaja=?"
-        poziv = conn.execute(sql, [self.id,])
+        poziv = conn.execute(sql, [id,])
         cas = 0
         for d in poziv.fetchall():
             cas += d[0]
-        self.celotnaDolzina = cas
+        sql = "UPDATE Izdaja SET celotnaDolzina=? WHERE idIzdaja=?"
+        with conn:
+            conn.execute(sql, [cas, id,])
+        return cas
 
     @staticmethod
     def poisci_po_naslovu(niz):
