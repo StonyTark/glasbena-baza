@@ -45,8 +45,26 @@ class Oseba:
         return rez
 
     def relevantnaDela(self):
-        #TODO
-        return 
+        rez=[]
+        sql="SELECT FROM Je_Sodeloval WHERE idOseba=?"
+        poizv=conn.execute(sql,[self.id,])
+        for vrst in poizv.fetchall():
+            rez.append(vrst(0))
+        return rez
+    
+    @staticmethod
+    def brisiID(id):
+        with conn:
+            #Brisi iz vmesnih
+            sql="DELETE FROM Je_Sodeloval WHERE idOseba=?"
+            poizv=conn.execute(sql,[id,])
+
+            sql="DELETE FROM Je_Clan WHERE idOseba=?"
+            poizv=conn.execute(sql,[id,])
+
+            #Brisi iz glavne
+            sql="DELETE FROM Oseba WHERE idOseba=?"
+            poizv=conn.execute(sql,[id,])
 
     @staticmethod
     def poisci_po_ImePriimek(**kwargs):
@@ -60,7 +78,7 @@ class Oseba:
     def poisci_po_vsem(ime,priimek,dat_od,dat_do,spol,drzava):
         sql = '''SELECT idOseba,ime,priimek,datumRojstva,spol,drzava FROM Oseba 
                 WHERE ime LIKE ? AND priimek LIKE ? AND (datumRojstva BETWEEN ? AND ?) AND spol LIKE ? AND drzava LIKE ?
-                ORDER BY ime;
+                ORDER BY lower(priimek);
         '''
         for osID,ime,priimek,datumRojstva,spol,drzava in conn.execute(sql, [enkapsulirajNiz(ime),enkapsulirajNiz(priimek),dat_od,dat_do,enkapsulirajNiz(spol),enkapsulirajNiz(drzava)]):
             yield Oseba(ime,priimek,datumRojstva,spol,drzava,id=osID)
@@ -74,7 +92,7 @@ class Oseba:
     
     @staticmethod
     def vrni_spisek_oseb():
-        sql = "SELECT idOseba,ime,priimek,datumRojstva FROM Oseba ORDER BY priimek;"
+        sql = "SELECT idOseba,ime,priimek,datumRojstva FROM Oseba ORDER BY lower(priimek);"
         poizv=conn.execute(sql)
         rez=[]
         for vrst in poizv.fetchall():
@@ -198,7 +216,7 @@ class Artist:
     def poisci_po_vsem(ime,leto_od,leto_do,drzava,mesto):
         sql = '''SELECT idArtist,ime,leto_nastanka,drzava,mesto FROM Artist 
                 WHERE ime LIKE ? AND (leto_nastanka BETWEEN ? AND ?) AND drzava LIKE ? AND mesto LIKE ?
-                ORDER BY ime;
+                ORDER BY lower(ime);
 
         '''
         for arID,ime,leto_nastanka,drzava,mesto in conn.execute(sql, [enkapsulirajNiz(ime),leto_od,leto_do,enkapsulirajNiz(drzava),enkapsulirajNiz(mesto)]):
@@ -321,9 +339,6 @@ class Izdaja:
                     je_sodeloval.dodaj_vrstico(idOseba=clan, idIzdaja=self.id, idVloga=1) #VLOGA ZA AVTORJA NAJ BO 1
               
     def dodaj_zanr(self,zanrID):
-        print("DODAJAM ZANR")
-        print(self.id)
-        print(zanrID)
         with conn:
             spada.dodaj_vrstico(idIzdaja=self.id,idZanr=zanrID)
     
@@ -353,7 +368,7 @@ class Izdaja:
     def poisci_po_vsem(naslov,leto_od,leto_do,tip):
         sql = '''SELECT idIzdaja,naslov,leto_izida,celotnaDolzina,tip,idZalozbe FROM Izdaja 
                 WHERE naslov LIKE ? AND (leto_izida BETWEEN ? AND ?) AND tip LIKE ?
-                ORDER BY naslov;
+                ORDER BY lower(naslov);
         '''
         for izID,naslov,leto_izida,celotnaDolzina,tip,idZalozbe in conn.execute(sql, [enkapsulirajNiz(naslov),leto_od,leto_do,enkapsulirajNiz(tip)]):
             yield Izdaja(naslov,leto_izida,celotnaDolzina,tip,idZalozbe,id=izID)

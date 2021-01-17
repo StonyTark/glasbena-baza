@@ -168,6 +168,14 @@ def iskanje():
 def oseba(id):
     return bottle.template('oseba.html', iskaniID=id , podatki=model.Oseba.poisciID(id))
 
+@bottle.post("/oseba/<id>")
+def oseba_post(id):
+    gumb=bottle.request.forms.getunicode("submit")
+    if gumb=="brisi":
+        model.Oseba.brisiID(id)
+    bottle.redirect("/")
+    #return bottle.template('oseba.html', iskaniID=id , podatki=model.Oseba.poisciID(id))
+
 
 @bottle.get("/artist/<id>")
 def artist(id):
