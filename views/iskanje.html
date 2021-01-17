@@ -87,7 +87,7 @@
         </tbody>
       `
     }
-    setTimeout(() => {$("#tabela").empty().append(forma)}, 50)
+    setTimeout(() => {$("#tabela").empty().append(forma)}, 0)
   }
   </script>
 
@@ -109,7 +109,6 @@
             <input type="radio" name="izbira" id="radios-2" value="3" onclick="myFunction(); myTable(3)">
             <label class="radio-inline" for="radios-2"></label>Izdaja</label> 
 
-          % print(izbira)
           % if izbira == "1":
             <script>document.getElementById("radios-0").checked=true; myTable(1)</script>
           % elif izbira == "2":

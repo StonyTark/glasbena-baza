@@ -1,57 +1,84 @@
 % rebase('osnova.html')
 
-<div>
-ID: {{podatki.id}} <br>
-Avtor: 
-%avtorji=podatki.vrni_Avtorje()
-%dolz=len(avtorji)
-%for id,ime in avtorji:
-     <a href="/artist/{{id}}">{{ime}}</a>
-     %if dolz!=1:
-     ,
-     %dolz-=1
-     %end
-%end
+<div style="display: flex">
+    <div style="width: 40%">
+    ID: {{podatki.id}} <br>
+    Avtor: 
+    %avtorji=podatki.vrni_Avtorje()
+    %dolz=len(avtorji)
+    %for id,ime in avtorji:
+        <a href="/artist/{{id}}">{{ime}}</a>
+        %if dolz!=1:
+        ,
+        %dolz-=1
+        %end
+    %end
+    <br>
+    Naslov: {{podatki.naslov}} <br>
+    Leto_izida: {{podatki.leto_izida}} <br>
+    CelotnaDolzina: {{podatki.celotnaDolzina}} <br> 
+    Tip: {{podatki.tip}}<br>
+    IdZalozbe: {{podatki.idZalozbe}} <br>
+    </div>
 
-<br>
+    <form method="POST">
+        <fieldset>
+            <div style="flex-grow: 1;">
+                <div class="form-group" >
+                    <div class="row">
+                        <div class="col-form-label">
+                            <label>Dodaj novo skladbo:</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" class="form-control" id="naslov" name="naslov" placeholder="Naslov skladbe"/>
+                        </div>
+                        <div class="col-6">
+                            <input type="time" step="1" class="form-control" id="dolzina" name="dolzina"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+    </form>
 
-Naslov: {{podatki.naslov}} <br>
-Leto_izida: {{podatki.leto_izida}} <br>
-CelotnaDolzina: {{podatki.celotnaDolzina}} <br> 
-Tip: {{podatki.tip}}<br>
-IdZalozbe: {{podatki.idZalozbe}} <br>
 </div>
 
 <div>
     <br>
     <table class="table">
-    <tr>
-        <th>Tracklist</th>
-        <th>Naslov</th>
-        <th>Dolzina</th>
+        <h4>Seznam skladb v izdaji:</h4>
+        <thead>
+            <tr>
+                <th>Tracklist</th>
+                <th>Naslov</th>
+                <th>Dolzina</th>
+            </tr>
+        </thead>
+        % from pomozneFunkcije import sekunde_v_format
+        % i=1
+        % for naslov,dolzina in podatki.vrni_Tracklist():
+        <tr>
+            <td>{{i}}</td>
+            <td>{{naslov}}</td>
+            <td>{{sekunde_v_format(dolzina)}}</td>>
         </tr>
-    % i=1
-    % for naslov,dolzina in podatki.vrni_Tracklist():
-    <tr>
-        <td>{{i}}</td>
-        <td>{{naslov}}</td>
-        <td>{{dolzina}}</td>>
-    </tr>
-    % i+=1
-    % end
+        % i+=1
+        % end
     </table>
-    
 </div>
 
 <div>
+    <h4>Ustvarjalci, ki so sodelovali:</h4>
     <table class="table">
         <thead>
-            Ustvarjalci, ki so sodelovali:
+            <tr>
+                <th>Ime</th>
+                <th>Vloga</th>
+            </tr>
         </thead>
-        <tr>
-            <th>Ime</th>
-            <th>Vloga</th>
-        </tr>
         % for id, ime, priimek, vloga in podatki.vrni_Sodelujoce():
         <tr>
             <td><a href="/oseba/{{id}}">{{ime}} {{priimek}}</a></td>
