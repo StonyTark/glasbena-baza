@@ -173,7 +173,17 @@ function formaIzdaja(){
     document.getElementById("izbira").value="3"
 }
 
-
+function formaZanr () {
+    var forma = `
+        <div class="form-group">
+            <label for="exampleFormControlInput1"></label>
+            Žanr<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+        </div>
+        <input type="submit" value="Submit" class="btn btn-primary"/>
+    `
+    $("#obrazec").empty().append(forma)
+    document.getElementById("izbira").value="4"
+}
 
 
 
@@ -188,6 +198,7 @@ function formaIzdaja(){
         <a class="dropdown-item" href="#" onclick="formaOseba()">Dodaj osebo</a>
         <a class="dropdown-item" href="#" onclick="formaArtist()">Dodaj artista</a>
         <a class="dropdown-item" href="#" onclick="formaIzdaja()">Dodaj izdajo</a>
+        <a class="dropdown-item" href="#" onclick="formaZanr()">Dodaj žanr</a>
       </div>
     </div>
   </div>
