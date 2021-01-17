@@ -155,6 +155,7 @@
             <th>ID</th>
             <th>naslov</th>
             <th>leto_izida</th>
+            <th>Avtorji</th>
             <th>tip</th>
             <th>celotnaDolzina</th>
             <th>idZalozbe</th>
@@ -168,6 +169,17 @@
                   <td><a href={{referenca}}>{{izdaja.id}}</a></td>
                   <td>{{izdaja.naslov}}</td>
                   <td>{{izdaja.leto_izida}}</td>
+                  <td>
+                    %avtorji=izdaja.vrni_Avtorje()
+                    %dolz=len(avtorji)
+                    %for id,ime in avtorji:
+                        <a href="/artist/{{id}}">{{ime}}</a>
+                        %if dolz!=1:
+                        ,
+                        %   dolz-=1
+                        %end
+                    %end
+                  </td>
                   <td>{{izdaja.celotnaDolzina}}</td>
                   <td>{{izdaja.tip}}</td>
                   <td>{{izdaja.idZalozbe}}</td>
