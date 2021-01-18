@@ -167,7 +167,9 @@ def iskanje():
 
 @bottle.get("/oseba/<id>")
 def oseba(id):
-    return bottle.template('oseba.html', iskaniID=id , podatki=model.Oseba.poisciID(id))
+    podatki = model.Oseba.poisciID(id)
+    rojstvo = pf.popravi_datum(podatki.datumRojstva)
+    return bottle.template('oseba.html', iskaniID=id , podatki=podatki, rojstvo=rojstvo)
 
 @bottle.post("/oseba/<id>")
 def oseba_post(id):
