@@ -204,6 +204,20 @@ class Artist:
         for vrst in poizv.fetchall():
             rez.append(tuple(vrst))
         return rez
+    
+    @staticmethod
+    def brisiID(id):
+        with conn:
+            #Brisi iz vmesnih
+            sql="DELETE FROM Je_Avtor WHERE idArtist=?"
+            poizv=conn.execute(sql,[id,])
+
+            sql="DELETE FROM Je_Clan WHERE idArtist=?"
+            poizv=conn.execute(sql,[id,])
+
+            #Brisi iz glavne
+            sql="DELETE FROM Artist WHERE idArtist=?"
+            poizv=conn.execute(sql,[id,])
 
     @staticmethod
     def poisci_po_imenu(niz):

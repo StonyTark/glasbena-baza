@@ -184,9 +184,14 @@ def artist(id):
 
 @bottle.post("/artist/<id>")
 def artist_post(id):
-    id_oseba = bottle.request.forms.getunicode("id")
-    model.Artist.poisciID(id).dodaj_clane([id_oseba,]) #treba dodelat funkcijo, trenutno crashne, če dodaš osebo, ki je že član
-    return bottle.template('artist.html', iskaniID=id , podatki=model.Artist.poisciID(id)) 
+    gumb = bottle.request.forms.getunicode("gumb")
+    if gumb == "Submit":
+        artistId = bottle.request.forms.getunicode("id")
+        model.Artist.poisciID(id).dodaj_clane([artistId,]) # treba dodelat funkcijo, trenutno crashne, če dodaš osebo, ki je že član
+        return bottle.template('artist.html', iskaniID=id , podatki=model.Artist.poisciID(id)) 
+    elif gumb == "briši":
+        model.Artist.brisiID(id)
+        bottle.redirect("/")
 
 @bottle.get("/izdaja/<id>")
 def izdaja(id):
