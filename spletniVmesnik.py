@@ -23,7 +23,6 @@ def dodaj_post():
         oseba = model.Oseba(ime,priimek,datumRojstva,spol,drzava)
         oseba.dodaj_v_bazo()
         bottle.redirect("/oseba/"+str(oseba.id))
-        #return bottle.template("oseba.html", iskanId=oseba.id, podatki=oseba)
     
     elif izbira=='2':
         
@@ -44,9 +43,7 @@ def dodaj_post():
                 clani.append(int(temp))
             art.dodaj_clane(clani)
         bottle.redirect("/artist/"+str(art.id))
-        #return bottle.template("artist.html", iskanId=art.id, podatki=art)
             
-    
     elif izbira=='3':
         
         naslov = bottle.request.forms.getunicode("vnos1")
@@ -71,14 +68,12 @@ def dodaj_post():
                 avtorji.append(int(temp))
             izd.dodaj_avtorje(avtorji)   
         bottle.redirect("/izdaja/"+str(izd.id))
-        #return bottle.template("izdaja.html", iskaniID=izd.id , podatki=izd)
         
     elif izbira == '4':
         
         zanr=bottle.request.forms.getunicode('vnos1', '')
         model.Zanr(zanr).dodaj_v_bazo()
         bottle.redirect("/dodaj")
-        #return bottle.template("dodaj.html", osebe=model.Oseba.dummy(), artisti=model.Artist.dummy())
     
     elif izbira == '5':
 
@@ -86,9 +81,6 @@ def dodaj_post():
         drzava=bottle.request.forms.getunicode('vnos2', '')
         model.Zalozba(ime, drzava).dodaj_v_bazo()
         bottle.redirect("/dodaj")
-        #return bottle.template("dodaj.html", osebe=model.Oseba.dummy(), artisti=model.Artist.dummy()) 
-        
-    
 
 @bottle.get("/iskanje")
 def iskanje():
@@ -146,24 +138,6 @@ def iskanje():
         print(data[2])
 
     return bottle.template('iskanje.html', izbira=izbira, podatki=data)
-    '''data = [
-        #model.Artist.poisci(iskaniNiz),
-        model.Artist.poisci_po_vsem(),
-        model.Oseba.poisci(ime=iskaniNiz,priimek=priimek),
-        model.Izdaja.poisci(iskaniNiz),
-    ]
-    return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=data)
-    '''
-    
-
-#    if izbira=='1':
-#        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Artist.poisci(iskaniNiz))
-#    elif izbira=='2':
-#        priimek=bottle.request.query.get('iskaniNizAlt','')
-#        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Oseba.poisci(ime=iskaniNiz,priimek=priimek))
-#    elif izbira=='3':
-#        return bottle.template('iskanje.html', niz=iskaniNiz, izbira=izbira, podatki=model.Izdaja.poisci(iskaniNiz))
-
 
 @bottle.get("/oseba/<id>")
 def oseba(id):
@@ -177,7 +151,6 @@ def oseba_post(id):
     if gumb=="brisi":
         model.Oseba.brisiID(id)
     bottle.redirect("/")
-    #return bottle.template('oseba.html', iskaniID=id , podatki=model.Oseba.poisciID(id))
 
 
 @bottle.get("/artist/<id>")
@@ -202,7 +175,9 @@ def artist_post(id):
 def izdaja(id):
     podatki = model.Izdaja.poisciID(id)
     podatki.nastavi_dolzino(id)
-    return bottle.template('izdaja.html', iskaniID=id , podatki=podatki, artisti=model.Artist.dummy())
+    zalozba = model.Zalozba.dummy().vrni_zalozbo(podatki.idZalozbe)
+    print(zalozba)
+    return bottle.template('izdaja.html', iskaniID=id , podatki=podatki, artisti=model.Artist.dummy(), zalozba=zalozba)
 
 @bottle.post("/izdaja/<id>")
 def izdaja_post(id):
