@@ -192,6 +192,9 @@ def artist_post(id):
     elif gumb == "briši":
         model.Artist.brisiID(id)
         bottle.redirect("/")
+    else:
+        model.Artist.dummy().brisiClana(id, gumb)
+        return bottle.template('artist.html', iskaniID=id , podatki=model.Artist.poisciID(id)) 
 
 @bottle.get("/izdaja/<id>")
 def izdaja(id):

@@ -39,15 +39,18 @@
 
     <br>
     <table class="table">
-    <thead>
-        <th>Člani</th>
-    </thead>
-    %for id,ime,priimek in podatki.vrni_clane():
-    <tr>
-        <td><a href="/oseba/{{id}}">{{ime}} {{priimek}} ({{id}})</a></td>
-    </tr>
-    
-    %end
+        <thead>
+            <th>Člani</th>
+            <th class="text-right">Briši</th>
+        </thead>
+        %for id,ime,priimek in podatki.vrni_clane():
+        <tr>
+            <form method="POST">
+                <td><a href="/oseba/{{id}}">{{ime}} {{priimek}} ({{id}})</a></td>
+                <td><button class="btn btn-danger float-right" type="submit" name="gumb" value={{id}}>X</button></td>
+            </form>
+        </tr>
+        %end
     </table>
     
 </div>

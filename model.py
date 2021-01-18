@@ -259,6 +259,12 @@ class Artist:
         for vrst in poizv.fetchall():
             rez.append(tuple(vrst))
         return rez
+    
+    @staticmethod
+    def brisiClana(id, idClan):
+        sql = "DELETE FROM Je_Clan WHERE idArtist=? AND idOseba=?"
+        with conn:
+            conn.execute(sql, [id, idClan,])
 
     @staticmethod
     def dummy():
