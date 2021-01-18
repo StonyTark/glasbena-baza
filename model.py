@@ -357,6 +357,18 @@ class Izdaja:
             rez.append(tuple(vrst))
         return rez
     
+    def vrni_mozne_avtorje(self):
+        rez=[]
+        sql = '''
+            SELECT idArtist,ime,drzava FROM Artist 
+            WHERE idArtist NOT IN(SELECT idArtist FROM Je_Avtor WHERE idIzdaja=?)
+            ORDER BY lower(ime)
+        '''
+        poizv=conn.execute(sql,[self.id,])
+        for vrst in poizv.fetchall():
+            rez.append(tuple(vrst))
+        return rez
+    
     def vrni_Sodelujoce(self):
         rez = []
         sql = """
@@ -377,13 +389,16 @@ class Izdaja:
         podane osebe nato zapiše v tabelo je_clan z trenutni artist idjem
         '''
         with conn:
+            zeSodelujejo=self.vrni_Sodelujoce()
+            zeSodID=[i[0] for i in zeSodelujejo]
             for avtorID in avtorji:
                 je_avtor.dodaj_vrstico(idArtist=avtorID,idIzdaja=self.id)
 
                 "Vzame trenutne člane (osebe) in jih zapiše v je_sodeloval kot avtorje"
                 temp=Artist.poisciID(avtorID).vrni_clane()
                 for clan,_,_ in temp:
-                    je_sodeloval.dodaj_vrstico(idOseba=clan, idIzdaja=self.id, idVloga=1) #VLOGA ZA AVTORJA NAJ BO 1
+                    if clan not in(zeSodID):
+                        je_sodeloval.dodaj_vrstico(idOseba=clan, idIzdaja=self.id, idVloga=1) #VLOGA ZA AVTORJA NAJ BO 1
               
     def dodaj_zanr(self,zanrID):
         with conn:

@@ -40,7 +40,7 @@
                 <div class="row">
                     <div class="col">
                         <select type="text" class="form-control" id="id" name="izbraniArtist">
-                            %for id,ime,drzava in artisti.vrni_spisek_artistov():
+                            %for id,ime,drzava in podatki.vrni_mozne_avtorje():
                             <option value="{{id}}">{{ime}}, {{drzava}} (ID:{{id}})</option>
                             %end
                         </select>

@@ -219,7 +219,8 @@ def izdaja_post(id):
     elif gumb == "Dodaj avtorja":
         izbran = bottle.request.forms.getunicode("izbraniArtist")
         model.Izdaja.poisciID(id).dodaj_avtorje([izbran])
-        return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id), artisti=model.Artist.dummy())
+        bottle.redirect("/izdaja/"+str(id))
+        #return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id), artisti=model.Artist.dummy())
     elif gumb=='briši':
         model.Izdaja.brisiID(id)
         bottle.redirect("/")
