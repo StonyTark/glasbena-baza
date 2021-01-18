@@ -50,7 +50,7 @@ class Oseba:
                 JOIN Izdaja I ON I.idIzdaja=J.idIzdaja
                 JOIN Je_Avtor ja ON ja.idIzdaja=I.idIzdaja
                 JOIN Artist A ON A.idArtist=ja.idArtist
-                WHERE J.idOseba=?
+                WHERE J.idOseba=? AND J.idOseba IN (SELECT idOseba FROM Je_Clan WHERE idArtist=A.idArtist)
                 ORDER BY lower(A.ime),lower(I.naslov);
         '''
         poizv=conn.execute(sql,[self.id,])
