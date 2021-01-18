@@ -315,6 +315,17 @@ class Zalozba:
             self.id = zalozba.dodaj_vrstico(ime=self.ime,drzava=self.drzava)
     
     @staticmethod
+    def vrni_zalozbo(id):
+        """
+        Vrne ime in državo založbe z danim id-jem.
+        """
+        sql = "SELECT ime, drzava FROM Zalozba WHERE idZalozbe=?"
+        poziv = conn.execute(sql, [id,])
+        ime, drzava = poziv.fetchall()[0]
+        return ime, drzava
+            
+    
+    @staticmethod
     def vrni_spisek_zalozb():
         sql = "SELECT idZalozbe, ime, drzava FROM Zalozba ORDER BY lower(ime);"
         poizv=conn.execute(sql)

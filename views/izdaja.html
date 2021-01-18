@@ -30,7 +30,8 @@
                 %end
             %end
             <br/>
-            IdZalozbe: {{podatki.idZalozbe}} <br>
+            
+            IdZalozbe: {{zalozba[0] + " - " + zalozba[1]}} <br>
         </div>
             
         <div class="col">
@@ -89,7 +90,7 @@
                 <th>Tracklist</th>
                 <th>Naslov</th>
                 <th>Dolzina</th>
-                <th>Briši</th>
+                <th class="text-right">Briši</th>
             </tr>
         </thead>
         <form method="POST">
@@ -100,7 +101,7 @@
                 <td>{{i}}</td>
                 <td>{{naslov}}</td>
                 <td>{{sekunde_v_format(dolzina)}}</td>
-                <td><button class="btn btn-danger" type="submit" name="brisanID" value={{idTrack}}>X</button></td>
+                <td><button class="btn btn-danger float-right" type="submit" name="brisanID" value={{idTrack}}>X</button></td>
             </tr>
             % i+=1
             % end
