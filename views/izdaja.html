@@ -142,13 +142,13 @@
         <thead>
             <tr>
                 <th>Ime</th>
-                <th>Vloga</th>
+                <!--<th>Vloga</th>-->
             </tr>
         </thead>
         % for id, ime, priimek, vloga in podatki.vrni_Sodelujoce():
         <tr>
             <td><a href="/oseba/{{id}}">{{ime}} {{priimek}}</a></td>
-            <td>{{vloga}}</td>
+            <!--<td>{{vloga}}</td>-->
         </tr>
         % end
     </table>
