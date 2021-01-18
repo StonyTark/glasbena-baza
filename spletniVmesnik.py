@@ -188,11 +188,15 @@ def izdaja_post(id):
         dolzina = bottle.request.forms.getunicode("dolzina")
         model.Track(naslov, pf.pretvori_v_sekunde(dolzina), id).dodaj_v_bazo()
         model.Izdaja.nastavi_dolzino(id)
-        return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id), artisti=model.Artist.dummy())
+        podatki = model.Izdaja.poisciID(id)
+        zalozba = model.Zalozba.dummy().vrni_zalozbo(podatki.idZalozbe)
+        return bottle.template("izdaja.html", iskaniID=id , podatki=podatki, artisti=model.Artist.dummy(), zalozba=zalozba)
     elif gumb=='Dodaj zvrst':
         izbraniZanr = bottle.request.forms.getunicode("izbraniZanr")
         model.Izdaja.poisciID(id).dodaj_zanr(int(izbraniZanr))
-        return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id), artisti=model.Artist.dummy())
+        podatki = model.Izdaja.poisciID(id)
+        zalozba = model.Zalozba.dummy().vrni_zalozbo(podatki.idZalozbe)
+        return bottle.template("izdaja.html", iskaniID=id , podatki=podatki, artisti=model.Artist.dummy(), zalozba=zalozba)
     elif gumb == "Dodaj avtorja":
         izbran = bottle.request.forms.getunicode("izbraniArtist")
         model.Izdaja.poisciID(id).dodaj_avtorje([izbran])
