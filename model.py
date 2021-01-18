@@ -46,10 +46,16 @@ class Oseba:
 
     def relevantnaDela(self):
         rez=[]
-        sql="SELECT FROM Je_Sodeloval WHERE idOseba=?"
+        sql='''SELECT I.idIzdaja, A.idArtist, I.naslov, A.ime  FROM Je_Sodeloval J
+                JOIN Izdaja I ON I.idIzdaja=J.idIzdaja
+                JOIN Je_Avtor ja ON ja.idIzdaja=I.idIzdaja
+                JOIN Artist A ON A.idArtist=ja.idArtist
+                WHERE J.idOseba=?
+                ORDER BY lower(A.ime),lower(I.naslov);
+        '''
         poizv=conn.execute(sql,[self.id,])
         for vrst in poizv.fetchall():
-            rez.append(vrst(0))
+            rez.append(tuple(vrst))
         return rez
     
     @staticmethod
