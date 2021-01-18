@@ -131,6 +131,7 @@
           </tr>
         </thead>
         <tbody>
+          % from pomozneFunkcije import popravi_datum
           % if podatki[1] is not None:
           %   for oseba in podatki[1]:
           %   referenca="/oseba/"+str(oseba.id)
@@ -138,7 +139,7 @@
               <tr>
                 <td>{{oseba.id}}</td>
                 <td><a href={{referenca}}>{{name}}</a></td>
-                <td>{{oseba.datumRojstva}}</td>
+                <td>{{popravi_datum(oseba.datumRojstva)}}</td>
                 <td>{{oseba.spol}}</td>
                 <td>{{oseba.drzava}}</td>
               </tr>
