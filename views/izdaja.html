@@ -34,6 +34,23 @@
         </div>
             
         <div class="col">
+            <br>
+            <form method="POST">
+                <label>Dodaj avtorja:</label>
+                <div class="row">
+                    <div class="col">
+                        <select type="text" class="form-control" id="id" name="izbraniArtist">
+                            %for id,ime,drzava in artisti.vrni_spisek_artistov():
+                            <option value="{{id}}">{{ime}}, {{drzava}} (ID:{{id}})</option>
+                            %end
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <input type="submit" name="gumb" value="Dodaj avtorja" class="btn btn-primary"/>
+                    </div>
+                </div>
+            </form>
+            <br>
             <form method="POST">
                 <div class="form-group" >
                     <label>Dodaj zvrst:</label>
@@ -45,8 +62,6 @@
                                 %end
                             </select>
                         </div>
-                        <!--input type="text" id="ime" name="ime" placeholder="Ime"/-->
-                        <!--input type="text" id="priimek" name="priimek" placeholder="Priimek"/-->
                         <div class="col-2">
                             <input type="submit" name="gumb" value="Dodaj zvrst" class="btn btn-primary"/>
                         </div>

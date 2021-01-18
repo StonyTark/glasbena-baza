@@ -200,7 +200,7 @@ def artist_post(id):
 def izdaja(id):
     podatki = model.Izdaja.poisciID(id)
     podatki.nastavi_dolzino(id)
-    return bottle.template('izdaja.html', iskaniID=id , podatki=podatki)
+    return bottle.template('izdaja.html', iskaniID=id , podatki=podatki, artisti=model.Artist.dummy())
 
 @bottle.post("/izdaja/<id>")
 def izdaja_post(id):
@@ -211,11 +211,15 @@ def izdaja_post(id):
         dolzina = bottle.request.forms.getunicode("dolzina")
         model.Track(naslov, pf.pretvori_v_sekunde(dolzina), id).dodaj_v_bazo()
         model.Izdaja.nastavi_dolzino(id)
-        return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id),zanri=model.Zanr.dummy().vrni_zanre())
+        return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id), artisti=model.Artist.dummy())
     elif gumb=='Dodaj zvrst':
         izbraniZanr = bottle.request.forms.getunicode("izbraniZanr")
         model.Izdaja.poisciID(id).dodaj_zanr(int(izbraniZanr))
-        return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id),zanri=model.Zanr.dummy().vrni_zanre())
+        return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id), artisti=model.Artist.dummy())
+    elif gumb == "Dodaj avtorja":
+        izbran = bottle.request.forms.getunicode("izbraniArtist")
+        model.Izdaja.poisciID(id).dodaj_avtorje([izbran])
+        return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id), artisti=model.Artist.dummy())
     else:
         brisanID=bottle.request.forms.getunicode("brisanID")
         model.Track.izbrisi_ID(int(brisanID))

@@ -357,7 +357,7 @@ class Izdaja:
             rez.append(tuple(vrst))
         return rez
     
-    def dodaj_avtorje(self,avtorji):
+    def dodaj_avtorje(self, avtorji):
         '''
         avtorji naj bo tabela ID-jev željenih članov
         podane osebe nato zapiše v tabelo je_clan z trenutni artist idjem
