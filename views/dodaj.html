@@ -85,9 +85,9 @@ function formaOseba(){
     <div class="form-group">
         <label for="exampleFormControlInput1"></label>
         Spol
-        <select type="text" class="form-control" id="id" name="id" placeholder="Id">
+        <select type="text" class="form-control" id="idS" name="idS" placeholder="Id">
             % for spol in ["Male", "Female", "Other"]:
-            <option value="{{id}}">{{spol}}</option>
+            <option name="idS" value="{{spol}}">{{spol}}</option>
             %end
         </select>
     </div>

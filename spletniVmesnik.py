@@ -18,7 +18,7 @@ def dodaj_post():
         ime = bottle.request.forms.getunicode("vnos1")
         priimek = bottle.request.forms.getunicode("vnos2")
         datumRojstva = bottle.request.forms.getunicode("vnos3")
-        spol = bottle.request.forms.getunicode("vnos4")
+        spol = bottle.request.forms.getunicode("idS")
         drzava = bottle.request.forms.getunicode("vnos5")
         oseba = model.Oseba(ime,priimek,datumRojstva,spol,drzava)
         oseba.dodaj_v_bazo()
@@ -39,7 +39,7 @@ def dodaj_post():
         if koliko != '':
             koliko = int(koliko)
             clani=[]
-            for i in range(6,koliko+1):
+            for i in range(5,koliko+1):
                 temp=bottle.request.forms.getunicode("vnos{}".format(i))
                 clani.append(int(temp))
             art.dodaj_clane(clani)
