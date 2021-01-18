@@ -275,6 +275,19 @@ class Zalozba:
         assert self.id is None
         with conn:
             self.id = zalozba.dodaj_vrstico(ime=self.ime,drzava=self.drzava)
+    
+    @staticmethod
+    def vrni_spisek_zalozb():
+        sql = "SELECT idZalozbe, ime, drzava FROM Zalozba ORDER BY lower(ime);"
+        poizv=conn.execute(sql)
+        rez=[]
+        for el in poizv.fetchall():
+            rez.append(el)
+        return rez
+    
+    @staticmethod
+    def dummy():
+        return Zalozba(None,None)
 
 
 class Izdaja:

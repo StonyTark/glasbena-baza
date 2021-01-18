@@ -69,12 +69,12 @@ function formaOseba(){
   var forma= `
     <div class="form-group">
       <label for="exampleFormControlInput1"></label>
-        Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+        Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder="Tom"/>
     </div>
 
     <div class="form-group">
         <label for="exampleFormControlInput1"></label>
-        Priimek<input type="text" class="form-control" id="vnos2" name="vnos2" placeholder=""/>
+        Priimek<input type="text" class="form-control" id="vnos2" name="vnos2" placeholder="DeLonge"/>
     </div>
 
     <div class="form-group">
@@ -84,12 +84,17 @@ function formaOseba(){
     
     <div class="form-group">
         <label for="exampleFormControlInput1"></label>
-        Spol<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder=""/>
+        Spol
+        <select type="text" class="form-control" id="id" name="id" placeholder="Id">
+            % for spol in ["Male", "Female", "Other"]:
+            <option value="{{id}}">{{spol}}</option>
+            %end
+        </select>
     </div>
 
     <div class="form-group">
         <label for="exampleFormControlInput1"></label>
-        Drzava<input type="text" class="form-control" id="vnos5" name="vnos5" placeholder=""/>
+        Drzava<input type="text" class="form-control" id="vnos5" name="vnos5" placeholder="USA"/>
     </div>
     <input type="submit" value="Submit" class="btn btn-primary"/>`;
 
@@ -105,22 +110,22 @@ function formaArtist(){
     forma=`<fieldset id="formContent">
 <div class="form-group">
     <label for="exampleFormControlInput1"></label>
-    Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+    Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder="Blink-182"/>
 </div>
 
 <div class="form-group">
     <label for="exampleFormControlInput1"></label>
-    Leto nastanka<input type="text" class="form-control" id="vnos2" name="vnos2" placeholder=""/>
+    Leto nastanka<input type="text" class="form-control" id="vnos2" name="vnos2" placeholder="1992"/>
 </div>
 
 <div class="form-group">
 <label for="exampleFormControlInput1"></label>
-    Drzava<input type="text" class="form-control" id="vnos3" name="vnos3" placeholder=""/>
+    Drzava<input type="text" class="form-control" id="vnos3" name="vnos3" placeholder="USA"/>
 </div>
 
 <div class="form-group">
     <label for="exampleFormControlInput1"></label>
-    Mesto<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder=""/>
+    Mesto<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder="Poway"/>
 </div>
 
 <input type="button" id="dodajGumb" value='Dodaj člana' class="btn btn-secondary btn-sm"/>
@@ -139,12 +144,12 @@ function formaIzdaja(){
     <fieldset id="formContent">
 <div class="form-group">
     <label for="exampleFormControlInput1"></label>
-    Naslov<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+    Naslov<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder="The Rock Show"/>
 </div>
 
 <div class="form-group">
     <label for="exampleFormControlInput1"></label>
-    Leto izida<input type="text" class="form-control" id="vnos2" name="vnos2" placeholder=""/>
+    Leto izida<input type="number" class="form-control" id="vnos2" name="vnos2" placeholder="2001"/>
 </div>
 
 <div class="form-group">
@@ -152,12 +157,17 @@ function formaIzdaja(){
 
 <div class="form-group">
     <label for="exampleFormControlInput1"></label>
-    Tip<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder=""/>
+    Tip<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder="single"/>
 </div>
 
 <div class="form-group">
     <label for="exampleFormControlInput1"></label>
-    ID Zalozbe<input type="text" class="form-control" id="vnos5" name="vnos5" placeholder=""/>
+    Založba
+    <select type="text" class="form-control" id="id" name="id" placeholder="Id">
+        % for idZ, ime, drzava in zalozbe.vrni_spisek_zalozb():
+        <option value="{{idZ}}">{{ime}} - {{drzava}} - (ID:{{idZ}})</option>
+        %end
+    </select>
 </div>
 
 <input type="button" id="dodajGumb" value='Dodaj avtorja' class="btn btn-secondary btn-sm"/>

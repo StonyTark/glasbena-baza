@@ -8,7 +8,7 @@ def zacetna_stran():
 
 @bottle.get("/dodaj")
 def dodaj():
-    return bottle.template('dodaj.html',osebe=model.Oseba.dummy(),artisti=model.Artist.dummy()) #dummy objekt da lahko kličemo metode v html strani brez importa
+    return bottle.template('dodaj.html',osebe=model.Oseba.dummy(),artisti=model.Artist.dummy(), zalozbe=model.Zalozba.dummy()) #dummy objekt da lahko kličemo metode v html strani brez importa
 
 @bottle.post("/dodaj")
 def dodaj_post():
@@ -53,7 +53,7 @@ def dodaj_post():
         leto = bottle.request.forms.getunicode("vnos2")
         celotnaDolzina = 0
         tip = bottle.request.forms.getunicode("vnos4")
-        idZalozbe = bottle.request.forms.getunicode("vnos5")
+        idZalozbe = bottle.request.forms.getunicode("id")
         if idZalozbe=='':
             idZalozbe=None
         else:
