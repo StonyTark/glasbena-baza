@@ -14,6 +14,38 @@ oseba,zanr,artist,zalozba,izdaja,spada,track,vloga,je_clan,je_sodeloval,je_avtor
 def enkapsulirajNiz(niz):
     return '%' + niz + '%'
 
+def pretvoriSet(podani):
+    sez=list(podani)
+    pomozni=''
+    for elt in sez[:-1]:
+        pomozni+=str(elt)+','
+    pomozni+=str(sez[-1])
+    return pomozni
+
+def pretvoriSetALT(podani):
+    sez=list(podani)
+    pomozni=''
+    for elt in sez[:-1]:
+        pomozni+="\'"+str(elt)+"\',"
+    pomozni+="\'"+str(sez[-1])+"\'"
+    return pomozni
+
+def pretvoriTab(sez):
+    print(sez)
+    pomozni=''
+    for elt in sez[:-1]:
+        pomozni+=str(elt)+','
+    pomozni+=str(sez[-1])
+    return pomozni
+
+def pretvoriTabALT(sez):
+    print(sez)
+    pomozni=''
+    for elt in sez[:-1]:
+        pomozni+="\'"+str(elt)+"\',"
+    pomozni+="\'"+str(sez[-1])+"\'"
+    return pomozni
+
 class Oseba:
 
     def __init__(self, ime, priimek, datumRojstva, spol, drzava, *, id=None):
@@ -288,6 +320,7 @@ class Artist:
         for vrst in poizv.fetchall():
             rez.append(tuple(vrst))
         return rez
+    
 
 
     @staticmethod
@@ -533,6 +566,56 @@ class Track:
         with conn:
             conn.execute(sql,[id,])
     
+    @staticmethod
+    def generiraj_playlisto(n,zanri,drzave,ustvarjalci):
+        sql='''
+        SELECT DISTINCT T.idTrack,T.naslov,T.dolzina FROM Track T
+        JOIN Izdaja I on I.idIzdaja=T.idIzdaja
+        JOIN Je_Avtor J ON J.idIzdaja=I.idIzdaja
+        JOIN Artist A ON A.idArtist=J.idArtist
+        JOIN Spada S ON S.idIzdaja=I.idIzdaja
+        WHERE S.idZanr IN (?) AND ((A.drzava IN ? ) OR (J.idArtist IN ? ))
+        '''
+
+        if not zanri:
+            abc=Zanr.vrni_zanre()
+            temp=[i[0] for i in Zanr.vrni_zanre()]
+            param1=pretvoriTab(temp)
+        else:
+            param1=pretvoriSet(zanri)
+        
+        if not drzave:
+            temp=[i[0] for i in Artist.vrni_Drzave()]
+            param2=pretvoriTabALT(temp)
+        else:
+            param2=pretvoriSetALT(drzave)
+
+        if not ustvarjalci:
+            temp=[i[0] for i in Artist.vrni_spisek_artistov()]
+            param3=pretvoriTab(temp)
+        else:
+            param3=pretvoriSet(ustvarjalci)
+        
+        sql3='''
+            SELECT DISTINCT T.idTrack,T.naslov,T.dolzina FROM Track T
+            JOIN Izdaja I on I.idIzdaja=T.idIzdaja
+            JOIN Je_Avtor J ON J.idIzdaja=I.idIzdaja
+            JOIN Artist A ON A.idArtist=J.idArtist
+            JOIN Spada S ON S.idIzdaja=I.idIzdaja
+            WHERE S.idZanr IN ({}) AND ((A.drzava IN ({})) OR (J.idArtist IN ({})))
+        '''.format(param1,param2,param3)
+
+        #nerazumljive težave s parametri
+        #poizv=conn.execute(sql,[param1,param2,param3]) 
+
+        #trenutno ni sql injection safe
+        poizv=conn.execute(sql3)
+        rez=[]
+        for vrst in poizv.fetchall():
+            rez.append(vrst)
+        print("Vsi najdeni tracki")
+        print(rez)
+
     
 class Vloga:
 
