@@ -208,12 +208,20 @@ class Artist:
     @staticmethod
     def brisiID(id):
         with conn:
+            
+
+            #Briši še sodeluje
+            sql="DELETE FROM Je_Sodeloval WHERE idIzdaja IN (SELECT idIzdaja FROM je_avtor WHERE idArtist=?) AND idOseba IN (SELECT idOseba FROM je_clan WHERE idArtist=?)"
+            poizv=conn.execute(sql,[id,id])
+
             #Brisi iz vmesnih
             sql="DELETE FROM Je_Avtor WHERE idArtist=?"
             poizv=conn.execute(sql,[id,])
 
             sql="DELETE FROM Je_Clan WHERE idArtist=?"
             poizv=conn.execute(sql,[id,])
+
+            
 
             #Brisi iz glavne
             sql="DELETE FROM Artist WHERE idArtist=?"
@@ -425,13 +433,25 @@ class Izdaja:
         naslov,leto_izida,celotnaDolzina,tip,idZalozbe=rez.fetchone()
         return Izdaja(naslov,leto_izida,tip,celotnaDolzina,idZalozbe,id=id)
     
-    '''
-    TODO
-    Ob dodaji nove izdaje:
-    -dodaj artista kot avtorja
-    -trenutne clane zapisi kot avtorje v Je_sodeloval
-    -v pregledu izdaje izpisi tudi je_sodeloval
-    '''
+    @staticmethod
+    def brisiID(id):
+        with conn:
+            #Brisanje vmesnih
+            sql="DELETE FROM Spada WHERE idIzdaja=?"
+            rez=conn.execute(sql, [id,])
+
+            sql="DELETE FROM Track WHERE idIzdaja=?"
+            rez=conn.execute(sql, [id,])
+
+            sql="DELETE FROM Je_Sodeloval WHERE idIzdaja=?"
+            rez=conn.execute(sql, [id,])
+
+            sql="DELETE FROM Je_Avtor WHERE idIzdaja=?"
+            rez=conn.execute(sql, [id,])
+
+            #Brisanje glavne
+            sql="DELETE FROM Izdaja WHERE idIzdaja=?"
+            rez=conn.execute(sql, [id,])
 
 
 class Track:
@@ -475,49 +495,3 @@ class Vloga:
         assert self.id is None
         with conn:
             self.id = vloga.dodaj_vrstico(naziv=self.naziv)
-
-'''
-def najdi(id):
-        sql = """
-            SELECT idOseba,ime,priimek,datumRojstva,spol,drzava
-            FROM Oseba
-            WHERE idOseba=?
-        """
-        idOseba,ime,priimek,datumRojstva,spol,drzava=conn.execute(sql,str(id)).fetchone()
-        return Oseba(ime,priimek,datumRojstva,spol,drzava,id=idOseba)
-
-osebe=[]
-for i in range(5,10):
-    osebe.append(najdi(i))'''
-
-
-#skupina=Artist('neki',2005,'France','Paris')
-#skupina.dodaj_v_bazo()
-#skupina.dodaj_clane(osebe)
-
-
-
-
-
-
-#test=Oseba('Geezer','Butler','1949-07-17','M','United Kingdom')
-#test.dodaj_v_bazo()
-#print(test)
-
-# test=Zanr('Rock')
-# test.dodaj_v_bazo()
-
-# test=Zanr('Funk')
-# test.dodaj_v_bazo()
-
-# test=Zanr('Rock')
-# test.dodaj_v_bazo()
-    
-
-
-
-
-
-
-
-
