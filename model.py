@@ -433,13 +433,25 @@ class Izdaja:
         naslov,leto_izida,celotnaDolzina,tip,idZalozbe=rez.fetchone()
         return Izdaja(naslov,leto_izida,tip,celotnaDolzina,idZalozbe,id=id)
     
-    '''
-    TODO
-    Ob dodaji nove izdaje:
-    -dodaj artista kot avtorja
-    -trenutne clane zapisi kot avtorje v Je_sodeloval
-    -v pregledu izdaje izpisi tudi je_sodeloval
-    '''
+    @staticmethod
+    def brisiID(id):
+        with conn:
+            #Brisanje vmesnih
+            sql="DELETE FROM Spada WHERE idIzdaja=?"
+            rez=conn.execute(sql, [id,])
+
+            sql="DELETE FROM Track WHERE idIzdaja=?"
+            rez=conn.execute(sql, [id,])
+
+            sql="DELETE FROM Je_Sodeloval WHERE idIzdaja=?"
+            rez=conn.execute(sql, [id,])
+
+            sql="DELETE FROM Je_Avtor WHERE idIzdaja=?"
+            rez=conn.execute(sql, [id,])
+
+            #Brisanje glavne
+            sql="DELETE FROM Izdaja WHERE idIzdaja=?"
+            rez=conn.execute(sql, [id,])
 
 
 class Track:

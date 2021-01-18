@@ -216,6 +216,9 @@ def izdaja_post(id):
         izbraniZanr = bottle.request.forms.getunicode("izbraniZanr")
         model.Izdaja.poisciID(id).dodaj_zanr(int(izbraniZanr))
         return bottle.template("izdaja.html", iskaniID=id , podatki=model.Izdaja.poisciID(id),zanri=model.Zanr.dummy().vrni_zanre())
+    elif gumb=='briši':
+        model.Izdaja.brisiID(id)
+        bottle.redirect("/")
     else:
         brisanID=bottle.request.forms.getunicode("brisanID")
         model.Track.izbrisi_ID(int(brisanID))
