@@ -10,9 +10,12 @@ def zacetna_stran():
 @bottle.post("/")
 def zacetna_stran_post():
     print("=====================")
-    vnosi=[]
-    for i in range(model.Zanr.prestej_zvrsti()):
-        vnosi.append(bottle.request.forms.getunicode("izbiraZvrst"+str(i)))
+    vnosi=set()
+    for i in range(model.Zanr.prestej_zvrsti()+1):
+        temp=bottle.request.forms.getunicode("izbiraZvrst"+str(i))
+        if temp is not None:
+            vnosi.add(temp)
+    vnosi=set(vnosi)
     print(vnosi)
     
     izbrane_drzave=set(bottle.request.forms.getunicode("drzave").split(',')[:-1]) #(odbijem vejico)
@@ -20,6 +23,7 @@ def zacetna_stran_post():
 
     izbrani_ust=set(bottle.request.forms.getunicode("ustvarjalci").split(',')[:-1])
     print(izbrani_ust)
+    model.Track.generiraj_playlisto(10,vnosi,izbrane_drzave,izbrani_ust)
     bottle.redirect("/")
 
 @bottle.get("/dodaj")

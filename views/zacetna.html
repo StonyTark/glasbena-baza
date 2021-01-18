@@ -6,6 +6,7 @@
         var trenutnoIzbrane=document.getElementById("drzave").value
         var temp=trenutnoIzbrane+izbira+','
         document.getElementById("drzave").value=temp
+        feedback1()
     }
 
     function beriVrednost2(){
@@ -14,6 +15,17 @@
         var temp=trenutnoIzbrane+izbira+','
         document.getElementById("ustvarjalci").value=temp
         console.log(temp)
+        feedback2()
+    }
+
+    function feedback1(){
+        temp=document.getElementById("izbiraDrzave").value
+        document.getElementById("feedbackZaDrzavo").innerHTML=' '+temp+' DODANA'
+    }
+
+    function feedback2(){
+        temp=document.getElementById("izbiraUstvarjalcev").value
+        document.getElementById("feedbackZaUstvarjalca").innerHTML=' '+temp+' DODAN'
     }
 </script>
 
@@ -34,7 +46,7 @@
                         %ukaz="flip({})".format(ajdi)
                         %novo_ime="izbiraZvrst"+str(i)
                         <div class="form-group">
-                        <input type="checkbox"  id={{ajdi}} name={{novo_ime}} value={{ime}}>
+                        <input type="checkbox"  id={{ajdi}} name={{novo_ime}} value={{id}}>
                         <label for={{ajdi}}>{{ime}}</label>
                         </div>
                     %   i+=1
@@ -65,7 +77,8 @@
                 
             </form>
             <div class="form-group">
-                <button type="button" class="btn btn-primary" onclick="beriVrednost1()">Dodaj drzavo</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="beriVrednost1()">Dodaj drzavo</button>
+                <label id="feedbackZaDrzavo"></label>
             </div>
         </div>
         <div class="col">
@@ -84,7 +97,8 @@
                 
             </form>
             <div class="form-group">
-                <button type="button" class="btn btn-primary" onclick="beriVrednost2()">Dodaj ustvarjalca</button>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="beriVrednost2()">Dodaj ustvarjalca</button>
+                <label id="feedbackZaUstvarjalca"></label>
             </div>
         </div>
     </div>
