@@ -1,23 +1,92 @@
 % rebase('osnova.html')
 
+<script>
+    function beriVrednost1(){
+        var izbira=document.getElementById("izbiraDrzave").value
+        var trenutnoIzbrane=document.getElementById("drzave").value
+        var temp=trenutnoIzbrane+izbira+','
+        document.getElementById("drzave").value=temp
+    }
+
+    function beriVrednost2(){
+        var izbira=document.getElementById("izbiraUstvarjalcev").value
+        var trenutnoIzbrane=document.getElementById("ustvarjalci").value
+        var temp=trenutnoIzbrane+izbira+','
+        document.getElementById("ustvarjalci").value=temp
+        console.log(temp)
+    }
+</script>
+
 <div class="container-fluid">
     <br>
     <h1 style="text-align: center;">Ustvari naključno playlisto, glede na željene parametre!</h1>
     <br>
 </div>
-<div class="container">
+<div class="container-fluid">
     <form method="POST">
         <div class="row">
-            <div class="col-sm text-center">
-                <h4>Izberi željene zvrsti:</h4>
+            <div class="col">
+                <h4>Izberi željene zvrsti:</h4><br/>
+                <form method="POST">
+                    %i=1
+                    %for id,ime in zanr.vrni_zanre():
+                        %ajdi="gumb"+str(i)
+                        %ukaz="flip({})".format(ajdi)
+                        %novo_ime="izbiraZvrst"+str(i)
+                        <div class="form-group">
+                        <input type="checkbox"  id={{ajdi}} name={{novo_ime}} value={{ime}}>
+                        <label for={{ajdi}}>{{ime}}</label>
+                        </div>
+                    %   i+=1
+                    %end
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                    <input type="hidden" id="drzave" name="drzave" value="">
+                    <input type="hidden" id="ustvarjalci" name="ustvarjalci" value="">
+                  </form>
             </div>
-            <div class="col-sm text-center">
-                <h4>Izberi željen izvor glasbe:</h4>
-            </div>
-            <div class="col-sm text-center">
-                <h4>Izberi željene ustvarjalce:</h4>
+        
+        </div>
+    </form>
+    <br>
+    <div class="row">
+        <div class="col">
+            <h4>Izberi željen izvor glasbe:</h4>
+                <form>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Države</label>
+                    <select type="text" class="form-control" id="izbiraDrzave" name="izbiraDrzave" placeholder="Id" value="">
+                        % for drzava in artist.vrni_Drzave():
+                        %    drz=drzava[0]
+                            <option value="{{drz}}">{{drz}}</option>
+                        %end
+                    </select>
+                    
+                </div>
+                
+            </form>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="beriVrednost1()">Dodaj drzavo</button>
             </div>
         </div>
-    </form>    
+        <div class="col">
+            <h4>Izberi željene ustvarjalce:</h4>
+                <form method="POST">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1"></label>
+                    Ustvarjalci
+                    <select type="text" class="form-control" id="izbiraUstvarjalcev" name="izbiraUstvarjalcev" placeholder="Id" value="">
+                        % for idArtist,ime,_ in artist.vrni_spisek_artistov():
+                            <option value="{{idArtist}}">{{ime}}</option>
+                        %end
+                    </select>
+                    
+                </div>
+                
+            </form>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="beriVrednost2()">Dodaj ustvarjalca</button>
+            </div>
+        </div>
+    </div>
 </div>
 

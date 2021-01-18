@@ -132,12 +132,20 @@ class Zanr:
     @staticmethod
     def vrni_zanre():
         #Metoda vrne spisek trenutno zapisanih žanrov v obliki tabele
-        sql='SELECT idZanr, imeZanra FROM Zanr'
+        sql='SELECT idZanr, imeZanra FROM Zanr ORDER BY lower(imeZanra)'
         rez=[]
         poizv=conn.execute(sql)
         for vrst in poizv.fetchall():
             rez.append(tuple(vrst))
         return rez
+    
+    @staticmethod
+    def prestej_zvrsti():
+        sql='SELECT Count(*) FROM Zanr'
+        poizv=conn.execute(sql)
+        rez=poizv.fetchone()
+        return rez[0]
+        
     
     @staticmethod
     def dummy():
@@ -271,6 +279,16 @@ class Artist:
         sql = "DELETE FROM Je_Clan WHERE idArtist=? AND idOseba=?"
         with conn:
             conn.execute(sql, [id, idClan,])
+    
+    @staticmethod
+    def vrni_Drzave():
+        sql = "SELECT DISTINCT Drzava FROM Artist"
+        poizv=conn.execute(sql)
+        rez=[]
+        for vrst in poizv.fetchall():
+            rez.append(tuple(vrst))
+        return rez
+
 
     @staticmethod
     def dummy():
@@ -473,6 +491,10 @@ class Izdaja:
             #Brisanje glavne
             sql="DELETE FROM Izdaja WHERE idIzdaja=?"
             rez=conn.execute(sql, [id,])
+    
+    @staticmethod
+    def dummy():
+        return Izdaja(None,None,None)
 
 
 class Track:
@@ -499,6 +521,7 @@ class Track:
         sql = "DELETE FROM Track WHERE idTrack=?"
         with conn:
             conn.execute(sql,[id,])
+    
     
 class Vloga:
 

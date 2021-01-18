@@ -4,7 +4,23 @@ import pomozneFunkcije as pf
 
 @bottle.get("/")
 def zacetna_stran():
-    return bottle.template('zacetna.html')
+    
+    return bottle.template('zacetna.html', zanr=model.Zanr(None), artist=model.Artist.dummy(), izdaje=model.Izdaja.dummy())
+
+@bottle.post("/")
+def zacetna_stran_post():
+    print("=====================")
+    vnosi=[]
+    for i in range(model.Zanr.prestej_zvrsti()):
+        vnosi.append(bottle.request.forms.getunicode("izbiraZvrst"+str(i)))
+    print(vnosi)
+    
+    izbrane_drzave=set(bottle.request.forms.getunicode("drzave").split(',')[:-1]) #(odbijem vejico)
+    print(izbrane_drzave)
+
+    izbrani_ust=set(bottle.request.forms.getunicode("ustvarjalci").split(',')[:-1])
+    print(izbrani_ust)
+    bottle.redirect("/")
 
 @bottle.get("/dodaj")
 def dodaj():
