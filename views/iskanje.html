@@ -1,14 +1,5 @@
 % rebase('osnova.html')
 <script>
-  function myFunction() {
-        if(document.getElementById("radios-1").checked){
-          document.getElementById("searchinputAlt").style.display="none"
-        }
-        else{
-          document.getElementById("searchinputAlt").style.display="none"
-        }
-    }
-  
 
   //Izpis form
   function artistForm(){
@@ -203,13 +194,13 @@
     <!-- Multiple Radios (inline) -->
       <div class="form-group">
         <div class="col-md-4">
-            <input type="radio" name="izbira" id="radios-0" value="1" onclick="myFunction(); myTable(1)">
+            <input type="radio" name="izbira" id="radios-0" value="1" onclick="myTable(1)">
             <label class="radio-inline" for="radios-0"></label>Artist</label> 
           
-            <input type="radio" name="izbira" id="radios-1" value="2" onclick="myFunction(); myTable(2)">
+            <input type="radio" name="izbira" id="radios-1" value="2" onclick="myTable(2)">
             <label class="radio-inline" for="radios-1"></label>Oseba</label>
           
-            <input type="radio" name="izbira" id="radios-2" value="3" onclick="myFunction(); myTable(3)">
+            <input type="radio" name="izbira" id="radios-2" value="3" onclick="myTable(3)">
             <label class="radio-inline" for="radios-2"></label>Izdaja</label> 
 
           % if izbira == "1":
