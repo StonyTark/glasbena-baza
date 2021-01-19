@@ -64,7 +64,9 @@
                     % i = 0
                 </div>
                 % end
-                
+                <input type="submit" class="btn btn-primary" value="Submit">
+                <input type="hidden" id="drzave" name="drzave" value="">
+                <input type="hidden" id="ustvarjalci" name="ustvarjalci" value="">
             </form>
         </div>
     </form>
@@ -72,7 +74,7 @@
     <div class="row">
         <div class="col">
             <h4>Izberi željen izvor glasbe:</h4>
-            <form method="POST">
+            <form>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Države</label>
                     <select type="text" class="form-control" id="izbiraDrzave" name="izbiraDrzave" placeholder="Id" value="">
@@ -110,27 +112,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-
-        </div>
-
-        <div class="col">
-            <form method="POST">
-            <button type="submit" class="btn btn-primary btn-lg btn-block" value="Submit">GENERIRAJ</button>
-            <input type="hidden" id="drzave" name="drzave" value="">
-            <input type="hidden" id="ustvarjalci" name="ustvarjalci" value="">
-            </form>
-        </div>
-
-        <div class="col">
-            
-        </div>
-    </div>
 </div>
-
-
-
 <br>
 <br>
 
