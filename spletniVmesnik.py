@@ -18,6 +18,7 @@ def zacetna_stran_post():
     vnosi=set(vnosi)
     print("vnosi:", vnosi)
     
+    print(bottle.request.forms.getunicode("drzave"))
     izbrane_drzave=set(bottle.request.forms.getunicode("drzave").split(',')[:-1]) #(odbijem vejico)
     print("drzave:", izbrane_drzave)
 
