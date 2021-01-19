@@ -20,50 +20,61 @@
 
     function feedback1(){
         temp=document.getElementById("izbiraDrzave").value
-        document.getElementById("feedbackZaDrzavo").innerHTML=' '+temp+' DODANA'
+        document.getElementById("feedbackZaDrzavo").innerHTML=' '+temp+' ADDED'
     }
 
     function feedback2(){
         temp=document.getElementById("izbiraUstvarjalcev").value
-        document.getElementById("feedbackZaUstvarjalca").innerHTML=' '+temp+' DODAN'
+        document.getElementById("feedbackZaUstvarjalca").innerHTML=' '+temp+' ADDED'
     }
 </script>
 
 <div class="container-fluid">
     <br>
-    <h1 style="text-align: center;">Ustvari naključno playlisto, glede na željene parametre!</h1>
+    <h1 style="text-align: center;">USTVARI NAKLJUČNO PLAYLISTO, GLEDE MA ŽELJENE PARAMETRE</h1>
+    <br>
     <br>
 </div>
 <div class="container-fluid">
     <form method="POST">
         <div class="row">
-            <div class="col">
-                <h4>Izberi željene zvrsti:</h4><br/>
-                <form method="POST">
-                    %i=1
-                    %for id,ime in zanr.vrni_zanre():
-                        %ajdi="gumb"+str(i)
-                        %ukaz="flip({})".format(ajdi)
-                        %novo_ime="izbiraZvrst"+str(i)
+            <h4>Izberi željene zvrsti:</h4>
+            <br>
+            <br>
+        </div>
+        <div class="row">
+            <form method="POST">
+                % i = 0
+                % j = 0
+                % dolz = len(zanri)
+                % for stolp in range(5):
+                <div class="col">
+                    % while i < dolz // 4 and zanri:
+                        % id, ime = zanri.pop(0)
+                        % i += 1
+                        % j += 1
+                        % ajdi="gumb"+str(j)
+                        % ukaz = "flip({})".format(ajdi)
+                        % novo_ime = "izbiraZvrst"+str(i)
                         <div class="form-group">
-                        <input type="checkbox"  id={{ajdi}} name={{novo_ime}} value={{id}}>
-                        <label for={{ajdi}}>{{ime}}</label>
+                            <input type="checkbox"  id={{ajdi}} name={{novo_ime}} value={{id}}>
+                            <label for={{ajdi}}>{{ime}}</label>
                         </div>
-                    %   i+=1
-                    %end
-                    <input type="submit" class="btn btn-primary" value="Submit">
-                    <input type="hidden" id="drzave" name="drzave" value="">
-                    <input type="hidden" id="ustvarjalci" name="ustvarjalci" value="">
-                  </form>
-            </div>
-        
+                    % end
+                    % i = 0
+                </div>
+                % end
+                <input type="submit" class="btn btn-primary" value="Submit">
+                <input type="hidden" id="drzave" name="drzave" value="">
+                <input type="hidden" id="ustvarjalci" name="ustvarjalci" value="">
+            </form>
         </div>
     </form>
     <br>
     <div class="row">
         <div class="col">
             <h4>Izberi željen izvor glasbe:</h4>
-                <form>
+            <form>
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Države</label>
                     <select type="text" class="form-control" id="izbiraDrzave" name="izbiraDrzave" placeholder="Id" value="">
@@ -83,10 +94,9 @@
         </div>
         <div class="col">
             <h4>Izberi željene ustvarjalce:</h4>
-                <form method="POST">
+            <form method="POST">
                 <div class="form-group">
-                    <label for="exampleFormControlInput1"></label>
-                    Ustvarjalci
+                    <label for="exampleFormControlInput1">Ustvarjalci</label>
                     <select type="text" class="form-control" id="izbiraUstvarjalcev" name="izbiraUstvarjalcev" placeholder="Id" value="">
                         % for idArtist,ime,_ in artist.vrni_spisek_artistov():
                             <option value="{{idArtist}}">{{ime}}</option>
@@ -103,4 +113,35 @@
         </div>
     </div>
 </div>
+<br>
+<br>
+
+
+
+% if podatki:
+<div class="container-fluid">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Naslov skladbe</th>
+                <th>Dolžina</th>
+                <th>Izdaja</th>
+            </tr>
+        </thead>
+        <tbody>
+            % i = 0
+            % for id, naslov, dolzina, izdaja, ime_izd in podatki:
+                % i += 1
+            <tr>
+                <td style="width: 10%;">{{i}}</td>
+                <td style="width: 35%;">{{naslov}}</td>
+                <td style="width: 20%;">{{dolzina}}</td>
+                <td style="width: 35%;"><a href="/izdaja/{{izdaja}}">{{ime_izd}}</td>
+            </tr>
+            % end
+        </tbody>
+    </table>
+</div>
+% end
 

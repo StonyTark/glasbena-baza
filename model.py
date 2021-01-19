@@ -1,5 +1,7 @@
 import baza
 import sqlite3
+import random as rd
+import pomozneFunkcije as pf
 
 conn = sqlite3.connect('glasbenaBaza.db')
 baza.ustvari_bazo_ce_ne_obstaja(conn)
@@ -595,26 +597,35 @@ class Track:
             param3=pretvoriTab(temp)
         else:
             param3=pretvoriSet(ustvarjalci)
-        
         sql3='''
-            SELECT DISTINCT T.idTrack,T.naslov,T.dolzina FROM Track T
+            SELECT DISTINCT T.idTrack,T.naslov,T.dolzina,I.idIzdaja,I.naslov FROM Track T
             JOIN Izdaja I on I.idIzdaja=T.idIzdaja
             JOIN Je_Avtor J ON J.idIzdaja=I.idIzdaja
             JOIN Artist A ON A.idArtist=J.idArtist
             JOIN Spada S ON S.idIzdaja=I.idIzdaja
-            WHERE S.idZanr IN ({}) AND ((A.drzava IN ({})) OR (J.idArtist IN ({})))
+            WHERE (S.idZanr IN ({})) AND (A.drzava IN ({})) AND (J.idArtist IN ({}))
         '''.format(param1,param2,param3)
 
         #nerazumljive težave s parametri
         #poizv=conn.execute(sql,[param1,param2,param3]) 
 
         #trenutno ni sql injection safe
+        
         poizv=conn.execute(sql3)
         rez=[]
         for vrst in poizv.fetchall():
             rez.append(vrst)
-        print("Vsi najdeni tracki")
-        print(rez)
+
+        true_rez = list()
+
+        while n > 0 and rez:
+            el = rd.choice(rez)
+            rez.remove(el)
+            true_rez.append(list(el))
+            true_rez[-1][2] = pf.sekunde_v_format(true_rez[-1][2])
+            n -= 1
+
+        return true_rez
 
     
 class Vloga:

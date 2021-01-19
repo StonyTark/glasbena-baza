@@ -5,7 +5,7 @@ import pomozneFunkcije as pf
 @bottle.get("/")
 def zacetna_stran():
     
-    return bottle.template('zacetna.html', zanr=model.Zanr(None), artist=model.Artist.dummy(), izdaje=model.Izdaja.dummy())
+    return bottle.template('zacetna.html', zanri=model.Zanr(None).vrni_zanre(), artist=model.Artist.dummy(), izdaje=model.Izdaja.dummy(), podatki=None)
 
 @bottle.post("/")
 def zacetna_stran_post():
@@ -16,14 +16,15 @@ def zacetna_stran_post():
         if temp is not None:
             vnosi.add(temp)
     vnosi=set(vnosi)
-    print(vnosi)
+    print("vnosi:", vnosi)
     
     izbrane_drzave=set(bottle.request.forms.getunicode("drzave").split(',')[:-1]) #(odbijem vejico)
-    print(izbrane_drzave)
+    print("drzave:", izbrane_drzave)
 
     izbrani_ust=set(bottle.request.forms.getunicode("ustvarjalci").split(',')[:-1])
-    print(izbrani_ust)
-    model.Track.generiraj_playlisto(10,vnosi,izbrane_drzave,izbrani_ust)
+    print("izbrani ustvarjalci:", izbrani_ust)
+    tracks = model.Track.generiraj_playlisto(30,vnosi,izbrane_drzave,izbrani_ust)
+    return bottle.template('zacetna.html', zanri=model.Zanr(None).vrni_zanre(), artist=model.Artist.dummy(), izdaje=model.Izdaja.dummy(), podatki=tracks)
     bottle.redirect("/")
 
 @bottle.get("/dodaj")

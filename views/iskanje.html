@@ -13,23 +13,23 @@
   //Izpis form
   function artistForm(){
     var forma=`<div class="form-group">
-                    Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+                    Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder="Blink-182"/>
                 </div>
                 
                 <div class="form-group">
                     Leto nastanka
                     <div class="row">
-                        <div class="col"><input type="text" class="form-control" id="vnos2" name="vnos2" placeholder="Od"/></div>
-                        <div class="col"><input type="text" class="form-control" id="vnos3" name="vnos3" placeholder="Do"/></div>
+                        <div class="col"><input type="number" class="form-control" id="vnos2" name="vnos2" placeholder="Od"/></div>
+                        <div class="col"><input type="number" class="form-control" id="vnos3" name="vnos3" placeholder="Do"/></div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    Drzava<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder=""/>
+                    Drzava<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder="United States"/>
                 </div>
 
                 <div class="form-group">
-                    Mesto<input type="text" class="form-control" id="vnos5" name="vnos5" placeholder=""/>
+                    Mesto<input type="text" class="form-control" id="vnos5" name="vnos5" placeholder="Poway"/>
                 </div>
                 <br/>`;
     $("#vnosnaPolja").empty()
@@ -38,11 +38,11 @@
 
   function osebaForm(){
     var forma=`<div class="form-group">
-    Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+    Ime<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder="Tom"/>
 </div>
 
 <div class="form-group">
-    Priimek<input type="text" class="form-control" id="vnos2" name="vnos2" placeholder=""/>
+    Priimek<input type="text" class="form-control" id="vnos2" name="vnos2" placeholder="DeLonge"/>
 </div>
 
 <div class="form-group">
@@ -54,11 +54,11 @@
 </div>
 
 <div class="form-group">
-    Spol<input type="text" class="form-control" id="vnos5" name="vnos5" placeholder=""/>
+    Spol<input type="text" class="form-control" id="vnos5" name="vnos5" placeholder="Male"/>
 </div>
 
 <div class="form-group">
-    Drzava<input type="text" class="form-control" id="vnos6" name="vnos6" placeholder=""/>
+    Drzava<input type="text" class="form-control" id="vnos6" name="vnos6" placeholder="United States"/>
 </div>`;
     $("#vnosnaPolja").empty()
     $("#vnosnaPolja").append(forma)
@@ -68,7 +68,7 @@
   function izdajaForm(){
     var forma=`
     <div class="form-group">
-    Naslov<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder=""/>
+    Naslov<input type="text" class="form-control" id="vnos1" name="vnos1" placeholder="Enema of the State"/>
     </div>
 
     <div class="form-group">
@@ -80,7 +80,7 @@
     </div>
 
     <div class="form-group">
-        Tip<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder=""/>
+        Tip<input type="text" class="form-control" id="vnos4" name="vnos4" placeholder="Studio album"/>
     </div>
     `;
     $("#vnosnaPolja").empty()
